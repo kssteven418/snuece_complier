@@ -58,14 +58,27 @@ comm_r		\*\/
 				printOutput("INT", yytext, -1);
 				}	
 <BB>{integer}	{;}
+
 <AA>{float}		{
 				printOutput("F", yytext, -1);
 				}
 <BB>{float}		{;}
+
 <AA>{operation}	{
 				printOutput("OP", yytext, -1);
 				}
 <BB>{operation} {;}
+
+<AA>{float}/\.\.	{
+					printOutput("F", yytext, -1);
+					}
+<BB>{float}/\.\.	{;}
+
+<AA>{integer}/\.\.	{
+					printOutput("INT", yytext, -1);
+					}
+<BB>{integer}/\.\.	{;}
+
 <AA>{id}		{
 				id* n_id = enter(ID, yytext, yyleng);
 				// this is OK, since if yytext is a keyword,
@@ -90,12 +103,13 @@ comm_r		\*\/
 {comm_l}		{
 				commentdepth++;
 				if(commentdepth==1) BEGIN BB;
-				printf("comm depth = %d\n", commentdepth);
+				//printf("comm depth = %d\n", commentdepth);
 				}
+
 {comm_r}		{
 				if(commentdepth>0) commentdepth--;
 				if(commentdepth==0) BEGIN AA;
-				printf("comm depth = %d\n", commentdepth);
+				//printf("comm depth = %d\n", commentdepth);
 				}
 
 {ws}		{;}

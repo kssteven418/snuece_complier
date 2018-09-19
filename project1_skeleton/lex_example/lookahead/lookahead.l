@@ -6,8 +6,8 @@ letter	[A-Za-z]
 "++"/{letter}  {printf("++a and yytext has %s\n",yytext);} 
 
 {letter}/"++"  {printf("a++ and yytext has %s\n",yytext);} 
-{letter}       {printf("letter %s\n", yytext);}
-. { ; }
+"++"			{printf("wow! %s\n", yytext);}
+. 				{ ; }
 
 %%
 

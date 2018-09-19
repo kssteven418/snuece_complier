@@ -42,6 +42,6 @@ OP	[
 INT	20
 OP	]
 OP	;
-F	1.
-OP	.
+INT	1
+OP	..
 INT	50

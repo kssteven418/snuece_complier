@@ -386,7 +386,7 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[13] =
     {   0,
-        0,    0,    6,    4,    5,    4,    3,    0,    0,    1,
+        0,    0,    6,    4,    5,    4,    4,    3,    0,    1,
         2,    0
     } ;
 
@@ -764,7 +764,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 9 "lookahead.l"
-{printf("letter %s\n", yytext);}
+{printf("wow! %s\n", yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
