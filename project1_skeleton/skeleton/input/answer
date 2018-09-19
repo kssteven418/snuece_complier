@@ -1,0 +1,47 @@
+KEY	struct	1
+ID	_point	1
+OP	{
+KEY	float	1
+ID	x	1
+OP	,
+ID	y	1
+OP	,
+ID	z	1
+OP	;
+KEY	int	1
+ID	color	1
+OP	;
+OP	}
+ID	point	1
+OP	[
+INT	20
+OP	]
+OP	;
+KEY	struct	2
+ID	_line	1
+OP	{
+KEY	struct	3
+ID	_point	2
+OP	*
+ID	p	1
+OP	[
+INT	2
+OP	]
+OP	;
+KEY	int	2
+ID	color	2
+OP	;
+KEY	float	2
+ID	meter	1
+OP	=
+F	0.5
+OP	;
+OP	}
+ID	line	1
+OP	[
+INT	20
+OP	]
+OP	;
+INT	1
+OP	..
+INT	50

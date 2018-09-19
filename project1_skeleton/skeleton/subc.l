@@ -30,7 +30,7 @@ int commentdepth=0;
 %}
 
 letter		[A-Za-z_]
-alnum		[A-Aa-z0-9_]
+alnum		[A-Za-z0-9_]
 digit		[0-9]
 ws			[ \t\n]
 integer		([1-9]+{digit}*)|0
@@ -47,19 +47,26 @@ operation	{op_paren}|{op_bool}|{op_cal}|{op_comp}|{op_subs}|{op_range}|{op_misc}
 
 id			{letter}{alnum}*
 
+comm_l		\/\*
+comm_r		\*\/
+
+
 %start AA BB
 
 %%
-{integer}	{
+<AA>{integer}	{
 				printOutput("INT", yytext, -1);
-			}
-{float}		{
+				}	
+<BB>{integer}	{;}
+<AA>{float}		{
 				printOutput("F", yytext, -1);
-			}
-{operation}	{
+				}
+<BB>{float}		{;}
+<AA>{operation}	{
 				printOutput("OP", yytext, -1);
-			}
-{id}		{
+				}
+<BB>{operation} {;}
+<AA>{id}		{
 				id* n_id = enter(ID, yytext, yyleng);
 				// this is OK, since if yytext is a keyword,
 				// then the tokenType ID will be ignored
@@ -75,10 +82,22 @@ id			{letter}{alnum}*
 				}
 				// if KEYWORD
 				else{
-					printOutput("KEYWORD", yytext, n_id->count);
+					printOutput("KEY", yytext, n_id->count);
+				}
+				}
+<BB>{id}		{;}
+
+{comm_l}		{
+				commentdepth++;
+				if(commentdepth==1) BEGIN BB;
+				printf("comm depth = %d\n", commentdepth);
+				}
+{comm_r}		{
+				if(commentdepth>0) commentdepth--;
+				if(commentdepth==0) BEGIN AA;
+				printf("comm depth = %d\n", commentdepth);
 				}
 
-			}
 {ws}		{;}
 .			{;}
 %%
@@ -121,9 +140,9 @@ void initHash()
 	for (i = 0; strcmp(keyWord[i], "\0") !=0; i++) {
 		cnt ++;
 		id* temp = enter(KEYWORD, keyWord[i], strlen(keyWord[i]));
-		printId(temp);
+		//printId(temp);
 	}
-	printf("cnt : %d\n", cnt);
+	//printf("cnt : %d\n", cnt);
 }
 
 int main(int argc, char** argv)
