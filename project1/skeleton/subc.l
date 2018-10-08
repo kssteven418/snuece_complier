@@ -81,7 +81,7 @@ comm_r		\*\/
 
 <AA>{id}		{
 				id* n_id = enter(ID, yytext, yyleng);
-				// this is OK, since if yytext is a keyword,
+				// this is OK, since if yytext were a keyword,
 				// then the tokenType ID will be ignored
 				// since there already exist a hash table entry
 				// with tokenType KEYWORD
@@ -103,13 +103,11 @@ comm_r		\*\/
 {comm_l}		{
 				commentdepth++;
 				if(commentdepth==1) BEGIN BB;
-				//printf("comm depth = %d\n", commentdepth);
 				}
 
 {comm_r}		{
 				if(commentdepth>0) commentdepth--;
 				if(commentdepth==0) BEGIN AA;
-				//printf("comm depth = %d\n", commentdepth);
 				}
 
 {ws}		{;}
@@ -154,9 +152,7 @@ void initHash()
 	for (i = 0; strcmp(keyWord[i], "\0") !=0; i++) {
 		cnt ++;
 		id* temp = enter(KEYWORD, keyWord[i], strlen(keyWord[i]));
-		//printId(temp);
 	}
-	//printf("cnt : %d\n", cnt);
 }
 
 int main(int argc, char** argv)

@@ -16,15 +16,10 @@ typedef struct nlist {
 	id *data;
 } nlist;
 
-/*
-typedef struct id {
-	int tokenType;
-	char *name;
-	int count;
-} id;
-*/
 
 int strCompare(char* x, int length, char* y){
+	// x is a character stream with length 'length'
+	// y is a string, ended by \0
 	for (int i=0; i<length; i++){
 		if (y[i]=='\0') 
 			return 0; // y is shorter than x
@@ -48,7 +43,7 @@ id *enter(int tokenType, char *name, int length) {
 	for (int i=0; i<length; i++){
 		hash_index += (int)name[i];
 	}
-	hash_index /= HASH_TABLE_SIZE;
+	hash_index %= HASH_TABLE_SIZE;
 
 	/* Then go to the hash table entry of the given index */
 	
@@ -63,17 +58,22 @@ id *enter(int tokenType, char *name, int length) {
 		n_nlist->data = (id*)malloc(sizeof(id));
 		n_nlist->data->tokenType = tokenType;
 		n_nlist->data->name = (char*)malloc(sizeof(char)*(length+1));
-		for (int i=0; i<length+1; i++){ // copy string
+		for (int i=0; i<length+1; i++){ 
+			// copy string from 0th char to (length-1)th char
+			// and insert \0 at last
 			if (i==length) n_nlist->data->name[i] = '\0';
 			else n_nlist->data->name[i] = name[i];
 		}
 		
-		if (tokenType==0){ // if keyword, then only initiated at first time
+		if (tokenType==0){ 
+			// if keyword, the only initiation is done by initHash function
 			n_nlist->data->count = 0; // so, the count must be 0
 		}
 		else{ // if ID< initiated at runtime, when the token is first used
 			n_nlist->data->count = 1; // so, the count must be 1
 		}
+		
+		//let the list entry point the nlist data
 		hashTable[hash_index] = n_nlist;
 		return n_nlist->data;
 	}
@@ -81,17 +81,19 @@ id *enter(int tokenType, char *name, int length) {
 	// 2) if hashTable is not empty
 	// then search if there already exists a entry with the same name value
 	
-	nlist* iter = hashTable[hash_index];
+	nlist* iter = hashTable[hash_index]; // first entry
 	while(1){
 
 		// 2-1) if there exists a matching name in the list,
 		if(strCompare(name, length, iter->data->name)){ 
 			//simply increment the count value
 			iter->data->count ++;
+			//and return the modified data(w/ incrementede cnt)  entry
 			return iter->data;
 		}
 
-		//at the end of the list
+		//if reached at the  end of the list
+		//in this case, no matching entry.
 		if(iter->next == NULL)
 			break;
 		//otherwise, progress
@@ -109,7 +111,9 @@ id *enter(int tokenType, char *name, int length) {
 	n_nlist->data = (id*)malloc(sizeof(id));
 	n_nlist->data->tokenType = tokenType;
 	n_nlist->data->name = (char*)malloc(sizeof(char)*(length+1));
-	for (int i=0; i<length+1; i++){ // copy string
+	for (int i=0; i<length+1; i++){ 
+		// copy string from 0th char to (length-1)th char
+		// and insert \0 at last
 		if (i==length) n_nlist->data->name[i] = '\0';
 		else n_nlist->data->name[i] = name[i];
 	}
@@ -125,88 +129,29 @@ id *enter(int tokenType, char *name, int length) {
 
 	return n_nlist->data;
 
+}
+
+/* DEBUGGIN */
+
+void printHash(){
+
+	for(int i=0; i<HASH_TABLE_SIZE; i++){
+		
+		nlist* temp = hashTable[i];
+
+		if(temp==NULL) continue;
+		printf("%d : ", i);
+		while(1){
+			if(temp == NULL) break;
+			printf("(%d, %s, %d) ", 
+					temp->data->tokenType, 
+					temp->data->name, 
+					temp->data->count);
+			temp = temp->next;
+		}
+		printf("\n");
+	}
 
 }
 
 
-/*
-*********************** DEBUGGING **********************
-
-int main(){
-
-	//DEBUGGING enter
-
-	char* text = "qwertyuiopasdfghjklzxcvbnmdsct";
-	
-	//er
-	id* temp = enter(0, &text[2], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//er
-	temp = enter(0, &text[2], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-
-	//e
-	temp = enter(0, &text[2], 1);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-
-	//ert
-	temp = enter(0, &text[2], 3);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-
-	//er
-	temp = enter(0, &text[2], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//ert
-	temp = enter(0, &text[2], 18);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	printf("**********************\n");
-	//ds
-	temp = enter(0, &text[26], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//ds
-	temp = enter(0, &text[26], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//ct
-	temp = enter(0, &text[28], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//ds
-	temp = enter(0, &text[26], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//rty
-	temp = enter(0, &text[3], 3);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-	
-	//er
-	temp = enter(0, &text[2], 2);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-
-	//ert
-	temp = enter(0, &text[2], 3);
-	printf("ID NAME : %s, COUNT : %d \n", temp->name, temp->count);
-
-	
-	//DEBUGGING strCompare
-
-	int len = 6;
-	char* t1 = "qwer";
-	char* t2 = "qwert";
-	char* t3 = "qwerty";
-	char* t4 = "qwertyu";
-	char* t5 = "qwertyi";
-	char* t6 = "wertyu";
-	
-	printf("%d\n", strCompare(&text[0], len, t1)?1:0);
-	printf("%d\n", strCompare(&text[0], len, t2)?1:0);
-	printf("%d\n", strCompare(&text[0], len, t3)?1:0);
-	printf("%d\n", strCompare(&text[0], len, t4)?1:0);
-	printf("%d\n", strCompare(&text[0], len, t5)?1:0);
-	printf("%d\n", strCompare(&text[0], len, t6)?1:0);
-}
-*/

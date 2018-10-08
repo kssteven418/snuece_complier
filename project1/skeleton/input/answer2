@@ -1,0 +1,212 @@
+KEY	struct	1
+ID	_point	1
+OP	{
+KEY	float	1
+ID	x	1
+OP	,
+ID	y	1
+OP	,
+ID	z	1
+OP	;
+KEY	int	1
+ID	color	1
+OP	;
+OP	}
+ID	point	1
+OP	[
+INT	20
+OP	]
+OP	;
+KEY	int	2
+ID	foo	1
+OP	(
+KEY	int	3
+ID	x	2
+OP	,
+KEY	int	4
+ID	y	2
+OP	,
+KEY	int	5
+ID	z	2
+OP	)
+OP	{
+KEY	int	6
+ID	temp	1
+OP	=
+ID	x	3
+OP	+
+ID	y	3
+OP	+
+ID	z	3
+OP	;
+ID	temp	2
+OP	=
+ID	temp	3
+OP	/
+INT	3
+OP	;
+KEY	return	1
+ID	temp	4
+OP	;
+OP	}
+KEY	struct	2
+ID	_line	1
+OP	{
+KEY	struct	3
+ID	_point	2
+OP	*
+ID	p	1
+OP	[
+INT	2
+OP	]
+OP	;
+KEY	int	7
+ID	color	2
+OP	;
+KEY	float	2
+ID	meter	1
+OP	=
+F	0.5
+OP	;
+ID	p	2
+OP	[
+INT	1
+OP	]
+OP	.
+ID	x	4
+OP	=
+ID	p	3
+OP	[
+INT	1
+OP	]
+OP	.
+ID	x	5
+OP	+
+INT	1
+OP	;
+ID	p	4
+OP	[
+INT	1
+OP	]
+OP	.
+ID	x	6
+OP	++
+OP	;
+ID	p	5
+OP	[
+INT	2
+OP	]
+OP	.
+ID	color	3
+OP	=
+OP	(
+ID	p	6
+OP	[
+INT	1
+OP	]
+OP	.
+ID	x	7
+OP	+
+ID	p	7
+OP	[
+INT	1
+OP	]
+OP	.
+ID	y	4
+OP	+
+ID	p	8
+OP	[
+INT	1
+OP	]
+OP	.
+ID	z	4
+OP	)
+OP	*
+OP	(
+ID	p	9
+OP	[
+INT	1
+OP	]
+OP	.
+ID	x	8
+OP	+
+ID	p	10
+OP	[
+INT	1
+OP	]
+OP	.
+ID	y	5
+OP	+
+ID	p	11
+OP	[
+INT	1
+OP	]
+OP	.
+ID	z	5
+OP	)
+OP	;
+KEY	for	1
+OP	(
+KEY	int	8
+ID	i	1
+OP	=
+INT	0
+OP	;
+ID	i	2
+OP	<
+INT	2
+OP	;
+ID	i	3
+OP	++
+OP	)
+OP	{
+ID	p	12
+OP	[
+ID	i	4
+OP	]
+OP	.
+ID	color	4
+OP	=
+ID	foo	2
+OP	(
+ID	p	13
+OP	[
+ID	i	5
+OP	]
+OP	.
+ID	x	9
+OP	,
+ID	p	14
+OP	[
+ID	i	6
+OP	]
+OP	.
+ID	y	6
+OP	,
+ID	p	15
+OP	[
+ID	i	7
+OP	]
+OP	.
+ID	z	6
+OP	)
+OP	;
+OP	}
+OP	}
+ID	line	1
+OP	[
+INT	20
+OP	]
+OP	;
+INT	1
+OP	..
+INT	50
+F	1.1
+OP	..
+F	1.2
+F	1.1
+OP	..
+INT	2
+INT	2
+OP	..
+F	1.1

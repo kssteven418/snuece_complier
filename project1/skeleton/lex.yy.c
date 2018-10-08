@@ -923,7 +923,7 @@ YY_RULE_SETUP
 #line 82 "subc.l"
 {
 				id* n_id = enter(ID, yytext, yyleng);
-				// this is OK, since if yytext is a keyword,
+				// this is OK, since if yytext were a keyword,
 				// then the tokenType ID will be ignored
 				// since there already exist a hash table entry
 				// with tokenType KEYWORD
@@ -952,35 +952,33 @@ YY_RULE_SETUP
 {
 				commentdepth++;
 				if(commentdepth==1) BEGIN BB;
-				//printf("comm depth = %d\n", commentdepth);
 				}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 109 "subc.l"
+#line 108 "subc.l"
 {
 				if(commentdepth>0) commentdepth--;
 				if(commentdepth==0) BEGIN AA;
-				//printf("comm depth = %d\n", commentdepth);
 				}
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 115 "subc.l"
+#line 113 "subc.l"
 {;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 116 "subc.l"
+#line 114 "subc.l"
 {;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 117 "subc.l"
+#line 115 "subc.l"
 ECHO;
 	YY_BREAK
-#line 984 "lex.yy.c"
+#line 982 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(AA):
 case YY_STATE_EOF(BB):
@@ -1983,7 +1981,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 117 "subc.l"
+#line 115 "subc.l"
 
 
 
@@ -2025,9 +2023,7 @@ void initHash()
 	for (i = 0; strcmp(keyWord[i], "\0") !=0; i++) {
 		cnt ++;
 		id* temp = enter(KEYWORD, keyWord[i], strlen(keyWord[i]));
-		//printId(temp);
 	}
-	//printf("cnt : %d\n", cnt);
 }
 
 int main(int argc, char** argv)
