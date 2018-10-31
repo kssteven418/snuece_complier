@@ -1,0 +1,106 @@
+ext_def_list->epsilon
+type_specifier->TYPE
+opt_specifier->type_specifier
+funct_decl->ID '(' ')'
+def_list->epsilon
+type_specifier->TYPE
+var_decl->ID
+decl->var_decl
+decl_list->decl
+def->type_specifier decl_list ';'
+def_list->def_list def
+type_specifier->TYPE
+var_decl->ID
+decl->var_decl
+decl_list->decl
+def->type_specifier decl_list ';'
+def_list->def_list def
+local_defs->def_list
+stmt_list->epsilon
+unary->ID
+binary->unary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+or_expr->or_list
+expr->or_expr
+unary->INTEGER_CONST
+binary->unary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+or_expr->or_list
+expr->or_expr
+expr->expr '=' expr
+stmt->expr ';'
+stmt_list->stmt_list stmt
+unary->ID
+binary->unary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+or_expr->or_list
+expr->or_expr
+unary->INTEGER_CONST
+binary->unary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+or_expr->or_list
+expr->or_expr
+expr->expr '=' expr
+stmt->expr ';'
+stmt_list->stmt_list stmt
+unary->ID
+binary->unary
+unary->INTEGER_CONST
+binary->unary
+binary->binary EQUOP binary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+unary->ID
+binary->unary
+unary->INTEGER_CONST
+binary->unary
+binary->binary EQUOP binary
+and_list->binary
+and_expr->and_list
+or_list->or_list LOGICAL_OR and_expr
+or_expr->or_list
+expr->or_expr
+test->expr
+def_list->epsilon
+local_defs->def_list
+stmt_list->epsilon
+unary->INTEGER_CONST
+binary->unary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+or_expr->or_list
+expr->or_expr
+stmt->RETURN expr ';'
+stmt_list->stmt_list stmt
+compound_stmt->'{' local_defs stmt_list '}'
+stmt->compound_stmt
+def_list->epsilon
+local_defs->def_list
+stmt_list->epsilon
+unary->INTEGER_CONST
+binary->unary
+and_list->binary
+and_expr->and_list
+or_list->and_expr
+or_expr->or_list
+expr->or_expr
+stmt->RETURN expr ';'
+stmt_list->stmt_list stmt
+compound_stmt->'{' local_defs stmt_list '}'
+stmt->compound_stmt
+stmt->IF '(' test ')' stmt ELSE stmt
+stmt_list->stmt_list stmt
+compound_stmt->'{' local_defs stmt_list '}'
+ext_def->opt_specifier funct_decl compound_stmt
+ext_def_list->ext_def_list ext_def
+program->ext_def_list

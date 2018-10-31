@@ -29,12 +29,7 @@ int commentdepth=0;
 
 %}
 
-letter		[A-Za-z_]
-alnum		[A-Za-z0-9_]
-digit		[0-9]
 ws			[ \t\n]
-integer		([1-9]+{digit}*)|0
-float		{digit}+\.{digit}*([eE][+-]?{digit}+)?
 
 op_paren	[\(\)\[\]\{\}]
 op_bool		!|~|&|&&|\||\|\||\^
@@ -45,6 +40,12 @@ op_range	\.\.
 op_misc		\->|\.|\,|\?|\:|\;
 operation	{op_paren}|{op_bool}|{op_cal}|{op_comp}|{op_subs}|{op_range}|{op_misc}
 
+letter		[A-Za-z_]
+alnum		[A-Za-z0-9_]
+digit		[0-9]
+integer		([1-9]+{digit}*)|0
+float		{digit}+\.{digit}*([eE][+-]?{digit}+)?
+
 id			{letter}{alnum}*
 
 comm_l		\/\*
@@ -54,6 +55,14 @@ comm_r		\*\/
 %start AA BB
 
 %%
+
+{ws}		{;}
+
+<AA>{operation}	{
+				printOutput("OP", yytext, -1);
+				}
+<BB>{operation} {;}
+
 <AA>{integer}	{
 				printOutput("INT", yytext, -1);
 				}	
@@ -63,11 +72,6 @@ comm_r		\*\/
 				printOutput("F", yytext, -1);
 				}
 <BB>{float}		{;}
-
-<AA>{operation}	{
-				printOutput("OP", yytext, -1);
-				}
-<BB>{operation} {;}
 
 <AA>{float}/\.\.	{
 					printOutput("F", yytext, -1);
@@ -110,7 +114,6 @@ comm_r		\*\/
 				if(commentdepth==0) BEGIN AA;
 				}
 
-{ws}		{;}
 .			{;}
 %%
 
