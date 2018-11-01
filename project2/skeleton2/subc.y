@@ -19,13 +19,24 @@ void 	REDUCE(char* s);
 }
 
 /* Precedences and Associativities */
-%left	','
 %left 	STRUCTOP
+%right	'!' PLUS_PLUS MINUS_MINUS
+%right 	UMINUS UPOINTER UADDR
+%left 	'*' '/' '%'
+%left 	'+' '-'
+%left 	RELOP
+%left 	EQUOP
+%left 	'&'
+%left 	'|'
+%left 	LOGICAL_AND
+%left 	LOGICAL_OR
+%right	ASSIGNOP '='	
+%left	','
 
 /* Token and Types */
 %token<stringVal>	TYPE STRUCT RETURN IF ELSE WHILE FOR BREAK CONTINUE 
 %token<stringVal>   LOGICAL_OR LOGICAL_AND   
-%token<stringVal>   ASSINGOP RELOP EQUOP PLUS_PLUS MINUS_MINUS STRUCTOP
+%token<stringVal>   ASSIGNOP RELOP EQUOP PLUS_PLUS MINUS_MINUS STRUCTOP
 %token<stringVal>	ID CHAR_CONST STRING 
 %token<intVal>		INTEGER_CONST
 
@@ -148,7 +159,7 @@ decl: funct_decl{
 
 compound_stmt: compound_stmt: '{' local_defs stmt_list '}'
 {
-	REDUCE("compound_stmt->compound_stmt: '{' local_defs stmt_list '}'");
+	REDUCE("compound_stmt->'{' local_defs stmt_list '}'");
 };
 
 local_defs: def_list
@@ -227,9 +238,9 @@ opt_expr: expr
 	REDUCE("opt_expr->epsilon");
 };
 
-expr: expr ASSINGOP expr
+expr: expr ASSIGNOP expr
 {
-	REDUCE("expr->expr ASSINGOP expr");
+	REDUCE("expr->expr ASSIGNOP expr");
 }
 | expr '=' expr{
 	REDUCE("expr->expr '=' expr");
@@ -246,7 +257,7 @@ or_list: or_list LOGICAL_OR and_expr{
 	REDUCE("or_list->or_list LOGICAL_OR and_expr");
 }
 | or_list '|' and_expr{
-	REDUCE("or_list: or_list '|' and_expr");
+	REDUCE("or_list-> or_list '|' and_expr");
 }
 | and_expr{
 	REDUCE("or_list->and_expr");
@@ -312,7 +323,7 @@ unary: '(' expr ')'
 {
 	REDUCE("unary->STRING");
 }
-| '-' unary
+| '-' unary %prec UMINUS
 {
 	REDUCE("unary->'-' unary");
 }
@@ -328,11 +339,11 @@ unary: '(' expr ')'
 {
 	REDUCE("unary->unary MINUS_MINUS");
 }
-| '&' unary
+| '&' unary %prec UADDR
 {
 	REDUCE("unary->'&' unary");
 }
-| '*' unary		
+| '*' unary	%prec UPOINTER
 {
 	REDUCE("unary->'*' unary");
 }
@@ -360,7 +371,8 @@ args: expr
 | args ',' expr
 {
 	REDUCE("args->args ',' expr");
-}
+};
+
 
 
 %%

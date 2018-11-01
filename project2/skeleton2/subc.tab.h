@@ -46,26 +46,29 @@ extern int yydebug;
   enum yytokentype
   {
     STRUCTOP = 258,
-    TYPE = 259,
-    STRUCT = 260,
-    RETURN = 261,
-    IF = 262,
-    ELSE = 263,
-    WHILE = 264,
-    FOR = 265,
-    BREAK = 266,
-    CONTINUE = 267,
-    LOGICAL_OR = 268,
-    LOGICAL_AND = 269,
-    ASSINGOP = 270,
-    RELOP = 271,
-    EQUOP = 272,
-    PLUS_PLUS = 273,
-    MINUS_MINUS = 274,
-    ID = 275,
-    CHAR_CONST = 276,
-    STRING = 277,
-    INTEGER_CONST = 278
+    PLUS_PLUS = 259,
+    MINUS_MINUS = 260,
+    UMINUS = 261,
+    UPOINTER = 262,
+    UADDR = 263,
+    RELOP = 264,
+    EQUOP = 265,
+    LOGICAL_AND = 266,
+    LOGICAL_OR = 267,
+    ASSIGNOP = 268,
+    TYPE = 269,
+    STRUCT = 270,
+    RETURN = 271,
+    IF = 272,
+    ELSE = 273,
+    WHILE = 274,
+    FOR = 275,
+    BREAK = 276,
+    CONTINUE = 277,
+    ID = 278,
+    CHAR_CONST = 279,
+    STRING = 280,
+    INTEGER_CONST = 281
   };
 #endif
 
@@ -79,7 +82,7 @@ union YYSTYPE
 	int		intVal;
 	char	*stringVal;
 
-#line 83 "subc.tab.h" /* yacc.c:1909  */
+#line 86 "subc.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
