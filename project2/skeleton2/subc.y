@@ -19,19 +19,22 @@ void 	REDUCE(char* s);
 }
 
 /* Precedences and Associativities */
-%left 	STRUCTOP
-%right	'!' PLUS_PLUS MINUS_MINUS
-%right 	UMINUS UPOINTER UADDR
-%left 	'*' '/' '%'
-%left 	'+' '-'
-%left 	RELOP
-%left 	EQUOP
-%left 	'&'
-%left 	'|'
-%left 	LOGICAL_AND
-%left 	LOGICAL_OR
-%right	ASSIGNOP '='	
 %left	','
+%right	ASSIGNOP '='	
+%left 	LOGICAL_OR
+%left 	LOGICAL_AND
+%left 	'|'
+%left 	'&'
+%left 	EQUOP
+%left 	RELOP
+%left 	'+' '-'
+%left 	'*' '/' '%'
+%right 	UMINUS UPOINTER UADDR
+%right	'!' PLUS_PLUS MINUS_MINUS
+%left 	STRUCTOP
+%left 	'[' ']' '(' ')'
+%nonassoc IFX
+%nonassoc ELSE
 
 /* Token and Types */
 %token<stringVal>	TYPE STRUCT RETURN IF ELSE WHILE FOR BREAK CONTINUE 
@@ -157,7 +160,7 @@ decl: funct_decl{
 	REDUCE("decl->var_decl");
 };
 
-compound_stmt: compound_stmt: '{' local_defs stmt_list '}'
+compound_stmt: '{' local_defs stmt_list '}'
 {
 	REDUCE("compound_stmt->'{' local_defs stmt_list '}'");
 };
@@ -195,11 +198,11 @@ stmt: expr ';'
 {
 	REDUCE("stmt->';'");
 }
-| IF '(' test ')' stmt
+| IF '(' test ')' stmt %prec IFX
 {
 	REDUCE("stmt->IF '(' test ')' stmt");
 }
-| IF '(' test ')' stmt ELSE stmt
+| IF '(' test ')' stmt ELSE stmt 
 {
 	REDUCE("stmt->IF '(' test ')' stmt ELSE stmt");
 }
@@ -257,7 +260,7 @@ or_list: or_list LOGICAL_OR and_expr{
 	REDUCE("or_list->or_list LOGICAL_OR and_expr");
 }
 | or_list '|' and_expr{
-	REDUCE("or_list-> or_list '|' and_expr");
+	REDUCE("or_list->or_list '|' and_expr");
 }
 | and_expr{
 	REDUCE("or_list->and_expr");

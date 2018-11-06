@@ -799,7 +799,7 @@ YY_RULE_SETUP
 #line 38 "subc.l"
 { 
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**ASSIGNOP : %s\n", yylval);
+//	if(DEBUG) printf("**ASSIGNOP : %s\n", yylval);
 	return ASSIGNOP;}
 	YY_BREAK
 case 2:
@@ -807,7 +807,7 @@ YY_RULE_SETUP
 #line 43 "subc.l"
 {
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**LOGICAL_OR : %s\n", yylval);
+//	if(DEBUG) printf("**LOGICAL_OR : %s\n", yylval);
 	return LOGICAL_OR;}
 	YY_BREAK
 case 3:
@@ -815,7 +815,7 @@ YY_RULE_SETUP
 #line 48 "subc.l"
 {
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**LOGICAL_AND : %s\n", yylval);
+//	if(DEBUG) printf("**LOGICAL_AND : %s\n", yylval);
 	return LOGICAL_AND;}
 	YY_BREAK
 case 4:
@@ -823,7 +823,7 @@ YY_RULE_SETUP
 #line 53 "subc.l"
 { 
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**RELOP : %s\n", yylval);
+//	if(DEBUG) printf("**RELOP : %s\n", yylval);
 	return RELOP;}
 	YY_BREAK
 case 5:
@@ -831,7 +831,7 @@ YY_RULE_SETUP
 #line 58 "subc.l"
 {
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**EQUOP : %s\n", yylval);
+//	if(DEBUG) printf("**EQUOP : %s\n", yylval);
 	return EQUOP;}
 	YY_BREAK
 case 6:
@@ -839,7 +839,7 @@ YY_RULE_SETUP
 #line 63 "subc.l"
 {
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**PLUS_PLUS : %s\n", yylval);
+//	if(DEBUG) printf("**PLUS_PLUS : %s\n", yylval);
 	return PLUS_PLUS;}
 	YY_BREAK
 case 7:
@@ -847,7 +847,7 @@ YY_RULE_SETUP
 #line 68 "subc.l"
 {
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**MINUS_MINUS : %s\n", yylval);
+//	if(DEBUG) printf("**MINUS_MINUS : %s\n", yylval);
 	return MINUS_MINUS;}
 	YY_BREAK
 case 8:
@@ -855,7 +855,7 @@ YY_RULE_SETUP
 #line 73 "subc.l"
 {
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**STRUCT_OP : %s\n", yylval);
+//	if(DEBUG) printf("**STRUCT_OP : %s\n", yylval);
 	return STRUCTOP;}
 	YY_BREAK
 case 9:
@@ -865,124 +865,123 @@ YY_RULE_SETUP
 	/* includes keywords */
 	struct id *entered  = enter(ID, yytext, yyleng);
 	yylval.stringVal = entered->name;
-	if(DEBUG) printf("**ID : %s, %d\n", entered->name, entered->lextype);
 	return entered->lextype;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 85 "subc.l"
+#line 84 "subc.l"
 {
 	yylval.intVal = atoi(yytext);
-	if(DEBUG) printf("**INTEGER : %d\n", yylval);
+//	if(DEBUG) printf("**INTEGER : %d\n", yylval);
 	return INTEGER_CONST;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 90 "subc.l"
+#line 89 "subc.l"
 {
 	/* String Variable */
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**STRING : %s\n", yylval);
+//	if(DEBUG) printf("**STRING : %s\n", yylval);
 	return STRING;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 96 "subc.l"
+#line 95 "subc.l"
 {
 	/* Character Variable */
 	yylval.stringVal = yytext;
-	if(DEBUG) printf("**CHAR : %s\n", yylval);
+//	if(DEBUG) printf("**CHAR : %s\n", yylval);
 	return CHAR_CONST;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 102 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : ,\n"); return ','; }
+#line 101 "subc.l"
+{ return ','; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 103 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : !\n"); return '!'; }
+#line 102 "subc.l"
+{ return '!'; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 104 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : +\n"); return '+'; }
+#line 103 "subc.l"
+{ return '+'; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 105 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : -\n"); return '-'; }
+#line 104 "subc.l"
+{ return '-'; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 106 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : *\n"); return '*'; }
+#line 105 "subc.l"
+{ return '*'; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 107 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : /\n"); return '/'; }
+#line 106 "subc.l"
+{ return '/'; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 108 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : %\n"); return '%'; }
+#line 107 "subc.l"
+{ return '%'; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 109 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : &\n"); return '&'; }
+#line 108 "subc.l"
+{ return '&'; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 110 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : |\n"); return '|'; }
+#line 109 "subc.l"
+{ return '|'; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 111 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : =\n"); return '='; }
+#line 110 "subc.l"
+{ return '='; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 112 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : (\n"); return '('; }
+#line 111 "subc.l"
+{ return '('; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 113 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : )\n"); return ')'; }
+#line 112 "subc.l"
+{ return ')'; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 114 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : {\n"); return '{'; }
+#line 113 "subc.l"
+{ return '{'; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 115 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : }\n"); return '}'; }
+#line 114 "subc.l"
+{ return '}'; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 116 "subc.l"
-{ if(DEBUG) printf("**OPERATOR : ;\n"); return yytext[0]; }
+#line 115 "subc.l"
+{ return yytext[0]; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 118 "subc.l"
+#line 117 "subc.l"
 
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 120 "subc.l"
+#line 119 "subc.l"
 ++lineno;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 122 "subc.l"
+#line 121 "subc.l"
 {
 		   ++comment_depth;
 		   BEGIN (COMMENT);
@@ -990,20 +989,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 126 "subc.l"
+#line 125 "subc.l"
 if(--comment_depth == 0) BEGIN (INITIAL);
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 127 "subc.l"
+#line 126 "subc.l"
 {}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 130 "subc.l"
+#line 129 "subc.l"
 ECHO;
 	YY_BREAK
-#line 1007 "lex.yy.c"
+#line 1006 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -2005,7 +2004,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 130 "subc.l"
+#line 129 "subc.l"
 
 
 
