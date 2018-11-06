@@ -29,11 +29,10 @@ void 	REDUCE(char* s);
 %left 	RELOP
 %left 	'+' '-'
 %left 	'*' '/' '%'
-%right 	UMINUS UPOINTER UADDR
-%right	'!' PLUS_PLUS MINUS_MINUS
+%right 	'!' PLUS_PLUS MINUS_MINUS UMINUS UPOINTER UADDR
 %left 	STRUCTOP
 %left 	'[' ']' '(' ')'
-%nonassoc IFX
+%nonassoc IFONLY
 %nonassoc ELSE
 
 /* Token and Types */
@@ -176,7 +175,7 @@ stmt_list:	stmt_list stmt
 }		
 | /* empty */{
 	REDUCE("stmt_list->epsilon");
-}
+};
 
 stmt: expr ';'
 {
@@ -198,7 +197,7 @@ stmt: expr ';'
 {
 	REDUCE("stmt->';'");
 }
-| IF '(' test ')' stmt %prec IFX
+| IF '(' test ')' stmt %prec IFONLY
 {
 	REDUCE("stmt->IF '(' test ')' stmt");
 }

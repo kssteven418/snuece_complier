@@ -22,7 +22,7 @@ assignop \+=|\-=|\*=|\/=|\%=
 logical_or \|\|
 logical_and &&
 relop <|<=|>|>=
-equop ==|!=s
+equop ==|!=
 plus_plus \+\+
 minus_minus \-\-
 structop \.
@@ -37,42 +37,34 @@ special-char	\\[nt]
 
 {assignop} { 
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**ASSIGNOP : %s\n", yylval);
 	return ASSIGNOP;}
 
 {logical_or} {
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**LOGICAL_OR : %s\n", yylval);
 	return LOGICAL_OR;}
 
 {logical_and} {
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**LOGICAL_AND : %s\n", yylval);
 	return LOGICAL_AND;}
 
 {relop} { 
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**RELOP : %s\n", yylval);
 	return RELOP;}
 
 {equop} {
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**EQUOP : %s\n", yylval);
 	return EQUOP;}
 
 {plus_plus} {
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**PLUS_PLUS : %s\n", yylval);
 	return PLUS_PLUS;}
 
 {minus_minus} {
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**MINUS_MINUS : %s\n", yylval);
 	return MINUS_MINUS;}
 
 {structop} {
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**STRUCT_OP : %s\n", yylval);
 	return STRUCTOP;}
 
 {id} {
@@ -83,19 +75,16 @@ special-char	\\[nt]
 
 {integer_const}	{
 	yylval.intVal = atoi(yytext);
-//	if(DEBUG) printf("**INTEGER : %d\n", yylval);
 	return INTEGER_CONST;}
 
 \"({special-char}|[^\\\"\n])*\"	{
 	/* String Variable */
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**STRING : %s\n", yylval);
 	return STRING;}
 
 '({special-char}|[^\\'\n])'	{
 	/* Character Variable */
 	yylval.stringVal = yytext;
-//	if(DEBUG) printf("**CHAR : %s\n", yylval);
 	return CHAR_CONST;}
 
 ","		{ return ','; }
@@ -112,6 +101,8 @@ special-char	\\[nt]
 ")" 	{ return ')'; }
 "{" 	{ return '{'; }
 "}" 	{ return '}'; }
+"["		{ return '['; }
+"]"		{ return ']'; }
 ";"		{ return yytext[0]; }
 
 {white-space}

@@ -1,8 +1,8 @@
 int main(){
-
-	int a ;
+	int a[3];
 	int b;
 	int x;
-
-	x = b + a--;
+	break;
+	x = b & a * *b[3] / c * f+ d;
+	x = !&*a[3];
 }
