@@ -11,10 +11,10 @@
 #include <strings.h>
 
 /* structure for ID */
-struct id {
+typedef struct id {
       char *name;
       int lextype;
-};
+} id;
 
 /* For hash table */
 unsigned hash(char *name);

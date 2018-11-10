@@ -33,7 +33,7 @@ relop <|<=|>|>=
 equop ==|!=
 incop \+\+
 decop \-\-
-structop "->"
+structop \->
 
 white-space		[ \t]+
 special-char	\\[nt]
@@ -82,25 +82,25 @@ special-char	\\[nt]
 {structop} {
 	return STRUCTOP;}
 
-","		{ return ','; }
-"="		{ return '='; }
+","		{  return ','; }
+"="		{  return '='; }
 
-"&"		{ return '&'; }
-"+"		{ return '+'; }
-"-"		{ return '-'; }
-"*"		{ return '*'; }
+"&"		{  return '&'; }
+"+"		{  return '+'; }
+"-"		{  return '-'; }
+"*"		{  return '*'; }
 
-"!"		{ return '!'; }
+"!"		{  return '!'; }
 
-"(" 	{ return '('; }
-")" 	{ return ')'; }
-"["		{ return '['; }
-"]"		{ return ']'; }
-"."		{ return '.'; }
+"(" 	{  return '('; }
+")" 	{  return ')'; }
+"["		{  return '['; }
+"]"		{  return ']'; }
+"."		{  return '.'; }
 
-"{" 	{ return '{'; }
-"}" 	{ return '}'; }
-";"		{ return yytext[0]; }
+"{" 	{  return '{'; }
+"}" 	{  return '}'; }
+";"		{  return yytext[0]; }
 
 {white-space}
 <*>\n		   ++lineno;

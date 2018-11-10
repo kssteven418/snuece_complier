@@ -43,14 +43,17 @@ void 	REDUCE(char* s);
 %token<intVal>		INTEGER_CONST
 
 %%
-program: ext_def_list { 
+program: ext_def_list 
+{ 
 	REDUCE("program->ext_def_list");
 } ;
 
-ext_def_list: ext_def_list ext_def	{
+ext_def_list: ext_def_list ext_def	
+{
 	REDUCE("ext_def_list->ext_def_list ext_def");
 }	
-| /* empty */ {
+| /* empty */ 
+{
     REDUCE("ext_def_list->epsilon");
 } ;
 
@@ -82,17 +85,21 @@ opt_specifier: type_specifier{
 	REDUCE("opt_specifier->epsilon");
 };
 
-type_specifier:	TYPE{
+type_specifier:	TYPE
+{
 	REDUCE("type_specifier->TYPE");
 }
-| struct_specifier {
+| struct_specifier 
+{
 	REDUCE("type_specifier->struct_specifier");
 };
 
-struct_specifier: STRUCT opt_tag '{' def_list '}'{
+struct_specifier: STRUCT opt_tag '{' def_list '}'
+{
 	REDUCE("struct_specifier->STRUCT opt_tag '{' def_list '}'");
 }	
-| STRUCT ID {
+| STRUCT ID 
+{
 	REDUCE("struct_specifier->STRUCT ID");
 };
 
@@ -116,7 +123,8 @@ var_decl: ID{
 	REDUCE("var_decl->'*' ID");
 };
 
-funct_decl:	ID '(' ')'{
+funct_decl:	ID '(' ')'
+{
 	REDUCE("funct_decl->ID '(' ')'");
 }
 | ID '(' var_list ')'{
@@ -283,25 +291,32 @@ binary:	binary RELOP binary
 {
 	REDUCE("binary->binary RELOP binary");
 }
-| binary EQUOP binary{
+| binary EQUOP binary
+{
 	REDUCE("binary->binary EQUOP binary");
 }
-| binary '*' binary{
+| binary '*' binary
+{
 	REDUCE("binary->binary '*' binary");
 }
-| binary '/' binary{
+| binary '/' binary
+{
 	REDUCE("binary->binary '/' binary");
 }
-| binary '%' binary{
+| binary '%' binary
+{
 	REDUCE("binary->binary '\%' binary");
 }
-| binary '+' binary{
+| binary '+' binary
+{
 	REDUCE("binary->binary '+' binary");
 }
-| binary '-' binary{
+| binary '-' binary
+{
 	REDUCE("binary->binary '-' binary");
 }
-| unary{
+| unary
+{
 	REDUCE("binary->unary");
 };
 
