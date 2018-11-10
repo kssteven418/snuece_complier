@@ -43,42 +43,54 @@ special-char	\\[nt]
 %%
 
 {id}	{
+	// printf("LEX %s\n", yytext); 
+	// printf("%s %d", yytext, yyleng);
 	yylval.idptr = enter(ID, yytext, yyleng);
 	return (yylval.idptr)->lextype; }
 
 {integer_const}	{
+	// printf("LEX %s\n", yytext); 
 	yylval.intVal = atoi(yytext);
 	return INTEGER_CONST; }
 
 \"({special-char}|[^\\\"\n])*\"	{
 	/* String Variable */
+	// printf("LEX %s\n", yytext); 
 	yylval.stringVal = yytext;
 	return STRING; }
 
 '({special-char}|[^\\'\n])'	{
 	/* Character Variable */
+	// printf("LEX %s\n", yytext); 
 	yylval.stringVal = yytext;
 	return CHAR_CONST; }
 
 {logical_or} {
+	// printf("LEX %s\n", yytext); 
 	return LOGICAL_OR;}
 
 {logical_and} {
+	// printf("LEX %s\n", yytext); 
 	return LOGICAL_AND;}
 
 {relop} { 
+	// printf("LEX %s\n", yytext); 
 	return RELOP;}
 
 {equop} {
+	// printf("LEX %s\n", yytext); 
 	return EQUOP;}
 
 {incop} {
+	// printf("LEX %s\n", yytext); 
 	return INCOP;}
 
 {decop} {
+	// printf("LEX %s\n", yytext); 
 	return DECOP;}
 
 {structop} {
+	// printf("LEX %s\n", yytext); 
 	return STRUCTOP;}
 
 ","		{  return ','; }
@@ -119,6 +131,20 @@ int read_line()
    return lineno;
 }
    
+// insert type declaration at the symbol table bottom
+// p.27
+void init_type(){
+	decl* voidtype = maketypedecl(_VOID);
+	decl* inttype = maketypedecl(_INT);
+	decl* chartype = maketypedecl(_CHAR);
+	decl* stringtype = maketypedecl(_STRING);
+
+	declare(enter(ID, "void", 4), voidtype); 
+	declare(enter(ID, "int", 3), inttype); 
+	declare(enter(ID, "char", 4), chartype); 
+	declare(enter(ID, "string", 6), stringtype); 
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -131,12 +157,18 @@ int main(int argc, char* argv[])
 	temp->prev = NULL;
 	temp->decl = NULL;
 	sstop->top = temp; 
-
+	
+	// insert keywords in the hash table
    static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue",  NULL };
    static int tokentype[] = { TYPE, TYPE, VOID, STRUCT, RETURN, IF, ELSE, WHILE, FOR, BREAK, CONTINUE, 0 };
    int i;
    for(i = 0; keyword[i] != NULL; i++)
       enter(tokentype[i], keyword[i], strlen(keyword[i]));
+
+   // init types
+   init_type();
+	debugst();
+
 
    if(argc >= 2) yyin = fopen(argv[1], "r");
    else yyin = stdin;

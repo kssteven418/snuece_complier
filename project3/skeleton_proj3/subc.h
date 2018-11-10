@@ -17,10 +17,13 @@
 #define _TYPE 3
 
 // type classes
-#define _INT 0
-#define _ARRAY 1
-#define _STRUCT 2
-#define _POINTER 3
+#define _VOID 0
+#define _INT 1
+#define _CHAR 2
+#define _STRING 3
+#define _ARRAY 4
+#define _STRUCT 5
+#define _POINTER 6
 
 /* structure for ID */
 typedef struct id {
@@ -79,6 +82,20 @@ struct id *enter(int lextype, char *name, int length);
 struct id *lookup(char *name);
 
 int read_line();
+
+
+/* functions */
+/* defined in functions.c */
+
+void push_scope();
+void pop_scope();
+void declare(id* name, decl* decl);
+
+decl* maketypedecl(int type);
+void makeconstdecl();
+void makevardecl();
+
+void debugst();
 
 #endif
 
