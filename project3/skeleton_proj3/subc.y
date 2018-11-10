@@ -11,12 +11,14 @@ int    yylex ();
 int    yyerror (char* s);
 void 	REDUCE(char* s);
 
+
 %}
 
 /* yylval types */
 %union {
 	int		intVal;
 	char	*stringVal;
+	id		*idptr;
 }
 
 /* Precedences and Associativities */
@@ -36,10 +38,11 @@ void 	REDUCE(char* s);
 %nonassoc ELSE
 
 /* Token and Types */
-%token<stringVal> TYPE STRUCT 
-%token<stringVal> RETURN IF ELSE WHILE FOR BREAK CONTINUE 
+%token<idptr> ID
+%token<idptr> TYPE VOID STRUCT 
+%token<idptr> RETURN IF ELSE WHILE FOR BREAK CONTINUE 
 %token<stringVal> LOGICAL_OR LOGICAL_AND INCOP DECOP STRUCTOP 
-%token<stringVal> VOID STRING CHAR_CONST ID INTEGER_CONST
+%token<stringVal> STRING CHAR_CONST INTEGER_CONST
 
 %%
     

@@ -10,11 +10,68 @@
 #include <stdio.h>
 #include <strings.h>
 
+// decl classes
+#define _VAR 0
+#define _CONST 1
+#define _FUNC 2
+#define _TYPE 3
+
+// type classes
+#define _INT 0
+#define _ARRAY 1
+#define _STRUCT 2
+#define _POINTER 3
+
 /* structure for ID */
 typedef struct id {
       char *name;
       int lextype;
 } id;
+
+typedef struct ste{
+	struct id *name;
+	struct decl *decl;
+	struct ste *prev;
+} ste;
+
+typedef struct decl{
+	/* ALL */
+	int declclass;
+	
+	/* VAR, CONST */
+	struct decl *type;
+	
+	/* CONST */
+	int value;
+	
+	/* FUNC */
+	struct ste *formals; // arguments
+	struct decl *returntype; 
+	
+	/* TYPE */
+	int typeclass;
+	struct decl *elementvar; // ARRAY, pointer to VAR decl
+	int num_index;  // ARRAY, # of elements
+	struct ste *fieldlist; // STRUCT, pointer to field list
+	struct decl *ptrto; // POINTER, type of the pointer
+	
+	/* ALL */
+	int size; // size in byte
+
+	/* VAR */
+	struct ste **scope; // scope when VAR declared
+
+	struct decl* next;
+} decl;
+
+//scope stack element
+typedef struct scope_stack{
+	struct scope_stack *prev; // for pop operation
+	struct ste *top; // top of the ste
+} scope_stack;
+
+scope_stack *sstop;
+
 
 /* For hash table */
 unsigned hash(char *name);

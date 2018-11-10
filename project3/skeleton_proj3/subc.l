@@ -43,9 +43,8 @@ special-char	\\[nt]
 %%
 
 {id}	{
-	struct id *entered  = enter(ID, yytext, yyleng);
-	yylval.stringVal = entered->name;
-	return entered->lextype; }
+	yylval.idptr = enter(ID, yytext, yyleng);
+	return (yylval.idptr)->lextype; }
 
 {integer_const}	{
 	yylval.intVal = atoi(yytext);
@@ -122,6 +121,17 @@ int read_line()
    
 int main(int argc, char* argv[])
 {
+
+	// initialize scope stack
+	// dummy scope_stack at the bottom
+	sstop = (scope_stack*)malloc(sizeof(scope_stack)); 
+	sstop->prev = NULL;
+	// dummy ste at the bottom
+	ste *temp = (ste*)malloc(sizeof(ste));
+	temp->prev = NULL;
+	temp->decl = NULL;
+	sstop->top = temp; 
+
    static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue",  NULL };
    static int tokentype[] = { TYPE, TYPE, VOID, STRUCT, RETURN, IF, ELSE, WHILE, FOR, BREAK, CONTINUE, 0 };
    int i;
