@@ -11,19 +11,17 @@ int    yylex ();
 int    yyerror (char* s);
 void 	REDUCE(char* s);
 
-int		check_is_declared(id* name);
 
 %}
 
 /* yylval types */
 %union {
 	int		intVal;
+	char	charVal;
 	char	*stringVal;
 	id		*idptr;
 
 	decl	*declptr;
-	
-	int		boolean;
 }
 
 /* Precedences and Associativities */
@@ -44,13 +42,18 @@ int		check_is_declared(id* name);
 
 /* Token and Types */
 
+%type<intVal> pointers
 %type<declptr> type_specifier
-%type<boolean> pointers
+%type<declptr> const_expr expr or_expr or_list and_expr and_list
+%type<declptr> binary unary
+
 %token<idptr> ID
 %token<idptr> TYPE VOID STRUCT 
 %token<idptr> RETURN IF ELSE WHILE FOR BREAK CONTINUE 
 %token<stringVal> LOGICAL_OR LOGICAL_AND INCOP DECOP STRUCTOP 
-%token<stringVal> STRING CHAR_CONST INTEGER_CONST
+%token<stringVal> STRING 
+%token<charVal> CHAR_CONST 
+%token<intVal> INTEGER_CONST
 
 %%
     
@@ -142,7 +145,26 @@ def
 					
 		}
 
-		| type_specifier pointers ID '[' const_expr ']' ';'
+		| type_specifier pointers ID '[' const_expr ']' ';'{
+			int is_ptr = $2;
+
+			// if redeclared
+			if(check_is_declared($3)){
+				raise("redeclared");
+			}
+			else{
+				decl* var_decl = NULL;
+				if(is_ptr){
+					var_decl = makeptrdecl($1);
+				}
+				else{
+					var_decl = makevardecl($1);
+				}
+				decl* temp = makearraydecl($5->int_value, var_decl);
+				declare($3, temp);
+			}
+			
+		}
 		| type_specifier ';'
 		| func_decl ';'
 ;
@@ -214,14 +236,52 @@ binary
 		| unary %prec '='
 
 unary
-		: '(' expr ')'
+		: '(' expr ')'{
+			$$ = $2;
+		}
+		| '(' unary ')'{
+			$$ = $2;
+		}
+		| INTEGER_CONST{
+			ste* temp = find(lookup("int")); 
+			decl* const_decl = makeconstdecl(temp->decl);
+			const_decl->int_value = $1;
+			$$ = const_decl;
+		}
+		| CHAR_CONST{
+			ste* temp = find(lookup("char"));
+			decl* const_decl = makeconstdecl(temp->decl);
+			const_decl->char_value = $1;
+			$$ = const_decl;
+		}
+		| STRING{
+			//TODO
+		}
+		| ID{
+			id* name = $1;	
+			ste* id_ste = find_current_scope(name);
+			if(id_ste==NULL){
+				//use without definition
+				$$ = raise("not declared");
+			}
+			else{
+				$$ = copy(id_ste->decl);
+			}
+		
+		}
+		| '-' unary	%prec '!'{
+			if($2 == NULL) $$ = NULL;
+			else{
+				if(!check_type_compat($2->type, inttype)){
+					// unary is not INT type
+					$$ = raise("not int type");
+				}
+				else{
+					$$->int_value = -($$->int_value);
 
-		| '(' unary ')' 
-		| INTEGER_CONST
-		| CHAR_CONST
-		| STRING
-		| ID
-		| '-' unary	%prec '!'
+				}
+			}
+		}
 		| '!' unary
 		| unary INCOP
 		| unary DECOP
@@ -263,4 +323,8 @@ int check_is_declared(id* name){
 	ste* temp = find_current_scope(name);
 	if (temp==NULL) return 0;
 	else return 1;
+}
+
+int check_type_compat(decl* x, decl* y){
+	return x==y;
 }

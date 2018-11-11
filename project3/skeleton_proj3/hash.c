@@ -31,6 +31,15 @@ int strCompare(char* x, int length, char* y){
 	
 }
 
+int strCompare_no_len(char* x, char* y){
+	int i = 0;
+	while(1){
+		if(x[i] != y[i]) return 0;
+		if(x[i] == '\0') return 1;
+		i += 1;
+	}
+}
+
 static nlist *hashTable[HASH_TABLE_SIZE]; // initially NULL
 
 id *enter(int tokenType, char *name, int length) {
@@ -118,5 +127,18 @@ id *enter(int tokenType, char *name, int length) {
 
 struct id *lookup(char *name) {
    /* implementation is given here */
+	for(int i=0; i<HASH_TABLE_SIZE; i++){
+		if(hashTable[i]!=NULL){
+			nlist* iter = hashTable[i];
+
+			while(1){
+				if(strCompare_no_len(name, iter->data->name)) 
+					return iter->data;
+				if(iter->next == NULL) 
+					break;
+				iter = iter->next;	
+			}
+		}
+	}
 }
 

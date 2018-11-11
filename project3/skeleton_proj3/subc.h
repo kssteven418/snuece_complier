@@ -45,7 +45,8 @@ typedef struct decl{
 	struct decl *type;
 	
 	/* CONST */
-	int value;
+	int int_value;
+	char char_value;
 	
 	/* FUNC */
 	struct ste *formals; // arguments
@@ -74,7 +75,9 @@ typedef struct scope_stack{
 } scope_stack;
 
 scope_stack *sstop;
-
+decl *voidtype;
+decl *inttype;
+decl *chartype;
 
 /* For hash table */
 unsigned hash(char *name);
@@ -89,7 +92,8 @@ int read_line();
 /* functions */
 /* defined in functions.c */
 
-void raise(char* errormsg);
+void* raise(char* errormsg);
+decl* copy(decl* org);
 
 void push_scope();
 ste* pop_scope();
@@ -99,10 +103,16 @@ ste* find_current_scope(id* name);
 
 decl* maketypedecl(int type);
 decl* makevardecl(decl* type_decl);
+decl* makeconstdecl(decl* type_decl);
 decl* makeptrdecl(decl* type_decl);
 decl* makearraydecl(int size, decl* var_decl);
 
 void debugst(ste* st);
+
+/* functions in subc.y */
+
+int	check_is_declared(id* name);
+int check_type_compat(decl* x, decl* y);
 
 #endif
 

@@ -1,0 +1,74 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CC	Makefile	/^CC = gcc$/;"	m
+COMPILE_OPTION	Makefile	/^COMPILE_OPTION = -g$/;"	m
+HASH_TABLE_SIZE	hash.c	12;"	d	file:
+LEX	Makefile	/^LEX = flex$/;"	m
+LINK_OPTION	Makefile	/^LINK_OPTION = -lfl$/;"	m
+YACC	Makefile	/^YACC = bison$/;"	m
+YACC_OPTION	Makefile	/^YACC_OPTION = -vd$/;"	m
+_ARRAY	subc.h	24;"	d
+_CHAR	subc.h	22;"	d
+_CONST	subc.h	15;"	d
+_FUNC	subc.h	16;"	d
+_INT	subc.h	21;"	d
+_POINTER	subc.h	26;"	d
+_STRING	subc.h	23;"	d
+_STRUCT	subc.h	25;"	d
+_TYPE	subc.h	17;"	d
+_VAR	subc.h	14;"	d
+_VOID	subc.h	20;"	d
+__SUBC_H__	subc.h	8;"	d
+data	hash.c	/^	id *data;$/;"	m	struct:nlist	file:
+debugst	functions.c	/^void debugst(ste* st){$/;"	f
+decl	subc.h	/^	struct decl *decl;$/;"	m	struct:ste	typeref:struct:ste::decl
+decl	subc.h	/^typedef struct decl{$/;"	s
+decl	subc.h	/^} decl;$/;"	t	typeref:struct:decl
+declare	functions.c	/^void declare(id* name, decl* decl){$/;"	f
+declclass	subc.h	/^	int declclass;$/;"	m	struct:decl
+elementvar	subc.h	/^	struct decl *elementvar; \/\/ ARRAY, pointer to VAR decl$/;"	m	struct:decl	typeref:struct:decl::decl
+enter	hash.c	/^id *enter(int tokenType, char *name, int length) {$/;"	f
+fieldlist	subc.h	/^	struct ste *fieldlist; \/\/ STRUCT, pointer to field list$/;"	m	struct:decl	typeref:struct:decl::ste
+filename	subc.h	/^char *filename;$/;"	v
+find	functions.c	/^ste* find(id* name){$/;"	f
+find_current_scope	functions.c	/^ste* find_current_scope(id* name){$/;"	f
+formals	subc.h	/^	struct ste *formals; \/\/ arguments$/;"	m	struct:decl	typeref:struct:decl::ste
+hashTable	hash.c	/^static nlist *hashTable[HASH_TABLE_SIZE]; \/\/ initially NULL$/;"	v	file:
+id	subc.h	/^typedef struct id {$/;"	s
+id	subc.h	/^} id;$/;"	t	typeref:struct:id
+lextype	subc.h	/^      int lextype;$/;"	m	struct:id
+lookup	hash.c	/^struct id *lookup(char *name) {$/;"	f
+makearraydecl	functions.c	/^decl* makearraydecl(int size, decl* var_decl){$/;"	f
+makeptrdecl	functions.c	/^decl* makeptrdecl(decl* type_decl){$/;"	f
+maketypedecl	functions.c	/^decl* maketypedecl(int type){$/;"	f
+makevardecl	functions.c	/^decl* makevardecl(decl* type_decl){$/;"	f
+name	subc.h	/^	struct id *name;$/;"	m	struct:ste	typeref:struct:ste::id
+name	subc.h	/^      char *name;$/;"	m	struct:id
+next	hash.c	/^	struct nlist *next;$/;"	m	struct:nlist	typeref:struct:nlist::nlist	file:
+next	subc.h	/^	struct decl* next;$/;"	m	struct:decl	typeref:struct:decl::decl
+nlist	hash.c	/^typedef struct nlist {$/;"	s	file:
+nlist	hash.c	/^} nlist;$/;"	t	typeref:struct:nlist	file:
+num_index	subc.h	/^	int num_index;  \/\/ ARRAY, # of elements$/;"	m	struct:decl
+pop_scope	functions.c	/^ste* pop_scope(){$/;"	f
+prev	subc.h	/^	struct scope_stack *prev; \/\/ for pop operation$/;"	m	struct:scope_stack	typeref:struct:scope_stack::scope_stack
+prev	subc.h	/^	struct ste *prev;$/;"	m	struct:ste	typeref:struct:ste::ste
+ptrto	subc.h	/^	struct decl *ptrto; \/\/ POINTER, type of the pointer$/;"	m	struct:decl	typeref:struct:decl::decl
+push_scope	functions.c	/^void push_scope(){$/;"	f
+raise	functions.c	/^void raise(char* errormsg){$/;"	f
+returntype	subc.h	/^	struct decl *returntype; $/;"	m	struct:decl	typeref:struct:decl::decl
+scope	subc.h	/^	struct ste **scope; \/\/ scope when VAR declared$/;"	m	struct:decl	typeref:struct:decl::ste
+scope_stack	subc.h	/^typedef struct scope_stack{$/;"	s
+scope_stack	subc.h	/^} scope_stack;$/;"	t	typeref:struct:scope_stack
+size	subc.h	/^	int size; \/\/ size in byte$/;"	m	struct:decl
+sstop	subc.h	/^scope_stack *sstop;$/;"	v
+ste	subc.h	/^typedef struct ste{$/;"	s
+ste	subc.h	/^} ste;$/;"	t	typeref:struct:ste
+strCompare	hash.c	/^int strCompare(char* x, int length, char* y){$/;"	f
+top	subc.h	/^	struct ste *top; \/\/ top of the ste$/;"	m	struct:scope_stack	typeref:struct:scope_stack::ste
+type	subc.h	/^	struct decl *type;$/;"	m	struct:decl	typeref:struct:decl::decl
+typeclass	subc.h	/^	int typeclass;$/;"	m	struct:decl
+value	subc.h	/^	int value;$/;"	m	struct:decl

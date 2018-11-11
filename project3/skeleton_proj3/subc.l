@@ -62,7 +62,7 @@ special-char	\\[nt]
 '({special-char}|[^\\'\n])'	{
 	/* Character Variable */
 	// printf("LEX %s\n", yytext); 
-	yylval.stringVal = yytext;
+	yylval.charVal = yytext[0];
 	return CHAR_CONST; }
 
 {logical_or} {
@@ -134,15 +134,13 @@ int read_line()
 // insert type declaration at the symbol table bottom
 // p.27
 void init_type(){
-	decl* voidtype = maketypedecl(_VOID);
-	decl* inttype = maketypedecl(_INT);
-	decl* chartype = maketypedecl(_CHAR);
-	decl* stringtype = maketypedecl(_STRING);
+	voidtype = maketypedecl(_VOID);
+	inttype = maketypedecl(_INT);
+	chartype = maketypedecl(_CHAR);
 
 	declare(enter(ID, "void", 4), voidtype); 
 	declare(enter(ID, "int", 3), inttype); 
 	declare(enter(ID, "char", 4), chartype); 
-	declare(enter(ID, "string", 6), stringtype); 
 }
 
 int main(int argc, char* argv[])
@@ -205,7 +203,7 @@ int main(int argc, char* argv[])
 	declare(enter(ID, "hello2", 6), NULL);	
 	debugst(sstop->top);
 
-	name = enter(ID, "void", 4);
+	name = lookup("void");
 	s = find_current_scope(name);
 	if(s!=NULL)
 		printf("%s\n", s->name->name);
@@ -218,7 +216,7 @@ int main(int argc, char* argv[])
 	else
 		printf("NULL\n");
 
-	name = enter(ID, "hello", 5);
+	name = lookup("hello");
 	s = find_current_scope(name);
 	if(s!=NULL)
 		printf("%s\n", s->name->name);
@@ -237,7 +235,7 @@ int main(int argc, char* argv[])
 	debugst(sstop->top);
 	debugst(sttemp);
 
-	name = enter(ID, "void", 4);
+	name = lookup("void");
 	s = find_current_scope(name);
 	if(s!=NULL)
 		printf("%s\n", s->name->name);
@@ -250,7 +248,20 @@ int main(int argc, char* argv[])
 	else
 		printf("NULL\n");
 
-	name = enter(ID, "hello", 5);
+	name = lookup("hello");
+	s = find_current_scope(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	s = find(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+	
+	name = lookup("char");
 	s = find_current_scope(name);
 	if(s!=NULL)
 		printf("%s\n", s->name->name);

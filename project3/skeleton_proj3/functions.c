@@ -1,9 +1,16 @@
 
 #include "subc.h"
 #include <stdlib.h>
+#include <string.h> 
 
-void raise(char* errormsg){
+void* raise(char* errormsg){
 	printf("%s:%d: error:%s\n", filename, read_line(), errormsg);
+	return NULL;
+}
+decl* copy(decl* org){
+	decl* copy = (decl*)malloc(sizeof(decl));
+	memcpy(copy, org, sizeof(decl));
+	return copy;
 }
 
 //push scope at the scope stack
@@ -97,6 +104,13 @@ decl* makevardecl(decl* type_decl){
 	temp->type = type_decl;
 	return temp;
 
+}
+
+decl* makeconstdecl(decl* type_decl){
+	decl* temp = (decl*)malloc(sizeof(decl));
+	temp->declclass = _CONST;
+	temp->type = type_decl;
+	return temp;
 }
 
 decl* makeptrdecl(decl* type_decl){
