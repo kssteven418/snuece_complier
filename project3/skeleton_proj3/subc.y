@@ -265,6 +265,7 @@ unary
 				$$ = raise("not declared");
 			}
 			else{
+				// copy declaration : not in the symbol table
 				$$ = copy(id_ste->decl);
 			}
 		
@@ -278,11 +279,21 @@ unary
 				}
 				else{
 					$$->int_value = -($$->int_value);
-
 				}
 			}
 		}
-		| '!' unary
+		| '!' unary{
+			if($2 == NULL) $$ = NULL;
+			else{
+				if(!check_type_compat($2->type, inttype)){
+					// unary is not INT type
+					$$ = raise("not int type");
+				}
+				else{
+					$$->int_value = !($$->int_value);
+				}
+			}
+		}
 		| unary INCOP
 		| unary DECOP
 		| INCOP unary
