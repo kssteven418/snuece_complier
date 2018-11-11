@@ -11,6 +11,7 @@ int    yylex ();
 int    yyerror (char* s);
 void 	REDUCE(char* s);
 
+int		check_is_declared(id* name);
 
 %}
 
@@ -19,6 +20,10 @@ void 	REDUCE(char* s);
 	int		intVal;
 	char	*stringVal;
 	id		*idptr;
+
+	decl	*declptr;
+	
+	int		boolean;
 }
 
 /* Precedences and Associativities */
@@ -38,6 +43,9 @@ void 	REDUCE(char* s);
 %nonassoc ELSE
 
 /* Token and Types */
+
+%type<declptr> type_specifier
+%type<boolean> pointers
 %token<idptr> ID
 %token<idptr> TYPE VOID STRUCT 
 %token<idptr> RETURN IF ELSE WHILE FOR BREAK CONTINUE 
@@ -64,8 +72,16 @@ ext_def
 ; 
 
 type_specifier
-		: TYPE
-		| VOID
+		: TYPE{
+			ste* typeste = find($1);
+			// printf("TYPE %s\n", typeste->name->name);
+			$$ = typeste->decl;
+		}
+		| VOID{
+			ste* typeste = find($1);
+			// printf("VOID %s\n", typeste->name->name);
+			$$ = typeste->decl;
+		}
 		| struct_specifier
 ;
 
@@ -81,8 +97,12 @@ func_decl
 ;
 
 pointers
-		: '*'
-		| /* empty */
+		: '*'{
+			$$ = 1; // true
+		}
+		| /* empty */ {
+			$$ = 0; // false
+		}
 ;
 
 param_list  /* list of formal parameter declaration */
@@ -101,7 +121,27 @@ def_list    /* list of definitions, definition can be type(struct), variable, fu
 ;
 
 def
-		: type_specifier pointers ID ';'
+		: type_specifier pointers ID ';'{
+			int is_ptr = $2; // 0 if not pointer, 1 if pointer
+			
+			// if redeclared
+			if(check_is_declared($3)){
+				raise("redeclared");
+			}
+			else{
+				if(is_ptr){
+					decl* temp = makeptrdecl($1);
+					declare($3, temp);
+				}
+				else{
+					decl* temp = makevardecl($1);
+					declare($3, temp);
+				}
+
+			}
+					
+		}
+
 		| type_specifier pointers ID '[' const_expr ']' ';'
 		| type_specifier ';'
 		| func_decl ';'
@@ -214,4 +254,13 @@ int    yyerror (char* s)
 void 	REDUCE( char* s)
 {
 	printf("%s\n",s);
+}
+
+
+// check functions
+
+int check_is_declared(id* name){
+	ste* temp = find_current_scope(name);
+	if (temp==NULL) return 0;
+	else return 1;
 }

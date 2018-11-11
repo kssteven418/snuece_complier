@@ -81,21 +81,28 @@ unsigned hash(char *name);
 struct id *enter(int lextype, char *name, int length);
 struct id *lookup(char *name);
 
+// file and line info
+char *filename;
 int read_line();
 
 
 /* functions */
 /* defined in functions.c */
 
+void raise(char* errormsg);
+
 void push_scope();
-void pop_scope();
+ste* pop_scope();
 void declare(id* name, decl* decl);
+ste* find(id* name);
+ste* find_current_scope(id* name);
 
 decl* maketypedecl(int type);
-void makeconstdecl();
-void makevardecl();
+decl* makevardecl(decl* type_decl);
+decl* makeptrdecl(decl* type_decl);
+decl* makearraydecl(int size, decl* var_decl);
 
-void debugst();
+void debugst(ste* st);
 
 #endif
 

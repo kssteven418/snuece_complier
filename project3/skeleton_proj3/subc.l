@@ -150,13 +150,17 @@ int main(int argc, char* argv[])
 
 	// initialize scope stack
 	// dummy scope_stack at the bottom
+	scope_stack* dummy = (scope_stack*)malloc(sizeof(scope_stack)); 
+	dummy->prev = NULL;
 	sstop = (scope_stack*)malloc(sizeof(scope_stack)); 
-	sstop->prev = NULL;
+	sstop->prev = dummy;
+
 	// dummy ste at the bottom
 	ste *temp = (ste*)malloc(sizeof(ste));
 	temp->prev = NULL;
 	temp->decl = NULL;
 	sstop->top = temp; 
+	sstop->prev->top = temp;
 	
 	// insert keywords in the hash table
    static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue",  NULL };
@@ -167,11 +171,107 @@ int main(int argc, char* argv[])
 
    // init types
    init_type();
-	debugst();
+	
+   //debug
+   //debugst(sstop->top);
+   ste* s;
+   id* name;
 
+	/*
+	name = enter(ID, "int", 3);
+	s = find_current_scope(name);
+	printf("%s\n", s->name->name);
 
-   if(argc >= 2) yyin = fopen(argv[1], "r");
-   else yyin = stdin;
+	name = enter(ID, "void", 4);
+	s = find_current_scope(name);
+	printf("%s\n", s->name->name);
+
+	name = enter(ID, "string", 6);
+	s = find_current_scope(name);
+	printf("%s\n", s->name->name);
+
+	name = enter(ID, "soid", 4);
+	s = find_current_scope(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+	*/
+
+   /*
+   printf("PUSH\n");
+	push_scope();
+	declare(enter(ID, "hello", 5), NULL);	
+	declare(enter(ID, "hello2", 6), NULL);	
+	debugst(sstop->top);
+
+	name = enter(ID, "void", 4);
+	s = find_current_scope(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	s = find(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	name = enter(ID, "hello", 5);
+	s = find_current_scope(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	s = find(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	ste* sttemp = pop_scope();
+
+   printf("\nPOP\n");
+	debugst(sstop->top);
+	debugst(sttemp);
+
+	name = enter(ID, "void", 4);
+	s = find_current_scope(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	s = find(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	name = enter(ID, "hello", 5);
+	s = find_current_scope(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+
+	s = find(name);
+	if(s!=NULL)
+		printf("%s\n", s->name->name);
+	else
+		printf("NULL\n");
+	*/
+
+   if(argc >= 2) {
+	   yyin = fopen(argv[1], "r");
+	   filename = argv[1];
+   }
+   else {
+	   yyin = stdin;
+	   filename = "stdin";
+   }
    if(!yyin) {
       printf("Can't open input stream!\n");
       exit(1);
