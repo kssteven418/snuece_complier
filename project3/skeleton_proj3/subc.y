@@ -140,7 +140,6 @@ def
 					decl* temp = makevardecl($1);
 					declare($3, temp);
 				}
-
 			}
 					
 		}
@@ -229,11 +228,40 @@ and_list
 ;
 
 binary
-		: binary RELOP binary
-		| binary EQUOP binary
-		| binary '+' binary
-		| binary '-' binary
-		| unary %prec '='
+		: binary RELOP binary{
+			
+		}
+		| binary EQUOP binary{
+			
+		}
+		| binary '+' binary{
+			if(check_add_sub($1, $3, $$)){
+				$$ = copy($1);
+				if(check_is_const($1) && check_is_const($3)){
+					//ASSERT : $$->declclass = _CONST
+					// in case of addition of two integer constants
+					$$->int_value = $1->int_value + $3->int_value;
+				}
+				else{
+					$$->declclass = _EXP;
+				}
+			}
+		}
+		| binary '-' binary{
+				$$ = copy($1);
+				if(check_is_const($1) && check_is_const($3)){
+					//ASSERT : $$->declclass = _CONST
+					// in case of subtraction of two integer constants
+					$$->int_value = $1->int_value + $3->int_value;
+				}
+				else{
+					$$->declclass = _EXP;
+				}
+			
+		}
+		| unary %prec '='{
+			$$ = $1;
+		}
 
 unary
 		: '(' expr ')'{
@@ -242,21 +270,27 @@ unary
 		| '(' unary ')'{
 			$$ = $2;
 		}
+
 		| INTEGER_CONST{
 			ste* temp = find(lookup("int")); 
+			// construct a new constant declaration
 			decl* const_decl = makeconstdecl(temp->decl);
 			const_decl->int_value = $1;
 			$$ = const_decl;
 		}
+
 		| CHAR_CONST{
 			ste* temp = find(lookup("char"));
+			// construct a new constant declaration
 			decl* const_decl = makeconstdecl(temp->decl);
 			const_decl->char_value = $1;
 			$$ = const_decl;
 		}
+
 		| STRING{
 			//TODO
 		}
+
 		| ID{
 			id* name = $1;	
 			ste* id_ste = find_current_scope(name);
@@ -270,34 +304,87 @@ unary
 			}
 		
 		}
+
 		| '-' unary	%prec '!'{
 			if($2 == NULL) $$ = NULL;
+			
+			// unary is not INT type
+			else if(!check_type_compat($2->type, inttype)){
+				$$ = raise("not int type");
+			}
+
+			// unary must be a const or a variable 
+			else if(!check_is_const_var($2)){
+				$$ = raise("not const or variable");
+			}
+			
 			else{
-				if(!check_type_compat($2->type, inttype)){
-					// unary is not INT type
-					$$ = raise("not int type");
-				}
-				else{
+				$$ = $2;
+				if(check_is_const($$)){
+					// in case unary is a constant, value must be computed
 					$$->int_value = -($$->int_value);
 				}
+				else{
+					$$->declclass = _EXP; // integer expression
+				}
 			}
 		}
+
 		| '!' unary{
 			if($2 == NULL) $$ = NULL;
+			
+			// unary must be a INT type
+			else if(!check_type_compat($2->type, inttype)){
+				$$ = raise("not int type");
+			}
+			
+			// unary must be a const or a variable 
+			else if (!check_is_const_var($2)){
+				$$ = raise("not const or variable");
+			}
+			
 			else{
-				if(!check_type_compat($2->type, inttype)){
-					// unary is not INT type
-					$$ = raise("not int type");
+				$$ = $2;
+				if(check_is_const($$)){
+					// in case unary is a constant, value must be computed
+					$$->int_value = !($$->int_value);
 				}
 				else{
-					$$->int_value = !($$->int_value);
+					$$->declclass = _EXP; // integer expression
 				}
 			}
 		}
-		| unary INCOP
-		| unary DECOP
-		| INCOP unary
-		| DECOP unary
+
+		| unary INCOP{
+			/* for INCOP and DECOP, the unary must be a variable */
+			if(check_inc_dec($1, $$)){
+				$$ = $1;
+				$$->declclass = _EXP; // integer/char expression
+			}
+		}
+
+		| unary DECOP{
+			/* for INCOP and DECOP, the unary must be a variable */
+			if(check_inc_dec($1, $$)){
+				$$ = $1;
+				$$->declclass = _EXP; // integer/char expression
+			}
+		}
+		| INCOP unary{
+			/* for INCOP and DECOP, the unary must be a variable */
+			if(check_inc_dec($2, $$)){
+				$$ = $2;
+				$$->declclass = _EXP; // integer/char expression
+			}
+		}
+
+		| DECOP unary{
+			/* for INCOP and DECOP, the unary must be a variable */
+			if(check_inc_dec($2, $$)){
+				$$ = $2;
+				$$->declclass = _EXP; // integer/char expression
+			}
+		}
 		| '&' unary	%prec '!'
 		| '*' unary	%prec '!'
 		| unary '[' expr ']'
@@ -331,11 +418,119 @@ void 	REDUCE( char* s)
 // check functions
 
 int check_is_declared(id* name){
+	if(name==NULL) return 0;
 	ste* temp = find_current_scope(name);
 	if (temp==NULL) return 0;
 	else return 1;
 }
 
 int check_type_compat(decl* x, decl* y){
+	if(x==NULL) return 0;
+	if(y==NULL) return 0;
 	return x==y;
+}
+
+int check_is_var(decl* x){
+	if(x==NULL) return 0;
+	return (x->declclass==_VAR);
+}
+
+int check_is_const(decl* x){
+	if(x==NULL) return 0;
+	return (x->declclass==_CONST);
+}
+
+int check_is_const_var(decl* x){
+	if(x==NULL) return 0;
+	return (x->declclass==_VAR) || (x->declclass==_CONST);
+}
+
+int check_is_pointer(decl* x){
+	if(x==NULL) return 0;
+	decl* type = x->type;
+	if(type==NULL) return 0;
+	return type->typeclass==_POINTER;
+}
+
+
+// for INCOP and DECOP
+int check_inc_dec(decl* src, decl* dest){
+	if(src==NULL){
+			dest = NULL;
+			return 0;
+	}
+	// unary must be a INT or a CHAR
+	else if (!check_type_compat(src->type, inttype)
+					&& !check_type_compat(src->type, chartype)){
+		dest = raise("not int or char type");
+		return 0;
+	}
+	
+	// unary must be a variable
+	else if(!check_is_var(src)){
+		dest = raise("not variable");
+		return 0;
+	}
+	return 1;
+}
+
+// for binary add/sub operations
+int check_add_sub(decl* x, decl* y, decl* dest){
+	if(x==NULL){
+			dest = NULL;
+			return 0;
+	}
+	if(y==NULL){
+			dest = NULL;
+			return 0;
+	}
+
+	// operands(x, y) should be INT
+	if(!check_type_compat(x->type, inttype)){
+		dest = raise("not int type");
+		return 0;
+	}
+	if(!check_type_compat(y->type, inttype)){
+		dest = raise("not int type");
+		return 0;
+	}
+
+	// operands should be computable : should have same types
+	if(!check_type_compat(x->type, y->type)){
+		dest = raise("not computable");
+		return 0;
+	}
+	return 1;
+}
+
+int check_rel_equ(decl* x, decl* y, decl* dest){
+	if(x==NULL){
+			dest = NULL;
+			return 0;
+	}
+	if(y==NULL){
+			dest = NULL;
+			return 0;
+	}
+	// operands(x, y) should be INT, CHAR, or POINTER
+	if(!check_type_compat(x->type, inttype) 
+					&& !check_type_compat(x->type, chartype)
+					&& !check_is_pointer(x)){
+		dest = raise("not int or char type");
+		return 0;
+	}
+	if(!check_type_compat(y->type, inttype) 
+					&& !check_type_compat(y->type, chartype)
+					&& check_is_pointer(y)){
+		dest = raise("not int or char type");
+		return 0;
+	}
+
+	// operands should be computable : should have same types
+	if(!check_type_compat(x->type, y->type)){
+		dest = raise("not computable");
+		return 0;
+	}
+
+	return 1;
 }

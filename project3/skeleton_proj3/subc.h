@@ -15,6 +15,7 @@
 #define _CONST 1
 #define _FUNC 2
 #define _TYPE 3
+#define _EXP 4
 
 // type classes
 #define _VOID 0
@@ -113,6 +114,11 @@ void debugst(ste* st);
 
 int	check_is_declared(id* name);
 int check_type_compat(decl* x, decl* y);
-
+int check_is_var(decl* x);
+int check_is_const(decl* x);
+int check_is_const_var(decl* x);
+int check_inc_dec(decl* src, decl* dest);
+int check_add_sub(decl* x, decl* y, decl* dest);
+int check_rel_equ(decl* x, decl* y, decl* dest);
 #endif
 
