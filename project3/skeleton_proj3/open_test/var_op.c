@@ -46,5 +46,30 @@ int main() {
 	(--a)++;
 	(a--)++;
 
+	/* binary ADD, SUB */
+	/* all pass */
+	a+a; 
+	a-a; 
+	a+b;
+	a-b;
+	b+b;
+	b-b;
+	b+a;
+	b-a;
+	
+	/* all errors */
+	a+p;
+	a-p;
+	b+p;
+	b-p;
+	p+p;
+	p-p;
+	a+d;
+	a-d;
+	d+p;
+	d-p;
+
+
+
     return 0;
 }

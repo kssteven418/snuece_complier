@@ -210,21 +210,53 @@ expr
 ;
 
 or_expr
-		: or_list
+		: or_list{
+			$$ = $1;
+		}
 ;
 
 or_list
-		: or_list LOGICAL_OR and_expr
-		| and_expr
+		: or_list LOGICAL_OR and_expr{
+			if(check_and_or($1, $3, $$)){
+				$$ = copy($1);
+				if(check_is_const($1) || check_is_const($3)){
+					//ASSERT : $$->declclass = _CONST
+					// in case of addition of two integer constants
+					$$->int_value = $1->int_value && $3->int_value;
+				}
+				else{
+					$$->declclass = _EXP;
+				}
+			}
+		}
+		| and_expr{
+			$$ = $1;
+		}
 ;
 
 and_expr
-		: and_list
+		: and_list{
+			$$ = $1;	
+		}
 ;
 
 and_list
-		: and_list LOGICAL_AND binary
-		| binary
+		: and_list LOGICAL_AND binary{
+			if(check_and_or($1, $3, $$)){
+				$$ = copy($1);
+				if(check_is_const($1) && check_is_const($3)){
+					//ASSERT : $$->declclass = _CONST
+					// in case of addition of two integer constants
+					$$->int_value = $1->int_value && $3->int_value;
+				}
+				else{
+					$$->declclass = _EXP;
+				}
+			}
+		}
+		| binary{
+			$$ = $1;
+		}
 ;
 
 binary
@@ -247,7 +279,9 @@ binary
 				}
 			}
 		}
+
 		| binary '-' binary{
+			if(check_add_sub($1, $3, $$)){
 				$$ = copy($1);
 				if(check_is_const($1) && check_is_const($3)){
 					//ASSERT : $$->declclass = _CONST
@@ -257,6 +291,7 @@ binary
 				else{
 					$$->declclass = _EXP;
 				}
+			}
 			
 		}
 		| unary %prec '='{
@@ -314,7 +349,7 @@ unary
 			}
 
 			// unary must be a const or a variable 
-			else if(!check_is_const_var($2)){
+			else if(!check_is_const_var($2, 1)){
 				$$ = raise("not const or variable");
 			}
 			
@@ -339,7 +374,7 @@ unary
 			}
 			
 			// unary must be a const or a variable 
-			else if (!check_is_const_var($2)){
+			else if (!check_is_const_var($2, 1)){
 				$$ = raise("not const or variable");
 			}
 			
@@ -430,9 +465,10 @@ int check_type_compat(decl* x, decl* y){
 	return x==y;
 }
 
-int check_is_var(decl* x){
+int check_is_var(decl* x, int incl_expr){
 	if(x==NULL) return 0;
-	return (x->declclass==_VAR);
+	return (x->declclass==_VAR) 
+			|| (incl_expr && (x->declclass==_EXP));
 }
 
 int check_is_const(decl* x){
@@ -440,9 +476,11 @@ int check_is_const(decl* x){
 	return (x->declclass==_CONST);
 }
 
-int check_is_const_var(decl* x){
+int check_is_const_var(decl* x, int incl_expr){
 	if(x==NULL) return 0;
-	return (x->declclass==_VAR) || (x->declclass==_CONST);
+	return (x->declclass==_VAR) 
+			|| (x->declclass==_CONST)
+			|| (incl_expr && (x->declclass==_EXP));
 }
 
 int check_is_pointer(decl* x){
@@ -467,7 +505,7 @@ int check_inc_dec(decl* src, decl* dest){
 	}
 	
 	// unary must be a variable
-	else if(!check_is_var(src)){
+	else if(!check_is_var(src, 0)){
 		dest = raise("not variable");
 		return 0;
 	}
@@ -503,7 +541,9 @@ int check_add_sub(decl* x, decl* y, decl* dest){
 	return 1;
 }
 
-int check_rel_equ(decl* x, decl* y, decl* dest){
+// for binary rel/equ operations
+// op==0 for rel, 1 for equ
+int check_rel_equ(decl* x, decl* y, decl* dest, int op){
 	if(x==NULL){
 			dest = NULL;
 			return 0;
@@ -512,25 +552,41 @@ int check_rel_equ(decl* x, decl* y, decl* dest){
 			dest = NULL;
 			return 0;
 	}
+
 	// operands(x, y) should be INT, CHAR, or POINTER
 	if(!check_type_compat(x->type, inttype) 
 					&& !check_type_compat(x->type, chartype)
 					&& !check_is_pointer(x)){
-		dest = raise("not int or char type");
+		dest = raise("not int, char or pointer type"); // TODO : error message?
 		return 0;
 	}
 	if(!check_type_compat(y->type, inttype) 
 					&& !check_type_compat(y->type, chartype)
 					&& check_is_pointer(y)){
-		dest = raise("not int or char type");
-		return 0;
-	}
-
-	// operands should be computable : should have same types
-	if(!check_type_compat(x->type, y->type)){
-		dest = raise("not computable");
+		dest = raise("not int, char or pointer type"); // TODO : error message?
 		return 0;
 	}
 
 	return 1;
+}
+
+// for and/or operations
+int check_and_or(decl* x, decl* y, decl* dest){
+		if(x==NULL) {
+			dest = NULL;
+			return 0;
+		}
+		if(x==NULL){
+			dest = NULL;
+			return 0;
+		}
+
+		//and_list and binary should be both int		
+		else if(check_type_compat(x->type, inttype)
+						|| check_type_compat(y->type, inttype)){
+			dest = raise("not int type");
+			return 0;
+		}
+
+		return 1;
 }
