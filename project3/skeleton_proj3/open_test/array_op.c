@@ -5,7 +5,6 @@ int a;
 int main() {
 	int x[10];
 	int a;
-
 	/* errors */
 	x++;
 	a+x;

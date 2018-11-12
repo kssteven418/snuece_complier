@@ -465,28 +465,60 @@ unary
 
 		| '&' unary	%prec '!'{
 			/* returns pointer of a value */
+			if($2==NULL){
+				$$ = NULL;
+			}
+
 			// unary must be a pure variable
-			if(!check_is_var($2, 0)){
+			else if(!check_is_var($2, 0)){
 				$$ = raise("not variable");
 			}
 			else{
 				// $2 : VAR	
 				decl* temp = makeptrdecl($2->type); // type is either int or char		
 				$$ = temp;
+				$$->declclass = _EXP;
 			}
 		}
 
 		| '*' unary	%prec '!'{
 			/* returns pointer of a value */
+			if($2==NULL){
+				$$ = NULL;
+			}
+
 			// unary must be a pointer
-			if(!check_is_pointer($2)){
+			else if(!check_is_pointer($2)){
 				$$ = raise("not a pointer");
 			}
 			else{
-				
+				// access the value in the pointer
+				decl* temp = makevardecl($2->type->ptrto);		
+				$$ = temp;
+				$$->declclass = _EXP;
 			}
 		}
-		| unary '[' expr ']'
+
+		| unary '[' expr ']'{
+			if($1 == NULL){
+				$$ = NULL;
+			}
+			else if($3 == NULL){
+				$$ = NULL;
+			}
+
+			else if(!check_is_array($1)){
+				$$ = raise("not array type"); // TODO : error msg?
+			}
+			else if(!check_type_compat($3->type, inttype)){
+				$$ = raise("not int type");
+			}
+			else{
+				decl* temp = copy($1->type->elementvar);
+				$$ = temp;
+				$$->declclass = _VAR;
+			}
+		}
 		| unary '.' ID
 		| unary STRUCTOP ID 
 		| unary '(' args ')'
@@ -537,13 +569,16 @@ int check_is_var(decl* x, int incl_expr){
 
 int check_is_const(decl* x){
 	if(x==NULL) return 0;
-	return (x->declclass==_CONST);
+	decl* type = x->type;
+	if(type==NULL) return 0;
+	return (x->declclass==_CONST) && (type==inttype || type==chartype);
 }
 
 int check_is_const_var(decl* x, int incl_expr){
 	if(x==NULL) return 0;
+	decl* type = x->type;
 	return (x->declclass==_VAR) 
-			|| (x->declclass==_CONST)
+			|| ((x->declclass==_CONST) && (type==inttype || type==chartype))
 			|| (incl_expr && (x->declclass==_EXP));
 }
 
@@ -554,6 +589,12 @@ int check_is_pointer(decl* x){
 	return type->typeclass==_POINTER;
 }
 
+int check_is_array(decl* x){
+	if(x==NULL) return 0;
+	decl* type = x->type;
+	if(type==NULL) return 0;
+	return (x->declclass==_CONST) && (type->typeclass==_ARRAY);
+}
 
 // for INCOP and DECOP
 int check_inc_dec(decl* src, decl* dest){

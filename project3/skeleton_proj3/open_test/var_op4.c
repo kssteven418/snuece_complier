@@ -9,7 +9,9 @@ int main() {
 	int* p;
 	char* q;
 	int x[10];
-	int *t[10];
+	int *xp[10];
+	int y[x]; /* error */
+	int y[xp]; /* error */
 
 	!!a;
 
@@ -22,8 +24,8 @@ int main() {
 	&(a+c);
 	
 	&p;
-	&x;
-	&(&p);
+	&x; /* error */
+	&(&p); /* error */
 
 	*p;
 	*q;
@@ -34,6 +36,38 @@ int main() {
 	*(p+1);
 	*(p+q);
 	*x;
+
+	*p;
+	*(&p);
+	**(&p);
+	***(&p); /* error */
+	*a; /* error */
+	*(&a);
+	**(&a); /* error */
+
+	(*(&a))++; /* error */
+	(*p)++; /* error */
+	p++; /* error */
+	1+(a++);
+	(*p)+(a++);
+	(*q)+(a++); /* error */
+	(*p)+(*q); /* error */
+	(*p)+c; /* error */
+	
+	p==&a;
+	p<&a; /* error */
+	p==&p;
+	q==&p;
+	p==&c;
+
+	*p==*(&a);
+	*p==a;
+	*p==*q; /* error */
+	*p==&a; /* error */
+
+	*s; /* error */
+	&s; /* error */
+	&(*s); /* error */
 
 
     return 0;

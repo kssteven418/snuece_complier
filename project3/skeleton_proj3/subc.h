@@ -116,6 +116,7 @@ decl* makeconstdecl(decl* type_decl);
 decl* makeptrdecl(decl* type_decl);
 decl* makearraydecl(int size, decl* var_decl);
 
+
 void debugst(ste* st);
 
 /* functions in subc.y */
@@ -126,6 +127,7 @@ int check_is_var(decl* x, int incl_expr);
 int check_is_const(decl* x);
 int check_is_const_var(decl* x, int incl_expr);
 int check_is_pointer(decl* x);
+int check_is_array(decl* x);
 int check_inc_dec(decl* src, decl* dest);
 int check_add_sub(decl* x, decl* y, decl* dest);
 int check_rel_equ(decl* x, decl* y, decl* dest, int op);
