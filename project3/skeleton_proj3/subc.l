@@ -4,19 +4,12 @@
  * Description : a skeleton flex input
  */
 
+#include <string.h>
 #include "subc.h"
 #include "subc.tab.h"
 static int comment_depth = 0;
 static int lineno = 1;
-/*
 
-
-%token TYPE STRUCT 
-%token RETURN IF ELSE WHILE FOR BREAK CONTINUE 
-%token LOGICAL_OR LOGICAL_AND INCOP DECOP STRUCTOP 
-%token VOID STRING CHAR_CONST ID INTEGER_CONST
-
-*/
 
 %}
 
@@ -75,10 +68,16 @@ special-char	\\[nt]
 
 {relop} { 
 	// printf("LEX %s\n", yytext); 
+	if(strcmp(yytext, "<")) yylval.intVal = _LT;
+	if(strcmp(yytext, "<=")) yylval.intVal = _LTE;
+	if(strcmp(yytext, ">")) yylval.intVal = _GT;
+	if(strcmp(yytext, ">=")) yylval.intVal = _GTE;
 	return RELOP;}
 
 {equop} {
 	// printf("LEX %s\n", yytext); 
+	if(strcmp(yytext, "==")) yylval.intVal = _EQ;
+	if(strcmp(yytext, "!=")) yylval.intVal = _NE;
 	return EQUOP;}
 
 {incop} {

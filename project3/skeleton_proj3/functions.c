@@ -76,7 +76,6 @@ ste* find(id* name){
 		if(temp->name == name) return temp;
 		else temp = temp->prev;
 	}
-
 }
 
 ste* find_current_scope(id* name){
@@ -126,6 +125,7 @@ decl* makeptrdecl(decl* type_decl){
 	type->declclass = _TYPE;
 	type->typeclass = _POINTER;
 	type->ptrto = type_decl;
+	return var;
 }
 
 decl* makearraydecl(int size, decl* var_decl){
@@ -141,6 +141,7 @@ decl* makearraydecl(int size, decl* var_decl){
 	type->typeclass = _ARRAY;
 	type->elementvar = var_decl;
 	type->size = size;
+	return cons;
 }
 
 

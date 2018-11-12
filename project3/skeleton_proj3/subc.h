@@ -26,6 +26,14 @@
 #define _STRUCT 5
 #define _POINTER 6
 
+/* RELOP, EQUOP */
+#define _LT 0
+#define _LTE 1
+#define _GT 2
+#define _GTE 3
+#define _EQ 4
+#define _NE 5
+
 /* structure for ID */
 typedef struct id {
       char *name;
@@ -117,9 +125,11 @@ int check_type_compat(decl* x, decl* y);
 int check_is_var(decl* x, int incl_expr);
 int check_is_const(decl* x);
 int check_is_const_var(decl* x, int incl_expr);
+int check_is_pointer(decl* x);
 int check_inc_dec(decl* src, decl* dest);
 int check_add_sub(decl* x, decl* y, decl* dest);
 int check_rel_equ(decl* x, decl* y, decl* dest, int op);
 int check_and_or(decl* x, decl* y, decl* dest);
+
 #endif
 

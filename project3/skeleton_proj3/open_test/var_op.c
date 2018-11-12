@@ -13,6 +13,17 @@ int main() {
 
     a = b;
     a = e;	/* error */
+
+	/* not declared */
+	x++;
+	x--;
+	!x;
+	-x;
+	x+1;
+	x-a;
+	a||x;
+	a&&x;
+
 	
 	/* int INCOP, DECOP */
 	a++;

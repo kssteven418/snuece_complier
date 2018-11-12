@@ -54,6 +54,7 @@ void 	REDUCE(char* s);
 %token<stringVal> STRING 
 %token<charVal> CHAR_CONST 
 %token<intVal> INTEGER_CONST
+%token<intVal> RELOP EQUOP
 
 %%
     
@@ -67,7 +68,9 @@ ext_def_list
 ;
 
 ext_def
-		: type_specifier pointers ID ';'
+		: type_specifier pointers ID ';'{
+			//TODO
+		}
 		| type_specifier pointers ID '[' const_expr ']' ';'
 		| func_decl ';'
 		| type_specifier ';'
@@ -76,13 +79,12 @@ ext_def
 
 type_specifier
 		: TYPE{
+			// only int and char
 			ste* typeste = find($1);
-			// printf("TYPE %s\n", typeste->name->name);
 			$$ = typeste->decl;
 		}
 		| VOID{
 			ste* typeste = find($1);
-			// printf("VOID %s\n", typeste->name->name);
 			$$ = typeste->decl;
 		}
 		| struct_specifier
@@ -141,28 +143,31 @@ def
 					declare($3, temp);
 				}
 			}
-					
 		}
 
 		| type_specifier pointers ID '[' const_expr ']' ';'{
-			int is_ptr = $2;
-
-			// if redeclared
-			if(check_is_declared($3)){
-				raise("redeclared");
+			if($5==NULL){
 			}
 			else{
-				decl* var_decl = NULL;
-				if(is_ptr){
-					var_decl = makeptrdecl($1);
+				int is_ptr = $2;
+
+				// if redeclared
+				if(check_is_declared($3)){
+					raise("redeclared");
 				}
 				else{
-					var_decl = makevardecl($1);
+					decl* var_decl = NULL;
+					if(is_ptr){
+						var_decl = makeptrdecl($1);
+					}
+					else{
+						var_decl = makevardecl($1);
+					}
+					decl* temp = makearraydecl($5->int_value, var_decl);
+
+					declare($3, temp);
 				}
-				decl* temp = makearraydecl($5->int_value, var_decl);
-				declare($3, temp);
 			}
-			
 		}
 		| type_specifier ';'
 		| func_decl ';'
@@ -201,12 +206,24 @@ expr_e
 ;
 
 const_expr
-		: expr
+		: expr{
+			//should be a constant
+			if(check_is_const($1)){
+				$$ = $1;
+			}
+			else{
+				$$ = raise("not constant");
+			}
+		}
 ;
 
 expr
-		: unary '=' expr
-		| or_expr
+		: unary '=' expr{
+				//TODO
+		}
+		| or_expr{
+				$$ = $1;
+		}
 ;
 
 or_expr
@@ -222,7 +239,7 @@ or_list
 				if(check_is_const($1) || check_is_const($3)){
 					//ASSERT : $$->declclass = _CONST
 					// in case of addition of two integer constants
-					$$->int_value = $1->int_value && $3->int_value;
+					$$->int_value = $1->int_value || $3->int_value;
 				}
 				else{
 					$$->declclass = _EXP;
@@ -261,9 +278,34 @@ and_list
 
 binary
 		: binary RELOP binary{
-			
+			if(check_rel_equ($1, $3, $$, 0)){
+				$$ = copy($1);
+				if(check_is_const($1) && check_is_const($3)){
+					// in case of addition of two integer constants
+					if($2==_LT)	$$->int_value = $1->int_value < $3->int_value;
+					if($2==_LTE)	$$->int_value = $1->int_value <= $3->int_value;
+					if($2==_GT)	$$->int_value = $1->int_value > $3->int_value;
+					if($2==_GTE)	$$->int_value = $1->int_value >= $3->int_value;
+				}
+				else{
+					$$->declclass = _EXP;
+				}
+				
+			}
 		}
 		| binary EQUOP binary{
+			if(check_rel_equ($1, $3, $$, 1)){
+				$$ = copy($1);
+				if(check_is_const($1) && check_is_const($3)){
+					// in case of addition of two integer constants
+					if($2==_EQ)	$$->int_value = $1->int_value == $3->int_value;
+					if($2==_NE)	$$->int_value = $1->int_value != $3->int_value;
+				}
+				else{
+					$$->declclass = _EXP;
+				}
+				
+			}
 			
 		}
 		| binary '+' binary{
@@ -420,8 +462,30 @@ unary
 				$$->declclass = _EXP; // integer/char expression
 			}
 		}
-		| '&' unary	%prec '!'
-		| '*' unary	%prec '!'
+
+		| '&' unary	%prec '!'{
+			/* returns pointer of a value */
+			// unary must be a pure variable
+			if(!check_is_var($2, 0)){
+				$$ = raise("not variable");
+			}
+			else{
+				// $2 : VAR	
+				decl* temp = makeptrdecl($2->type); // type is either int or char		
+				$$ = temp;
+			}
+		}
+
+		| '*' unary	%prec '!'{
+			/* returns pointer of a value */
+			// unary must be a pointer
+			if(!check_is_pointer($2)){
+				$$ = raise("not a pointer");
+			}
+			else{
+				
+			}
+		}
 		| unary '[' expr ']'
 		| unary '.' ID
 		| unary STRUCTOP ID 
@@ -545,25 +609,37 @@ int check_add_sub(decl* x, decl* y, decl* dest){
 // op==0 for rel, 1 for equ
 int check_rel_equ(decl* x, decl* y, decl* dest, int op){
 	if(x==NULL){
-			dest = NULL;
-			return 0;
+		dest = NULL;
+		return 0;
 	}
 	if(y==NULL){
-			dest = NULL;
-			return 0;
+		dest = NULL;
+		return 0;
+	}
+	//for equ operation, pointer operation is possible
+	if(op && check_is_pointer(x)){
+		// if both operands are pointer, than comparable
+		if(check_is_pointer(y)) return 1;
+		// otherwise, not comparable
+		dest = raise("not comparable");
+		return 0;
 	}
 
-	// operands(x, y) should be INT, CHAR, or POINTER
+	//otherwise, both operands should be INT or CHAR
 	if(!check_type_compat(x->type, inttype) 
-					&& !check_type_compat(x->type, chartype)
-					&& !check_is_pointer(x)){
-		dest = raise("not int, char or pointer type"); // TODO : error message?
+					&& !check_type_compat(x->type, chartype)){
+		dest = raise("not int or char type"); 
 		return 0;
 	}
 	if(!check_type_compat(y->type, inttype) 
-					&& !check_type_compat(y->type, chartype)
-					&& check_is_pointer(y)){
-		dest = raise("not int, char or pointer type"); // TODO : error message?
+					&& !check_type_compat(y->type, chartype)){
+		dest = raise("not int or char type"); 
+		return 0;
+	}
+
+	// operands should be computable : should have same types
+	if(!check_type_compat(x->type, y->type)){
+		dest = raise("not comparable");
 		return 0;
 	}
 
@@ -576,14 +652,14 @@ int check_and_or(decl* x, decl* y, decl* dest){
 			dest = NULL;
 			return 0;
 		}
-		if(x==NULL){
+		if(y==NULL){
 			dest = NULL;
 			return 0;
 		}
 
 		//and_list and binary should be both int		
-		else if(check_type_compat(x->type, inttype)
-						|| check_type_compat(y->type, inttype)){
+		else if(!check_type_compat(x->type, inttype)
+						|| !check_type_compat(y->type, inttype)){
 			dest = raise("not int type");
 			return 0;
 		}
