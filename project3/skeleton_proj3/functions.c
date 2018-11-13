@@ -23,37 +23,26 @@ void push_scope(){
 
 //pop scope from the scope stack
 ste* pop_scope(){
-	/*
-	ste* from = sstop->top;
-	ste* to = sstop->prev->top;
-	ste* temp = from;
-	while(1){
-		if(from==to) break;
-		temp = from;
-		from = from->prev;
-		free(temp);
-	}
-	scope_stack* sstemp = sstop;
-	sstop = sstop->prev;
-	free(sstemp);
-	*/
 	
 	ste* from = sstop->top;
 	ste* to = sstop->prev->top;
-	while(1){
-		if(from->prev == to) break;
-		from = from->prev;
-	}
-	
-	//make dummy node for the output stack table
-	ste* dummy = (ste*)malloc(sizeof(ste));
-	dummy->prev = NULL;
-	from->prev = dummy;
+	ste* temp;
 
-	from = sstop->top; // stack top to return
+	ste* outstack = (ste*)malloc(sizeof(ste));
+	outstack->prev = NULL;
+
+	while(1){
+		if(from == to) break;
+		// append to outstack
+		temp = from->prev;
+		from->prev = outstack;
+		outstack = from;
+		from = temp;
+	}
+
 	sstop = sstop->prev;
 
-	return from;
+	return outstack;
 }
 
 //insert declare into the symbol table
@@ -142,6 +131,15 @@ decl* makearraydecl(int size, decl* var_decl){
 	type->elementvar = var_decl;
 	type->size = size;
 	return cons;
+}
+
+decl* makestructdecl(ste* fields){
+	decl* type = (decl*)malloc(sizeof(decl));
+	type->declclass = _TYPE;
+	type->typeclass= _STRUCT;
+	type->fields = fields;
+	return type;
+	
 }
 
 

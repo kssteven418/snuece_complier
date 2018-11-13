@@ -174,6 +174,24 @@ int main(int argc, char* argv[])
    ste* s;
    id* name;
 
+   /*
+   debugst(sstop->top);
+
+   push_scope();
+
+   declare(enter(ID, "x", 1), NULL);
+   declare(enter(ID, "int", 3), NULL);
+   declare(enter(ID, "y", 1), NULL);
+   declare(enter(ID, "z", 1), NULL);
+
+   debugst(sstop->top);
+
+   ste* stetemp = pop_scope();
+
+   debugst(sstop->top);
+   printf("\n");
+   debugst(stetemp);
+	*/
 	/*
 	name = enter(ID, "int", 3);
 	s = find_current_scope(name);

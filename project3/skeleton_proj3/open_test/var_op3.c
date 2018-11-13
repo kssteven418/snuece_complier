@@ -13,6 +13,7 @@ int main() {
 	int y[1+3];
 	int w[(1+2)||(3-2)];
 	int z[a]; /* error */
+	int z['c'];
 
 	a>=b;
 	a==b;

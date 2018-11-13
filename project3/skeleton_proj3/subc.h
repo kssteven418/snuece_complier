@@ -65,7 +65,7 @@ typedef struct decl{
 	int typeclass;
 	struct decl *elementvar; // ARRAY, pointer to VAR decl
 	int num_index;  // ARRAY, # of elements
-	struct ste *fieldlist; // STRUCT, pointer to field list
+	struct ste *fields; // STRUCT, pointer to field list
 	struct decl *ptrto; // POINTER, type of the pointer
 	
 	/* ALL */
@@ -115,6 +115,7 @@ decl* makevardecl(decl* type_decl);
 decl* makeconstdecl(decl* type_decl);
 decl* makeptrdecl(decl* type_decl);
 decl* makearraydecl(int size, decl* var_decl);
+decl* makestructdecl(ste* fields);
 
 
 void debugst(ste* st);

@@ -43,7 +43,8 @@ void 	REDUCE(char* s);
 /* Token and Types */
 
 %type<intVal> pointers
-%type<declptr> type_specifier
+%type<declptr> def def_list ext_def ext_def_list
+%type<declptr> type_specifier struct_specifier
 %type<declptr> const_expr expr or_expr or_list and_expr and_list
 %type<declptr> binary unary
 
@@ -87,11 +88,22 @@ type_specifier
 			ste* typeste = find($1);
 			$$ = typeste->decl;
 		}
-		| struct_specifier
+		| struct_specifier{
+			$$ = $1;
+		}
 ;
 
 struct_specifier
-		: STRUCT ID '{' def_list '}'
+		: STRUCT ID '{' {
+			push_scope(); 
+		}
+			def_list '}' {
+				if(!check_is_declared($2)){
+					ste* fields = pop_scope();
+					$$ = makestructdecl(fields);
+					declare($2, $$);
+				}
+		}
 		| STRUCT ID
 ;
 
@@ -127,33 +139,40 @@ def_list    /* list of definitions, definition can be type(struct), variable, fu
 
 def
 		: type_specifier pointers ID ';'{
+			if($1==NULL){ $$ = NULL;}
+			
 			int is_ptr = $2; // 0 if not pointer, 1 if pointer
 			
 			// if redeclared
 			if(check_is_declared($3)){
-				raise("redeclared");
+				$$ = raise("redeclared");
 			}
 			else{
 				if(is_ptr){
-					decl* temp = makeptrdecl($1);
-					declare($3, temp);
+					$$ = makeptrdecl($1);
+					declare($3, $$);
 				}
 				else{
-					decl* temp = makevardecl($1);
-					declare($3, temp);
+					$$ = makevardecl($1);
+					declare($3, $$);
 				}
 			}
 		}
 
 		| type_specifier pointers ID '[' const_expr ']' ';'{
-			if($5==NULL){
+			if($1==NULL){ $$ = NULL; }
+			else if($5==NULL){ $$ = NULL; }
+
+			//index must be a integer
+			else if(!check_type_compat($5->type, inttype)){
+				$$ = raise("not int type");
 			}
 			else{
 				int is_ptr = $2;
 
 				// if redeclared
 				if(check_is_declared($3)){
-					raise("redeclared");
+					$$ = raise("redeclared");
 				}
 				else{
 					decl* var_decl = NULL;
@@ -163,9 +182,9 @@ def
 					else{
 						var_decl = makevardecl($1);
 					}
-					decl* temp = makearraydecl($5->int_value, var_decl);
+					$$ = makearraydecl($5->int_value, var_decl);
 
-					declare($3, temp);
+					declare($3, $$);
 				}
 			}
 		}
@@ -178,7 +197,7 @@ compound_stmt
 ;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
-		:	def_list
+		:	def_list /* TODO : check no struct decl */
 ;
 
 stmt_list
@@ -236,7 +255,7 @@ or_list
 		: or_list LOGICAL_OR and_expr{
 			if(check_and_or($1, $3, $$)){
 				$$ = copy($1);
-				if(check_is_const($1) || check_is_const($3)){
+				if(check_is_const($1) && check_is_const($3)){
 					//ASSERT : $$->declclass = _CONST
 					// in case of addition of two integer constants
 					$$->int_value = $1->int_value || $3->int_value;
