@@ -2,7 +2,7 @@
 struct str1 {
 	int i;
 	char c;
-};
+} ;
 
 struct str2 {
 	int *i;
@@ -11,8 +11,10 @@ struct str2 {
 	struct str3 {
 		int *i;
 		char *c;
+		struct str_in {
+		} st;
 	} st;
-};
+} ;
 
 int x;
 
@@ -26,7 +28,18 @@ struct str3 { /* error, redeclaration of struct str3 */
 	char *c;
 };
 
+struct str_in{ /* error, redec */
+	int x;
+};
 
+struct str4{
+	struct str_in{ /* error, redec */
+		struct str3{} st; /* error, redec */
+	}st;
+};
+
+int;
+void;
 
 int main(void) {
 	return 0;

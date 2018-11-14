@@ -65,18 +65,34 @@ program
 
 ext_def_list
 		: ext_def_list ext_def
-		| /* empty */
+		| /* empty */{
+			$$ = NULL;
+		}
 ;
 
 ext_def
 		: type_specifier pointers ID ';'{
 			$$ = define_normal($1, $2, $3);
+			/*
+			printf("@%s\n", $3->name);
+			debugst(sstop->top);
+			printf("");
+			*/
 		}
 		| type_specifier pointers ID '[' const_expr ']' ';'{
 			$$ = define_array($1, $2, $3, $5);
 		}
 		| func_decl ';'
-		| type_specifier ';'
+		| type_specifier ';'{
+			// type-only component, then should be a struct type
+			// int; void; ... are not allowed!
+			if(!check_is_struct($1)){
+				$$ = raise("not struct type"); // TODO : error message??
+			}
+			else{
+				$$ = $1;
+			}
+		}
 		| func_decl compound_stmt
 ; 
 
@@ -115,15 +131,17 @@ struct_specifier
 					$$ = makestructdecl(fields);
 					declare_struct_type($2, $$);
 				}
+				/*
+				printf("");
 				printf("@%s\n", $2->name);
 				debugst(sstop->top);
 				debugst(fields);
+				*/
 		}
 		/* access the already declared struct type */
 		| STRUCT ID {
 			if ($$ = NULL) { $$ = NULL;}
 			else{
-				printf("struct2\n");
 				// find struct type
 				ste* id_ste = find($2);
 
@@ -133,7 +151,7 @@ struct_specifier
 				}
 
 				// type should be a struct type TODO : is this right error message?
-				else if(check_is_struct(id_ste->decl)){
+				else if(!check_is_struct(id_ste->decl)){
 					$$ = raise("not struct type");
 				}
 			}
@@ -168,7 +186,9 @@ param_decl  /* formal parameter declaration */
 
 def_list    /* list of definitions, definition can be type(struct), variable, function */
 		: def_list def
-		| /* empty */
+		| /* empty */{
+			$$ = NULL;
+		}
 ;
 
 def
@@ -176,11 +196,19 @@ def
 			$$ = define_normal($1, $2, $3);
 		}
 
-
 		| type_specifier pointers ID '[' const_expr ']' ';'{
 			$$ = define_array($1, $2, $3, $5);
 		}
-		| type_specifier ';'
+		| type_specifier ';'{
+			// type-only component, then should be a struct type
+			// int; void; ... are not allowed!
+			if(!check_is_struct($1)){
+				$$ = raise("not struct type"); // TODO : error message??
+			}
+			else{
+				$$ = $1;
+			}
+		}
 		| func_decl ';'
 ;
 
@@ -618,6 +646,5 @@ decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){
 	declare(id_decl, temp);
 	
 	return temp;
-
-		return NULL;
 }
+
