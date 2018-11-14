@@ -62,6 +62,13 @@ int check_is_array(decl* x){
 
 int check_is_struct(decl* x){
 	if(x==NULL) return 0;
+	decl* type = x->type;
+	if(type==NULL) return 0;
+	return (type->typeclass==_STRUCT);
+}
+
+int check_is_struct_type(decl* x){
+	if(x==NULL) return 0;
 	return (x->typeclass==_STRUCT);
 }
 

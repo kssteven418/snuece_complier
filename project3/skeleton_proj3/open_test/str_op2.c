@@ -12,8 +12,16 @@ struct str2 {
 		int *i;
 		char *c;
 		struct str_in {
+			int x;
+			int y[10];
 		} st;
+		struct str_in st2;
+		struct str_in2{
+			int x2;
+			int y2;
+		};
 	} st;
+
 } ;
 
 int x;
@@ -38,8 +46,8 @@ struct str4{
 	}st;
 };
 
-int;
-void;
+int; /* error */
+void; /* error */
 
 int main(void) {
 	return 0;

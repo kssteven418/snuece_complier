@@ -111,6 +111,7 @@ void declare(id* name, decl* decl);
 void declare_struct_type(id* name, decl* decl);
 ste* find(id* name);
 ste* find_current_scope(id* name);
+ste* find_field(ste* fields, id* name);
 
 decl* maketypedecl(int type);
 decl* makevardecl(decl* type_decl);
@@ -137,6 +138,7 @@ int check_is_const_var(decl* x, int incl_expr);
 int check_is_pointer(decl* x);
 int check_is_array(decl* x);
 int check_is_struct(decl* x);
+int check_is_struct_type(decl* x);
 
 int check_inc_dec(decl* src, decl* dest);
 int check_add_sub(decl* x, decl* y, decl* dest);

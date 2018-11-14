@@ -92,6 +92,16 @@ ste* find_current_scope(id* name){
 	}
 }
 
+//find symbol table entry at the given fields
+ste* find_field(ste* fields, id* name){
+	ste* temp = fields;
+	while(1){
+		if(temp->prev == NULL) return NULL;
+		if(temp->name == name) return temp;
+		else temp = temp->prev;
+	}
+}
+
 /* make declares */
 
 decl* maketypedecl(int type){

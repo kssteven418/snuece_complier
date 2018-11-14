@@ -86,7 +86,7 @@ ext_def
 		| type_specifier ';'{
 			// type-only component, then should be a struct type
 			// int; void; ... are not allowed!
-			if(!check_is_struct($1)){
+			if(!check_is_struct_type($1)){
 				$$ = raise("not struct type"); // TODO : error message??
 			}
 			else{
@@ -109,6 +109,7 @@ type_specifier
 			$$ = typeste->decl;
 		}
 		| struct_specifier{
+			// if($1!=NULL) debugst($1->fields);
 			$$ = $1;
 		}
 ;
@@ -149,14 +150,16 @@ struct_specifier
 				if(id_ste == NULL){
 					$$ = raise("not declared");
 				}
-
 				// type should be a struct type TODO : is this right error message?
-				else if(!check_is_struct(id_ste->decl)){
+				else if(!check_is_struct_type(id_ste->decl)){
 					$$ = raise("not struct type");
 				}
+	
+				else{
+					$$ = id_ste->decl;
+				}
 			}
-		}
-		
+		}	
 ;
 
 func_decl
@@ -202,7 +205,7 @@ def
 		| type_specifier ';'{
 			// type-only component, then should be a struct type
 			// int; void; ... are not allowed!
-			if(!check_is_struct($1)){
+			if(!check_is_struct_type($1)){
 				$$ = raise("not struct type"); // TODO : error message??
 			}
 			else{
@@ -559,7 +562,29 @@ unary
 				$$->declclass = _VAR;
 			}
 		}
-		| unary '.' ID
+
+		| unary '.' ID{
+			if($1 == NULL) { $$ = NULL; }
+			else if($3 == NULL) { $$ = NULL;}
+			
+			//unary must be a struct type
+			else if(!check_is_struct($1)){
+				$$ = raise("variable is not struct");
+			}
+			
+			else{
+				// find field entry from the structure type fields
+				decl* strtype = $1->type;
+				ste* field = find_field(strtype->fields, $3);
+				if(field==NULL){
+					$$ = raise("struct not have same name field");
+				}
+				else{
+					$$ = field->decl;
+				}
+			}
+		}
+
 		| unary STRUCTOP ID 
 		| unary '(' args ')'
 		| unary '(' ')'
