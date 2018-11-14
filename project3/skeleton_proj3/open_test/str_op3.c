@@ -31,13 +31,16 @@ struct str{
 		int *q;
 	} s;
 	struct str_in s2;
+	struct str_in *sp;
 	struct str_in2 s2; /* error */
 	int *p;
 };
 
 void main(){
-	struct str str;
-
+	struct str st;
+	struct str *stp;
+	int x;
+	int* xp;
 	&x;
 
 	&sp;
@@ -49,24 +52,52 @@ void main(){
 	&sa[0];
 
 	/* test for struct fields */
-	str.x;
-	str.y;
-	str.z; /* error */
+	st.x;
+	st.y;
+	st.z; /* error */
 
-	str.x++;
-	str.x + str.y;
-	(str.x + 1);
-	(str.x + 1)++; /* error */
+	st.x++;
+	st.x + st.y;
+	(st.x + 1);
+	(st.x + 1)++; /* error */
 
 	/* field in field */
-	str.s.a;
-	str.s2.q;
-	str.str_in; /* error */
+	st.s.a;
+	st.s2.q;
+	st.str_in; /* error */
 
-	str.s.a++;
-	str.s2.a + str.x;
-	str.s.q == str.p;
-	&str == str.s.q;
+	st.s.a++;
+	st.s2.a + st.x;
+	st.s.q == st.p;
+	&st == st.s.q;
+	x.a; /* error */
 
+
+	/* test for struct pointer fields */
+	stp->x;
+	stp->y;
+	stp->z; /* error */
+	st->x; /* error */
+	x->x; /* error */
+	xp->x; /* error */
+	stp.x; /* error */
+
+	
+	(stp->x)++;
+	stp->x + stp->y;
+	(stp->x + 1);
+	(stp->x + 1)++; /* error */
+
+	/* field in field */
+	stp->s.a;
+	stp->s2.q;
+	stp->sp->a;
+	stp->str_in; /* error */
+	stp->sp.a; /* error */
+
+	stp->s.a++;
+	stp->s2.a + stp->sp->a;
+	stp->sp->q == stp->p;
+	&stp == stp->s.q;
 
 }

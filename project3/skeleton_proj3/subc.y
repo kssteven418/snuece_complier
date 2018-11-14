@@ -58,7 +58,11 @@ void 	REDUCE(char* s);
 %token<intVal> RELOP EQUOP
 
 %%
-    
+/*Question : 
+ 1. function in struct??
+ 2. struct x; ?? 
+ */    
+
 program
 		: ext_def_list
 ;
@@ -73,11 +77,6 @@ ext_def_list
 ext_def
 		: type_specifier pointers ID ';'{
 			$$ = define_normal($1, $2, $3);
-			/*
-			printf("@%s\n", $3->name);
-			debugst(sstop->top);
-			printf("");
-			*/
 		}
 		| type_specifier pointers ID '[' const_expr ']' ';'{
 			$$ = define_array($1, $2, $3, $5);
@@ -132,12 +131,6 @@ struct_specifier
 					$$ = makestructdecl(fields);
 					declare_struct_type($2, $$);
 				}
-				/*
-				printf("");
-				printf("@%s\n", $2->name);
-				debugst(sstop->top);
-				debugst(fields);
-				*/
 		}
 		/* access the already declared struct type */
 		| STRUCT ID {
@@ -220,7 +213,7 @@ compound_stmt
 ;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
-		:	def_list /* TODO : check no struct decl */
+		:	def_list 
 ;
 
 stmt_list
@@ -277,11 +270,12 @@ or_expr
 or_list
 		: or_list LOGICAL_OR and_expr{
 			if(check_and_or($1, $3, $$)){
-				$$ = copy($1);
+				$$ = makevardecl(inttype); // output must be a integer type
 				if(check_is_const($1) && check_is_const($3)){
 					//ASSERT : $$->declclass = _CONST
 					// in case of addition of two integer constants
 					$$->int_value = $1->int_value || $3->int_value;
+					$$->declclass = _CONST;
 				}
 				else{
 					$$->declclass = _EXP;
@@ -302,11 +296,12 @@ and_expr
 and_list
 		: and_list LOGICAL_AND binary{
 			if(check_and_or($1, $3, $$)){
-				$$ = copy($1);
+				$$ = makevardecl(inttype); // output must be a integer type
 				if(check_is_const($1) && check_is_const($3)){
 					//ASSERT : $$->declclass = _CONST
 					// in case of addition of two integer constants
 					$$->int_value = $1->int_value && $3->int_value;
+					$$->declclass = _CONST;
 				}
 				else{
 					$$->declclass = _EXP;
@@ -321,13 +316,14 @@ and_list
 binary
 		: binary RELOP binary{
 			if(check_rel_equ($1, $3, $$, 0)){
-				$$ = copy($1);
+				$$ = makevardecl(inttype); // output must be a integer type
 				if(check_is_const($1) && check_is_const($3)){
 					// in case of addition of two integer constants
 					if($2==_LT)	$$->int_value = $1->int_value < $3->int_value;
 					if($2==_LTE)	$$->int_value = $1->int_value <= $3->int_value;
 					if($2==_GT)	$$->int_value = $1->int_value > $3->int_value;
 					if($2==_GTE)	$$->int_value = $1->int_value >= $3->int_value;
+					$$->declclass = _CONST;
 				}
 				else{
 					$$->declclass = _EXP;
@@ -337,11 +333,12 @@ binary
 		}
 		| binary EQUOP binary{
 			if(check_rel_equ($1, $3, $$, 1)){
-				$$ = copy($1);
+				$$ = makevardecl(inttype); // output must be a integer type
 				if(check_is_const($1) && check_is_const($3)){
 					// in case of addition of two integer constants
 					if($2==_EQ)	$$->int_value = $1->int_value == $3->int_value;
 					if($2==_NE)	$$->int_value = $1->int_value != $3->int_value;
+					$$->declclass = _CONST;
 				}
 				else{
 					$$->declclass = _EXP;
@@ -580,12 +577,39 @@ unary
 					$$ = raise("struct not have same name field");
 				}
 				else{
-					$$ = field->decl;
+					$$ = copy(field->decl);
 				}
 			}
 		}
 
-		| unary STRUCTOP ID 
+		| unary STRUCTOP ID {
+			if($1 == NULL) { $$ = NULL;}
+			else if($3 == NULL) { $$ = NULL;}
+
+			// unary must be a pointer value
+			else if(!check_is_pointer($1)){
+				$$ = raise("not a pointer"); // TODO : error message?
+			}
+
+			else{
+				decl* strtype = $1->type->ptrto;
+				// pointer value must be a struct
+				if(!check_is_struct_type(strtype)){
+					$$ = raise("variable is not struct");
+				}
+				else{
+					// find field entry from the structure type fields
+					ste* field = find_field(strtype->fields, $3);
+					if(field==NULL){
+						$$ = raise("struct not have same name field");
+					}
+					else{
+					$$ = copy(field->decl);
+					}
+				}
+			}
+
+		}
 		| unary '(' args ')'
 		| unary '(' ')'
 ;
