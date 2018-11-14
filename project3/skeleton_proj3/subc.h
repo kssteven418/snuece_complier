@@ -88,6 +88,7 @@ ste *globaldef;
 decl *voidtype;
 decl *inttype;
 decl *chartype;
+id* returnid;
 
 /* For hash table */
 unsigned hash(char *name);
@@ -126,6 +127,7 @@ void debugst(ste* st);
 /* functions in subc.y */
 decl* define_normal(decl* type_decl, int is_ptr, id* id_decl);
 decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr);
+decl* define_struct_type(decl* type_decl);
 
 
 /* check functions */
