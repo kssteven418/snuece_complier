@@ -57,6 +57,21 @@ void declare(id* name, decl* decl){
 	sstop->top = temp;
 }
 
+//insert declare of struct type
+//must be global, so insert at the bottom-most entry
+void declare_struct_type(id* name, decl* decl){
+	// make a new ste
+	ste* temp = (ste*)malloc(sizeof(ste));
+	temp->decl = decl;
+	temp->name = name;
+
+	temp->prev = globaldef->prev;
+	globaldef->prev = temp;
+
+	// modify globaldef
+	globaldef = temp;
+}
+
 //find symbol table entry by given id
 ste* find(id* name){
 	ste* temp = sstop->top;

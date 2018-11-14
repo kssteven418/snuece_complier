@@ -70,14 +70,18 @@ ext_def_list
 
 ext_def
 		: type_specifier pointers ID ';'{
-			//TODO
+			$$ = define_normal($1, $2, $3);
 		}
-		| type_specifier pointers ID '[' const_expr ']' ';'
+		| type_specifier pointers ID '[' const_expr ']' ';'{
+			$$ = define_array($1, $2, $3, $5);
+		}
 		| func_decl ';'
 		| type_specifier ';'
 		| func_decl compound_stmt
 ; 
 
+/* returns decl entry of TYPE declaration */
+/* assert $$->declclass == _TYPE */
 type_specifier
 		: TYPE{
 			// only int and char
@@ -94,17 +98,47 @@ type_specifier
 ;
 
 struct_specifier
+		/* when first declared */
 		: STRUCT ID '{' {
 			push_scope(); 
 		}
 			def_list '}' {
-				if(!check_is_declared($2)){
-					ste* fields = pop_scope();
-					$$ = makestructdecl(fields);
-					declare($2, $$);
+				ste* fields = pop_scope();
+				if ($$ == NULL) { $$ = NULL; }
+					
+				// check if the struct type(ID) is declared
+				// must search in every scope
+				else if(check_is_declared($2, 0)){
+					$$ = raise("redeclared");
 				}
+				else{
+					$$ = makestructdecl(fields);
+					declare_struct_type($2, $$);
+				}
+				printf("@%s\n", $2->name);
+				debugst(sstop->top);
+				debugst(fields);
 		}
-		| STRUCT ID
+		/* access the already declared struct type */
+		| STRUCT ID {
+			if ($$ = NULL) { $$ = NULL;}
+			else{
+				printf("struct2\n");
+				// find struct type
+				ste* id_ste = find($2);
+
+				// struct must have been declared
+				if(id_ste == NULL){
+					$$ = raise("not declared");
+				}
+
+				// type should be a struct type TODO : is this right error message?
+				else if(check_is_struct(id_ste->decl)){
+					$$ = raise("not struct type");
+				}
+			}
+		}
+		
 ;
 
 func_decl
@@ -139,61 +173,19 @@ def_list    /* list of definitions, definition can be type(struct), variable, fu
 
 def
 		: type_specifier pointers ID ';'{
-			if($1==NULL){ $$ = NULL;}
-			
-			int is_ptr = $2; // 0 if not pointer, 1 if pointer
-			
-			// if redeclared
-			if(check_is_declared($3)){
-				$$ = raise("redeclared");
-			}
-			else{
-				if(is_ptr){
-					$$ = makeptrdecl($1);
-					declare($3, $$);
-				}
-				else{
-					$$ = makevardecl($1);
-					declare($3, $$);
-				}
-			}
+			$$ = define_normal($1, $2, $3);
 		}
 
+
 		| type_specifier pointers ID '[' const_expr ']' ';'{
-			if($1==NULL){ $$ = NULL; }
-			else if($5==NULL){ $$ = NULL; }
-
-			//index must be a integer
-			else if(!check_type_compat($5->type, inttype)){
-				$$ = raise("not int type");
-			}
-			else{
-				int is_ptr = $2;
-
-				// if redeclared
-				if(check_is_declared($3)){
-					$$ = raise("redeclared");
-				}
-				else{
-					decl* var_decl = NULL;
-					if(is_ptr){
-						var_decl = makeptrdecl($1);
-					}
-					else{
-						var_decl = makevardecl($1);
-					}
-					$$ = makearraydecl($5->int_value, var_decl);
-
-					declare($3, $$);
-				}
-			}
+			$$ = define_array($1, $2, $3, $5);
 		}
 		| type_specifier ';'
 		| func_decl ';'
 ;
 
 compound_stmt
-		: '{' local_defs stmt_list '}'
+		: '{' { push_scope(); }local_defs stmt_list '}'{pop_scope();}
 ;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
@@ -389,7 +381,8 @@ unary
 
 		| ID{
 			id* name = $1;	
-			ste* id_ste = find_current_scope(name);
+			// find in all scopes
+			ste* id_ste = find(name); 
 			if(id_ste==NULL){
 				//use without definition
 				$$ = raise("not declared");
@@ -564,165 +557,67 @@ void 	REDUCE( char* s)
 	printf("%s\n",s);
 }
 
+// definition of normal expressions
+// (int x, int *x, struct temp x, struct temp *x)
+// push entry into the symbol table and return its 
+decl* define_normal(decl* type_decl, int is_ptr, id* id_decl){
+	//type undefined
+	if(type_decl==NULL) return NULL; 
 
-// check functions
-
-int check_is_declared(id* name){
-	if(name==NULL) return 0;
-	ste* temp = find_current_scope(name);
-	if (temp==NULL) return 0;
-	else return 1;
-}
-
-int check_type_compat(decl* x, decl* y){
-	if(x==NULL) return 0;
-	if(y==NULL) return 0;
-	return x==y;
-}
-
-int check_is_var(decl* x, int incl_expr){
-	if(x==NULL) return 0;
-	return (x->declclass==_VAR) 
-			|| (incl_expr && (x->declclass==_EXP));
-}
-
-int check_is_const(decl* x){
-	if(x==NULL) return 0;
-	decl* type = x->type;
-	if(type==NULL) return 0;
-	return (x->declclass==_CONST) && (type==inttype || type==chartype);
-}
-
-int check_is_const_var(decl* x, int incl_expr){
-	if(x==NULL) return 0;
-	decl* type = x->type;
-	return (x->declclass==_VAR) 
-			|| ((x->declclass==_CONST) && (type==inttype || type==chartype))
-			|| (incl_expr && (x->declclass==_EXP));
-}
-
-int check_is_pointer(decl* x){
-	if(x==NULL) return 0;
-	decl* type = x->type;
-	if(type==NULL) return 0;
-	return type->typeclass==_POINTER;
-}
-
-int check_is_array(decl* x){
-	if(x==NULL) return 0;
-	decl* type = x->type;
-	if(type==NULL) return 0;
-	return (x->declclass==_CONST) && (type->typeclass==_ARRAY);
-}
-
-// for INCOP and DECOP
-int check_inc_dec(decl* src, decl* dest){
-	if(src==NULL){
-			dest = NULL;
-			return 0;
-	}
-	// unary must be a INT or a CHAR
-	else if (!check_type_compat(src->type, inttype)
-					&& !check_type_compat(src->type, chartype)){
-		dest = raise("not int or char type");
-		return 0;
-	}
+	//id parsing error
+	if(id_decl==NULL) return NULL;
 	
-	// unary must be a variable
-	else if(!check_is_var(src, 0)){
-		dest = raise("not variable");
-		return 0;
+	// id_decl : variable name
+
+	// ID must not be declared in the current scope
+	if (check_is_declared(id_decl, 1)){
+		return raise("redeclared");	
 	}
-	return 1;
+
+	decl* temp;
+	
+	if(is_ptr) temp = makeptrdecl(type_decl);
+	else temp = makevardecl(type_decl);
+
+	declare(id_decl, temp);
+	return temp;
+
 }
 
-// for binary add/sub operations
-int check_add_sub(decl* x, decl* y, decl* dest){
-	if(x==NULL){
-			dest = NULL;
-			return 0;
-	}
-	if(y==NULL){
-			dest = NULL;
-			return 0;
+// definition of array expressions
+// (int x[1], int *x[1], struct temp x[1], struct temp *x[1])
+decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){
+
+	//type undefined
+	if(type_decl==NULL) return NULL; 
+
+	//id parsing error
+	if(id_decl==NULL) return NULL;
+	
+	//error in constant definition
+	if(const_expr==NULL) return NULL;
+
+	//index must be an integer
+	//ASSERTED : const_expr is a constant
+	if(!check_type_compat(const_expr->type, inttype)){
+		return raise("not int type"); // could have been a constant array!
 	}
 
-	// operands(x, y) should be INT
-	if(!check_type_compat(x->type, inttype)){
-		dest = raise("not int type");
-		return 0;
-	}
-	if(!check_type_compat(y->type, inttype)){
-		dest = raise("not int type");
-		return 0;
+	// ID must not be declared in the current scope
+	if (check_is_declared(id_decl, 1)){
+		return raise("redeclared");	
 	}
 
-	// operands should be computable : should have same types
-	if(!check_type_compat(x->type, y->type)){
-		dest = raise("not computable");
-		return 0;
-	}
-	return 1;
-}
+	decl* var_decl;
+	
+	if(is_ptr) var_decl = makeptrdecl(type_decl);
+	else var_decl = makevardecl(type_decl);
 
-// for binary rel/equ operations
-// op==0 for rel, 1 for equ
-int check_rel_equ(decl* x, decl* y, decl* dest, int op){
-	if(x==NULL){
-		dest = NULL;
-		return 0;
-	}
-	if(y==NULL){
-		dest = NULL;
-		return 0;
-	}
-	//for equ operation, pointer operation is possible
-	if(op && check_is_pointer(x)){
-		// if both operands are pointer, than comparable
-		if(check_is_pointer(y)) return 1;
-		// otherwise, not comparable
-		dest = raise("not comparable");
-		return 0;
-	}
+	decl* temp = makearraydecl(const_expr->int_value, var_decl);
 
-	//otherwise, both operands should be INT or CHAR
-	if(!check_type_compat(x->type, inttype) 
-					&& !check_type_compat(x->type, chartype)){
-		dest = raise("not int or char type"); 
-		return 0;
-	}
-	if(!check_type_compat(y->type, inttype) 
-					&& !check_type_compat(y->type, chartype)){
-		dest = raise("not int or char type"); 
-		return 0;
-	}
+	declare(id_decl, temp);
+	
+	return temp;
 
-	// operands should be computable : should have same types
-	if(!check_type_compat(x->type, y->type)){
-		dest = raise("not comparable");
-		return 0;
-	}
-
-	return 1;
-}
-
-// for and/or operations
-int check_and_or(decl* x, decl* y, decl* dest){
-		if(x==NULL) {
-			dest = NULL;
-			return 0;
-		}
-		if(y==NULL){
-			dest = NULL;
-			return 0;
-		}
-
-		//and_list and binary should be both int		
-		else if(!check_type_compat(x->type, inttype)
-						|| !check_type_compat(y->type, inttype)){
-			dest = raise("not int type");
-			return 0;
-		}
-
-		return 1;
+		return NULL;
 }

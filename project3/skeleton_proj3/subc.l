@@ -138,6 +138,7 @@ void init_type(){
 	chartype = maketypedecl(_CHAR);
 
 	declare(enter(ID, "void", 4), voidtype); 
+	globaldef = sstop->top;
 	declare(enter(ID, "int", 3), inttype); 
 	declare(enter(ID, "char", 4), chartype); 
 }

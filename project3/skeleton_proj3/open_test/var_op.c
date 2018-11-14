@@ -1,6 +1,6 @@
 /* variable redefine */
 int a;
-
+int* a; /* error redec */
 
 int main() {
     int a;
@@ -84,3 +84,6 @@ int main() {
 
     return 0;
 }
+
+char* a; /* error redec */
+int b; /* ok */

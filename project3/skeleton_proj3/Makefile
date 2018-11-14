@@ -14,11 +14,14 @@ all : subc
 clean :
 	rm -f *.o lex.yy.c subc.tab.c subc.tab.h subc.output subc
 
-subc : lex.yy.o functions.o hash.o subc.tab.o
-	${CC} -o subc lex.yy.o functions.o hash.o subc.tab.o ${LINK_OPTION}
+subc : lex.yy.o check.o functions.o hash.o subc.tab.o
+	${CC} -o subc lex.yy.o check.o functions.o hash.o subc.tab.o ${LINK_OPTION}
 
 subc.tab.o : subc.tab.c subc.h
 	${CC} -c ${COMPILE_OPTION} subc.tab.c
+
+check.o : check.c subc.h
+	${CC} -c ${COMPILE_OPTION} check.c
 
 functions.o : functions.c subc.h
 	${CC} -c ${COMPILE_OPTION} functions.c
