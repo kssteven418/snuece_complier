@@ -7,9 +7,16 @@ void* raise(char* errormsg){
 	printf("%s:%d: error:%s\n", filename, read_line(), errormsg);
 	return NULL;
 }
+
 decl* copy(decl* org){
 	decl* copy = (decl*)malloc(sizeof(decl));
 	memcpy(copy, org, sizeof(decl));
+	return copy;
+}
+
+ste* copy_ste(ste* s){
+	ste* copy = (ste*)malloc(sizeof(ste));
+	memcpy(copy, s, sizeof(ste));
 	return copy;
 }
 
@@ -43,6 +50,21 @@ ste* pop_scope(){
 	sstop = sstop->prev;
 
 	return outstack;
+}
+
+//push stelist to the current stack
+void push_stelist(ste* stelist){
+	if(stelist==NULL) return;
+
+	ste* temp = stelist;
+	while(1){
+		if(temp->prev == NULL) break; // dummy
+		ste* copy = copy_ste(temp);
+		copy->prev = sstop->top;
+		sstop->top = copy;
+		temp = temp->prev;
+	}
+
 }
 
 //insert declare into the symbol table
@@ -165,6 +187,23 @@ decl* makestructdecl(ste* fields){
 	type->fields = fields;
 	return type;
 	
+}
+
+decl* makeprocdecl(){
+	decl* func = (decl*)malloc(sizeof(decl));
+	func->declclass = _FUNC;
+	return func;
+}
+
+decl* setprocdecl(decl* func, ste* formals){
+	if(func==NULL) return NULL;
+	if(formals==NULL) return NULL;
+
+	func->formals = formals->prev;
+	func->returntype = formals;
+
+	return func;
+
 }
 
 

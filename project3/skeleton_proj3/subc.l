@@ -141,7 +141,7 @@ void init_type(){
 	globaldef = sstop->top;
 	declare(enter(ID, "int", 3), inttype); 
 	declare(enter(ID, "char", 4), chartype); 
-	enter(ID, "*return", 7);
+	returnid = enter(ID, "*return", 7);
 }
 
 int main(int argc, char* argv[])

@@ -59,7 +59,7 @@ typedef struct decl{
 	
 	/* FUNC */
 	struct ste *formals; // arguments
-	struct decl *returntype; 
+	struct ste *returntype; 
 	
 	/* TYPE */
 	int typeclass;
@@ -105,9 +105,11 @@ int read_line();
 
 void* raise(char* errormsg);
 decl* copy(decl* org);
+ste* copy_ste(ste* ste);
 
 void push_scope();
 ste* pop_scope();
+void push_stelist(ste* stelist);
 void declare(id* name, decl* decl);
 void declare_struct_type(id* name, decl* decl);
 ste* find(id* name);
@@ -120,6 +122,8 @@ decl* makeconstdecl(decl* type_decl);
 decl* makeptrdecl(decl* type_decl);
 decl* makearraydecl(int size, decl* var_decl);
 decl* makestructdecl(ste* fields);
+decl* makeprocdecl();
+decl* setprocdecl(decl* func, ste* formals);
 
 void debugst(ste* st);
 
@@ -127,7 +131,10 @@ void debugst(ste* st);
 /* functions in subc.y */
 decl* define_normal(decl* type_decl, int is_ptr, id* id_decl);
 decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr);
-decl* define_struct_type(decl* type_decl);
+decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl);
+decl* check_struct_type(decl* type_decl);
+decl* check_function(decl* func_decl);
+decl* connect_defs(decl* def_list, decl* def);
 
 
 /* check functions */

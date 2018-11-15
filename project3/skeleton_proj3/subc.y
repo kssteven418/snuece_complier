@@ -44,6 +44,7 @@ void 	REDUCE(char* s);
 
 %type<intVal> pointers
 %type<declptr> def def_list ext_def ext_def_list
+%type<declptr> func_decl param_decl param_list
 %type<declptr> type_specifier struct_specifier
 %type<declptr> const_expr expr or_expr or_list and_expr and_list
 %type<declptr> binary unary
@@ -68,7 +69,11 @@ program
 ;
 
 ext_def_list
-		: ext_def_list ext_def
+		: ext_def_list ext_def{
+			//connect definition list
+			$$ = connect_defs($1, $2);
+		}
+		
 		| /* empty */{
 			$$ = NULL;
 		}
@@ -84,14 +89,18 @@ ext_def
 		}
 
 		| func_decl ';'{
-
+			$$ = check_function($1);
+			pop_scope();			
 		}
 
 		| type_specifier ';'{
-			$$ = define_struct_type($1);
+			$$ = check_struct_type($1);
 		}
 
-		| func_decl compound_stmt
+		| func_decl compound_stmt {
+			$$ = check_function($1);
+			pop_scope();
+		}
 ; 
 
 /* returns decl entry of TYPE declaration */
@@ -107,7 +116,6 @@ type_specifier
 			$$ = typeste->decl;
 		}
 		| struct_specifier{
-			// if($1!=NULL) debugst($1->fields);
 			$$ = $1;
 		}
 ;
@@ -119,7 +127,7 @@ struct_specifier
 		}
 			def_list '}' {
 				ste* fields = pop_scope();
-				if ($$ == NULL) { $$ = NULL; }
+				if ($2 == NULL) { $$ = NULL; }
 					
 				// check if the struct type(ID) is declared
 				// must search in every scope
@@ -131,9 +139,10 @@ struct_specifier
 					declare_struct_type($2, $$);
 				}
 		}
+
 		/* access the already declared struct type */
 		| STRUCT ID {
-			if ($$ = NULL) { $$ = NULL;}
+			if ($2 == NULL) { $$ = NULL;}
 			else{
 				// find struct type
 				ste* id_ste = find($2);
@@ -155,8 +164,70 @@ struct_specifier
 
 func_decl
 		: type_specifier pointers ID '(' ')'
+		{
+			$$ = define_function_no_param($1, $2, $3);
+		}
 		| type_specifier pointers ID '(' VOID ')'
-		| type_specifier pointers ID '(' param_list ')'
+		{
+			$$ = define_function_no_param($1, $2, $3);
+		}
+		| type_specifier pointers ID '('
+			{
+				if ($1 == NULL) { push_scope(); $<declptr>$ = NULL;}
+				else if ($3 == NULL) { push_scope(); $<declptr>$ = NULL;}
+
+				// function name must have not defined before
+				else if (check_is_declared($3, 1)){
+					push_scope();
+					$<declptr>$ = raise("redeclared");
+				}
+
+				else{
+					decl *func = makeprocdecl();
+					// function id is inserted into the stack
+					// before the fack stack scope is constructed
+					declare($3, func);
+					//fake scope
+					push_scope();
+					// return type that returnid ste points to
+					decl *returntype;
+					// if pointer, encapsule type_specifier into ptr type decl
+					if($2){
+						returntype = (decl*)malloc(sizeof(decl));
+						returntype->declclass = _TYPE;
+						returntype->typeclass = _POINTER;
+						returntype->ptrto = $1;
+					}
+					else{
+						returntype = $1;
+					}
+					
+					// push returnid at the fake stack
+					declare(returnid, returntype);
+					$<declptr>$ = func;
+				}
+			}
+			 param_list ')'
+			{
+				decl* func = $<declptr>5;
+				if(func==NULL){ 
+						pop_scope(); // must pop unnecessary declarations
+						$$ = NULL; 
+						push_scope(); // scope for unnecessary func body 
+				}
+				else{
+					// pop out the fake scope
+					ste* formals = pop_scope();
+					//debugst(formals);
+					// set returntype and formals information of the function
+					setprocdecl(func, formals); 
+					// new scope for local declarations and formals
+					push_scope();
+					// enter all the formal variables into the stack
+					push_stelist(formals);
+					$$ = func;
+				}
+			}
 ;
 
 pointers
@@ -169,17 +240,29 @@ pointers
 ;
 
 param_list  /* list of formal parameter declaration */
-		: param_decl
-		| param_list ',' param_decl
+		: param_decl{
+			$$ = $1;
+		}
+		| param_list ',' param_decl{
+			//connect parameter list
+			$$ = connect_defs($1, $3);
+		}
 ;
 
 param_decl  /* formal parameter declaration */
-		: type_specifier pointers ID
-		| type_specifier pointers ID '[' const_expr ']'
+		: type_specifier pointers ID{
+			$$ = define_normal($1, $2, $3);
+		}
+		| type_specifier pointers ID '[' const_expr ']'{
+			$$ = define_array($1, $2, $3, $5);
+		}
 ;
 
 def_list    /* list of definitions, definition can be type(struct), variable, function */
-		: def_list def
+		: def_list def{
+			//connect definition list
+			$$ = connect_defs($1, $2);
+		}
 		| /* empty */{
 			$$ = NULL;
 		}
@@ -195,14 +278,17 @@ def
 		}
 
 		| type_specifier ';'{
-			$$ = define_struct_type($1);
+			$$ = check_struct_type($1);
 		}
 
-		| func_decl ';'
+		| func_decl ';'{
+			$$ = check_function($1);
+			pop_scope();
+		}
 ;
 
 compound_stmt
-		: '{' { push_scope(); }local_defs stmt_list '}'{pop_scope();}
+		: '{' local_defs stmt_list '}'
 ;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
@@ -543,6 +629,7 @@ unary
 			else if(!check_is_array($1)){
 				$$ = raise("not array type"); // TODO : error msg?
 			}
+			//exp must be a integer
 			else if(!check_type_compat($3->type, inttype)){
 				$$ = raise("not int type");
 			}
@@ -690,8 +777,55 @@ decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){
 	return temp;
 }
 
+decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl){
+	if(type_decl==NULL) {
+			push_scope(); // scope for unnecessary func body
+			return NULL;
+	}
+	if(id_decl==NULL){
+			push_scope(); // scope for unnecessary func body
+			return NULL;
+	}
+	// function name must have not defined before
+	if (check_is_declared(id_decl, 1)){
+		push_scope(); // scope for unnecessary func body
+		return raise("redeclared");
+	}
 
-decl* define_struct_type(decl* type_decl){
+	decl* func = makeprocdecl();
+	declare(id_decl, func);
+	push_scope();
+
+	decl* returntype;
+
+	// if pointer, encapsule type_specifier into ptr type decl
+	if(is_ptr){
+		returntype = (decl*)malloc(sizeof(decl));
+		returntype->declclass = _TYPE;
+		returntype->typeclass = _POINTER;
+		returntype->ptrto = type_decl;
+	}
+	else{
+		returntype = type_decl;
+	}
+	declare(returnid, returntype);
+
+	// pop out the fake scope
+	ste* formals = pop_scope();
+	// set returntype and formals information of the function
+	setprocdecl(func, formals);
+	// new scope for local declarations and formals
+	push_scope();
+	// enter all the formal variables into the stack
+	push_stelist(formals);
+	
+	return func;
+
+
+}
+
+
+decl* check_struct_type(decl* type_decl){
 	if(type_decl == NULL) return NULL;
 
 	// type-only component, then should be a struct type
@@ -704,4 +838,17 @@ decl* define_struct_type(decl* type_decl){
 		return type_decl;
 	}
 
+}
+
+decl* check_function(decl* func_decl){
+		if(func_decl == NULL) return NULL;
+		return func_decl;
+}
+
+decl* connect_defs(decl* def_list, decl* def){
+	if(def==NULL) return NULL;
+
+	//connect def->def_list, def_list might be a null value
+	def->next = def_list;
+	return def;
 }
