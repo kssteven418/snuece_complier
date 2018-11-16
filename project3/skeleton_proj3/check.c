@@ -83,6 +83,11 @@ int check_is_struct_type(decl* x){
 	return (x->typeclass==_STRUCT);
 }
 
+int check_is_proc(decl* f){
+	if(f==NULL) return 0;
+	return (f->declclass==_FUNC);
+}
+
 // for INCOP and DECOP
 int check_inc_dec(decl* src, decl* dest){
 	if(src==NULL){

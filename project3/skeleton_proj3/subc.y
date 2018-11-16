@@ -46,7 +46,7 @@ void 	REDUCE(char* s);
 %type<declptr> def def_list ext_def ext_def_list local_defs
 %type<declptr> func_decl param_decl param_list
 %type<declptr> type_specifier struct_specifier
-%type<declptr> const_expr expr or_expr or_list and_expr and_list
+%type<declptr> const_expr expr or_expr or_list and_expr and_list args
 %type<declptr> binary unary
 
 %token<idptr> ID
@@ -70,8 +70,6 @@ program
 
 ext_def_list
 		: ext_def_list ext_def{
-			//connect definition list
-			$$ = connect_defs($1, $2);
 		}
 		
 		| /* empty */{
@@ -244,8 +242,6 @@ param_list  /* list of formal parameter declaration */
 			$$ = $1;
 		}
 		| param_list ',' param_decl{
-			//connect parameter list
-			$$ = connect_defs($1, $3);
 		}
 ;
 
@@ -260,8 +256,6 @@ param_decl  /* formal parameter declaration */
 
 def_list    /* list of definitions, definition can be type(struct), variable, function */
 		: def_list def{
-			//connect definition list
-			$$ = connect_defs($1, $2);
 		}
 		| /* empty */{
 			$$ = NULL;
@@ -733,13 +727,60 @@ unary
 			}
 
 		}
-		| unary '(' args ')'
-		| unary '(' ')'
+		| unary '(' args ')'{
+		
+			//debug_args($3);
+			
+			if($1==NULL) { $$ = NULL; }
+
+			// unary must be a function 
+			else if (!check_is_proc($1)){
+				$$ = raise("not a function");
+			}
+			else{
+				//check argument
+				if(!check_function_call($1, $3)){
+					$$ = raise("actual args are not equal to formal args");
+				}
+				else {
+					// return value is same as return type 
+					// and should be a expression
+					$$ = makevardecl($1->returntype->decl/* this is type */);
+					$$->declclass = _EXP;
+				}
+			}
+		}
+
+		| unary '(' ')'{
+			if($1==NULL){ $$ = NULL; }
+
+			// unary must be a function 
+			else if (!check_is_proc($1)){
+				$$ = raise("not a function");
+			}
+			else{
+				// check arguments
+				if(!check_function_call($1, NULL)){
+					$$ = raise("actual args are not equal to formal args");
+				}
+				else {
+					// return value is same as return type 
+					// and should be a expression
+					$$ = makevardecl($1->returntype->decl/* this is type */);
+					$$->declclass = _EXP;
+				}
+			}
+		}
 ;
 
 args    /* actual parameters(function arguments) transferred to function */
-		: expr
-		| args ',' expr
+		: expr{
+			$$ = copy($1);
+		}
+		| expr ',' args{
+			$$ = copy($1);
+			$$->next = $3;	
+		}
 ;
 
 
@@ -755,6 +796,43 @@ int    yyerror (char* s)
 void 	REDUCE( char* s)
 {
 	printf("%s\n",s);
+}
+
+void debug_args(decl* x){
+	while(x!=NULL) {
+			printf("%d ", x->type->typeclass);
+			x = x->next;
+	}
+	printf("\n");
+}
+
+int check_function_call(decl* func, decl* args){
+	if(func==NULL) return 0;
+	ste* formals = func->formals;
+
+	// 1. no passing arguments i.e. func()
+	if (args == NULL){
+		return (formals->prev==NULL);
+	}
+	
+	// 2. passing argument i.e. func(1, 2)
+	else{
+		while(formals->prev != NULL && args != NULL){
+			// type check b/w param and arg
+			if(!check_type_compat(formals->decl->type, args->type)){
+				return 0;
+			}
+			formals = formals->prev;
+			args = args->next;
+		}
+	
+		// if # param != # args
+		if(formals->prev != NULL || args != NULL){
+			return 0;
+		}
+			
+		return 1;
+	}
 }
 
 // definition of normal expressions
