@@ -43,7 +43,7 @@ void 	REDUCE(char* s);
 /* Token and Types */
 
 %type<intVal> pointers
-%type<declptr> def def_list ext_def ext_def_list
+%type<declptr> def def_list ext_def ext_def_list local_defs
 %type<declptr> func_decl param_decl param_list
 %type<declptr> type_specifier struct_specifier
 %type<declptr> const_expr expr or_expr or_list and_expr and_list
@@ -292,7 +292,9 @@ compound_stmt
 ;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
-		:	def_list 
+		:	def_list {
+			$$ = $1;
+		}
 ;
 
 stmt_list
@@ -303,8 +305,26 @@ stmt_list
 stmt
 		: expr ';'
 		| compound_stmt
-		| RETURN ';'
-		| RETURN expr ';'
+		| RETURN ';'{
+			ste* ret = find_current_scope(returnid);				
+			if (ret != NULL){
+				if(!check_type_compat(ret->decl, voidtype)){
+					raise("return value is not return type");			
+				}
+			}
+		}
+		| RETURN expr ';' {
+			ste* ret = find_current_scope(returnid);
+
+			// expression must be a constant, a variable or a pointer
+			// cannot be func, array constant, or type
+			if (ret != NULL){
+				if(!check_type_compat(ret->decl, $2->type)){
+					raise("return value is not return type");			
+				}
+					
+			}
+		}
 		| ';'
 		| IF '(' expr ')' stmt
 		| IF '(' expr ')' stmt ELSE stmt
@@ -334,6 +354,29 @@ const_expr
 expr
 		: unary '=' expr{
 				//TODO
+				if ($1==NULL) {$$=NULL;}
+				else if ($3==NULL) {$$=NULL;}
+				
+				// LHS unary must be a pure variable
+				// array is not allowed since it is a CONST
+				else if (!check_is_var($1, 0)){
+					$$ = raise("LHS is not a variable");
+				}
+					
+				// RHS expr must be a variable(+expr) or a const
+				else if (!check_is_const_var($3, 1)){
+					$$ = raise("RHS is not a const or variable");	
+				}
+
+				// RHS and LHS must have same type
+				else if (!check_type_compat($1->type, $3->type)){
+					$$ = raise("LHS and RHS are not same type");
+				}
+				
+				// otherwise, return the unary itself
+				else{
+					$$ = $1;
+				}
 		}
 		| or_expr{
 				$$ = $1;
@@ -614,7 +657,7 @@ unary
 				// access the value in the pointer
 				decl* temp = makevardecl($2->type->ptrto);		
 				$$ = temp;
-				$$->declclass = _EXP;
+				$$->declclass = _VAR;
 			}
 		}
 

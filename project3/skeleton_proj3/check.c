@@ -22,7 +22,18 @@ int check_is_declared(id* name, int for_current){
 int check_type_compat(decl* x, decl* y){
 	if(x==NULL) return 0;
 	if(y==NULL) return 0;
-	return x==y;
+	if (x==y) return 1;
+	
+	if (x->typeclass != y->typeclass) return 0;
+
+	// both are pointers
+	if(x->typeclass == _POINTER){
+		return check_type_compat(x->ptrto, y->ptrto); 
+	}
+
+	// assume that this function is not called
+	// in case of both are array
+	return 0;
 }
 
 int check_is_var(decl* x, int incl_expr){
