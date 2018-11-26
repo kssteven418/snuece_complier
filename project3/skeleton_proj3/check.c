@@ -25,7 +25,7 @@ int check_type_compat(decl* x, decl* y){
 	if (x==y) return 1;
 	
 	if (x->typeclass != y->typeclass) return 0;
-
+	
 	// both are pointers
 	if(x->typeclass == _POINTER){
 		return check_type_compat(x->ptrto, y->ptrto); 
@@ -152,7 +152,9 @@ int check_rel_equ(decl* x, decl* y, decl* dest, int op){
 	//for equ operation, pointer operation is possible
 	if(op && check_is_pointer(x)){
 		// if both operands are pointer, than comparable
-		if(check_is_pointer(y)) return 1;
+		if(check_is_pointer(y)) 
+				if(check_type_compat(x->type, y->type))
+						return 1;
 		// otherwise, not comparable
 		dest = raise("not comparable");
 		return 0;

@@ -133,7 +133,8 @@ int read_line()
 // insert type declaration at the symbol table bottom
 // p.27
 void init_type(){
-	null = makeconstdecl(NULL);
+	null = makeconstdecl(null);
+	null->declclass = _NULL;
 	voidtype = maketypedecl(_VOID);
 	inttype = maketypedecl(_INT);
 	chartype = maketypedecl(_CHAR);

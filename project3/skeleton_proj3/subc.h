@@ -16,6 +16,7 @@
 #define _FUNC 2
 #define _TYPE 3
 #define _EXP 4
+#define _NULL 5
 
 // type classes
 #define _VOID 0
@@ -95,6 +96,7 @@ id* returnid;
 unsigned hash(char *name);
 struct id *enter(int lextype, char *name, int length);
 struct id *lookup(char *name);
+int strCompare_no_len(char* x, char* y);
 
 // file and line info
 char *filename;

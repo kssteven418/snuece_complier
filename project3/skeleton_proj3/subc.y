@@ -126,7 +126,12 @@ struct_specifier
 			def_list '}' {
 				ste* fields = pop_scope();
 				if ($2 == NULL) { $$ = NULL; }
-					
+				
+				// id should not be 'NULL'
+				if(strCompare_no_len($2->name, "NULL")){
+					$$ = raise("unqualified id");
+				}
+
 				// check if the struct type(ID) is declared
 				// must search in every scope
 				else if(check_is_declared($2, 0)){
@@ -141,6 +146,11 @@ struct_specifier
 		/* access the already declared struct type */
 		| STRUCT ID {
 			if ($2 == NULL) { $$ = NULL;}
+			// id should not be 'NULL'
+			if(strCompare_no_len($2->name, "NULL")){
+				$$ = raise("unqualified id");
+			}
+			
 			else{
 				// find struct type
 				ste* id_ste = find($2);
@@ -173,6 +183,12 @@ func_decl
 			{
 				if ($1 == NULL) { push_scope(); $<declptr>$ = NULL;}
 				else if ($3 == NULL) { push_scope(); $<declptr>$ = NULL;}
+				
+				// id should not be 'NULL'
+				else if(strCompare_no_len($3->name, "NULL")){
+					push_scope();
+					$<declptr>$ = raise("unqualified id");
+				}
 
 				// function name must have not defined before
 				else if (check_is_declared($3, 1)){
@@ -313,7 +329,14 @@ stmt
 			// expression must be a constant, a variable or a pointer
 			// cannot be func, array constant, or type
 			if (ret != NULL){
-				if(!check_type_compat(ret->decl, $2->type)){
+
+				// if the expr is NULL
+				if($2->declclass == _NULL){
+					if (!(ret->decl->typeclass == _POINTER)){
+						raise("return value is not return type");
+					}
+				}
+				else if(!check_type_compat(ret->decl, $2->type)){
 					raise("return value is not return type");			
 				}
 					
@@ -356,6 +379,17 @@ expr
 					$$ = raise("LHS is not a variable");
 				}
 					
+				// if RHS is NULL
+				else if($3->declclass==_NULL){
+					// the LHS must be a pointer
+					if ($1->type->typeclass == _POINTER){
+						$$ = $1;
+					}
+					else{
+						$$ = raise("LHS and RHS are not same type");
+					}
+				}
+
 				// RHS expr must be a variable(+expr) or a const
 				else if (!check_is_const_var($3, 1)){
 					$$ = raise("RHS is not a const or variable");	
@@ -849,12 +883,18 @@ int check_function_call(decl* func, decl* args){
 // (int x, int *x, struct temp x, struct temp *x)
 // push entry into the symbol table and return its 
 decl* define_normal(decl* type_decl, int is_ptr, id* id_decl){
+
 	//type undefined
 	if(type_decl==NULL) return NULL; 
 
 	//id parsing error
 	if(id_decl==NULL) return NULL;
 	
+	// id should not be 'NULL'
+	if(strCompare_no_len(id_decl->name, "NULL")){
+		return raise("unqualified id");
+	}
+
 	// id_decl : variable name
 
 	// ID must not be declared in the current scope
@@ -884,6 +924,12 @@ decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){
 	
 	//error in constant definition
 	if(const_expr==NULL) return NULL;
+	
+	// id should not be 'NULL'
+	if(strCompare_no_len(id_decl->name, "NULL")){
+		return raise("unqualified id");
+	}
+
 
 	//index must be an integer
 	//ASSERTED : const_expr is a constant
@@ -917,6 +963,13 @@ decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl){
 			push_scope(); // scope for unnecessary func body
 			return NULL;
 	}
+
+	// id should not be 'NULL'
+	if(strCompare_no_len(id_decl->name, "NULL")){
+			push_scope();
+			return raise("unqualified id");
+	}
+
 	// function name must have not defined before
 	if (check_is_declared(id_decl, 1)){
 		push_scope(); // scope for unnecessary func body
