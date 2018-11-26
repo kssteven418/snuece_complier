@@ -133,10 +133,12 @@ int read_line()
 // insert type declaration at the symbol table bottom
 // p.27
 void init_type(){
+	null = makeconstdecl(NULL);
 	voidtype = maketypedecl(_VOID);
 	inttype = maketypedecl(_INT);
 	chartype = maketypedecl(_CHAR);
 
+	declare(enter(ID, "NULL", 4), null); 
 	declare(enter(ID, "void", 4), voidtype); 
 	globaldef = sstop->top;
 	declare(enter(ID, "int", 3), inttype); 
@@ -162,8 +164,8 @@ int main(int argc, char* argv[])
 	sstop->prev->top = temp;
 	
 	// insert keywords in the hash table
-   static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue",  NULL };
-   static int tokentype[] = { TYPE, TYPE, VOID, STRUCT, RETURN, IF, ELSE, WHILE, FOR, BREAK, CONTINUE, 0 };
+   static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue", "NULL",  NULL };
+   static int tokentype[] = { TYPE, TYPE, VOID, STRUCT, RETURN, IF, ELSE, WHILE, FOR, BREAK, CONTINUE, ID, 0 };
    int i;
    for(i = 0; keyword[i] != NULL; i++)
       enter(tokentype[i], keyword[i], strlen(keyword[i]));

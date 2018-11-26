@@ -92,7 +92,7 @@ ext_def
 		}
 
 		| type_specifier ';'{
-			$$ = check_struct_type($1);
+			$$ = $1;
 		}
 
 		| func_decl compound_stmt {
@@ -147,11 +147,11 @@ struct_specifier
 
 				// struct must have been declared
 				if(id_ste == NULL){
-					$$ = raise("not declared");
+					$$ = raise("incomplete type error");
 				}
-				// type should be a struct type TODO : is this right error message?
+				// type should be a struct type 
 				else if(!check_is_struct_type(id_ste->decl)){
-					$$ = raise("not struct type");
+					$$ = raise("undeclared");
 				}
 				else{
 					$$ = id_ste->decl;
@@ -272,7 +272,7 @@ def
 		}
 
 		| type_specifier ';'{
-			$$ = check_struct_type($1);
+			$$ = $1;
 		}
 
 		| func_decl ';'{
@@ -347,7 +347,6 @@ const_expr
 
 expr
 		: unary '=' expr{
-				//TODO
 				if ($1==NULL) {$$=NULL;}
 				else if ($3==NULL) {$$=NULL;}
 				
@@ -520,8 +519,19 @@ unary
 		}
 
 		| STRING{
-			//TODO
+			id* temp = lookup("char");	
+			ste* typeste = find(temp);
+			decl* typedecl = typeste->decl;
+			
+			int len = 0;
+			while($1[len]!='\0'){
+					len++;
+			}
+
+			decl* var_decl = makevardecl(typedecl);
+			$$ = makearraydecl(len-1, var_decl);
 		}
+
 
 		| ID{
 			id* name = $1;	

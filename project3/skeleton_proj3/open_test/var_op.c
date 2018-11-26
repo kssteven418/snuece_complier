@@ -10,6 +10,14 @@ int main() {
     int c;
     char d;
 	int* p;
+	void v;
+	void v2;
+
+	v=v2;
+	v==v2; /* error */
+
+	a = (p==p);
+	p = (p==p); /* error */
 
     a = b;
     a = e;	/* error */

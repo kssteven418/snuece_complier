@@ -85,6 +85,7 @@ typedef struct scope_stack{
 
 scope_stack *sstop;
 ste *globaldef;
+decl *null;
 decl *voidtype;
 decl *inttype;
 decl *chartype;
