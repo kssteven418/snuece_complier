@@ -670,7 +670,6 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($1, $$)){
 				$$ = $1;
-				$$->declclass = _EXP; // integer/char expression
 			}
 			else{
 				$$ = NULL;
@@ -681,7 +680,6 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($1, $$)){
 				$$ = $1;
-				$$->declclass = _EXP; // integer/char expression
 			}
 			else{
 				$$ = NULL;
@@ -691,7 +689,6 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
-				$$->declclass = _EXP; // integer/char expression
 			}
 			else{
 				$$ = NULL;
@@ -702,7 +699,6 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
-				$$->declclass = _EXP; // integer/char expression
 			}
 			else{
 				$$ = NULL;

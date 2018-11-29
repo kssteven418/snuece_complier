@@ -144,4 +144,9 @@ int main2(){
 	cpa[0] = "string"; 
 	*(cpa[0]) = "string"; /* error */
 
+	&"string"; /* error */
+	*"string"; 
+
+	(a) = 3;
+
 }

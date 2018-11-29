@@ -53,10 +53,10 @@ int main() {
 	(-a)--;/* error */
 	++(-a);/* error */
 	--(-a);/* error */
-	(a++)++;/* error */
-	(++a)++;/* error */
-	(--a)++;/* error */
-	(a--)++;/* error */
+	(a++)++;
+	(++a)++;
+	(--a)++;
+	(a--)++;
 	
 	(a+b)++; /* error */
 	(a+p)++; /* error */

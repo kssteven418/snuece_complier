@@ -47,5 +47,8 @@ int main() {
 	x[*q]; /* error */
 	x[p]; /* error */
 
+	&x; /* error */
+	&xp; /* error */
+
     return 0;
 }
