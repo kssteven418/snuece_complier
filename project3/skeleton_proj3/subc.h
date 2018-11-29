@@ -147,7 +147,7 @@ decl* connect_defs(decl* def_list, decl* def);
 /* check functions */
 /* defined in check.c */
 int	check_is_declared(id* name, int for_current);
-int check_type_compat(decl* x, decl* y);
+int check_type_compat(decl* x, decl* y, int arr_to_ptr);
 int check_is_var(decl* x, int incl_expr);
 int check_is_const(decl* x);
 int check_is_const_var(decl* x, int incl_expr);

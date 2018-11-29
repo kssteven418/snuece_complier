@@ -127,15 +127,28 @@ struct_specifier
 			// check if the struct type(ID) is declared
 			// must search in every scope
 			if(check_is_declared($2, 0)){
-				$<declptr>$ = raise("redeclared");
+				// id should not be 'NULL'
+				if(strCompare_no_len($2->name, "NULL")){
+					$<declptr>$ = raise("unqualified id");
+				}
+				else{
+					$<declptr>$ = raise("redeclared");
+				}
 			}
 		}
 			def_list '}' {
 				ste* fields = pop_scope();
 				if ($2 == NULL) { $$ = NULL; }
 				
+				else if(check_is_declared($2, 0)){
+						$$ = NULL;
+				}
+				else if(strCompare_no_len($2->name, "NULL")){
+					$$ = NULL;
+				}
+				
 				// id should not be 'NULL'
-				if(strCompare_no_len($2->name, "NULL")){
+				else if(strCompare_no_len($2->name, "NULL")){
 					$$ = raise("unqualified id");
 				}
 
@@ -323,12 +336,12 @@ stmt
 		| RETURN ';'{
 			ste* ret = find_current_scope(returnid);				
 			if (ret != NULL){
-				if(!check_type_compat(ret->decl, voidtype)){
+				if(!check_type_compat(ret->decl, voidtype, 0)){
 					raise("return value is not return type");			
 				}
 			}
 			else{
-				if(!check_type_compat(ftn_type_glob, voidtype)){
+				if(!check_type_compat(ftn_type_glob, voidtype, 0)){
 					raise("return value is not return type");
 				}
 			}
@@ -346,13 +359,13 @@ stmt
 						raise("return value is not return type");
 					}
 				}
-				else if(!check_type_compat(ret->decl, $2->type)){
+				else if(!check_type_compat(ret->decl, $2->type, 0)){
 					raise("return value is not return type");			
 				}
 					
 			}
 			else{
-				if(!check_type_compat(ftn_type_glob, $2->type)){
+				if(!check_type_compat(ftn_type_glob, $2->type, 0)){
 					raise("return value is not return type");
 				}
 			}
@@ -406,12 +419,13 @@ expr
 				}
 
 				// RHS expr must be a variable(+expr) or a const
-				else if (!check_is_const_var($3, 1)){
-					$$ = raise("RHS is not a const or variable");	
+				else if (!check_is_const_var($3, 1)
+								&& $3->type->typeclass != _ARRAY){
+						$$ = raise("RHS is not a const or variable");	
 				}
 
 				// RHS and LHS must have same type
-				else if (!check_type_compat($1->type, $3->type)){
+				else if (!check_type_compat($1->type, $3->type, 1)){
 					$$ = raise("LHS and RHS are not same type");
 				}
 				
@@ -492,7 +506,9 @@ binary
 				else{
 					$$->declclass = _EXP;
 				}
-				
+			}
+			else{
+				$$ = NULL;
 			}
 		}
 		| binary EQUOP binary{
@@ -507,7 +523,9 @@ binary
 				else{
 					$$->declclass = _EXP;
 				}
-				
+			}
+			else{
+				$$ = NULL;
 			}
 			
 		}
@@ -523,6 +541,9 @@ binary
 					$$->declclass = _EXP;
 				}
 			}
+			else{
+				$$ = NULL;
+			}
 		}
 
 		| binary '-' binary{
@@ -536,6 +557,9 @@ binary
 				else{
 					$$->declclass = _EXP;
 				}
+			}
+			else{
+				$$ = NULL;
 			}
 			
 		}
@@ -571,14 +595,9 @@ unary
 			id* temp = lookup("char");	
 			ste* typeste = find(temp);
 			decl* typedecl = typeste->decl;
-			
-			int len = 0;
-			while($1[len]!='\0'){
-					len++;
-			}
 
-			decl* var_decl = makevardecl(typedecl);
-			$$ = makearraydecl(len-1, var_decl);
+			$$ = makeptrdecl(typedecl);
+			$$->declclass = _EXP; 
 		}
 
 
@@ -601,7 +620,7 @@ unary
 			if($2 == NULL) $$ = NULL;
 			
 			// unary is not INT type
-			else if(!check_type_compat($2->type, inttype)){
+			else if(!check_type_compat($2->type, inttype, 0)){
 				$$ = raise("not int type");
 			}
 
@@ -626,7 +645,7 @@ unary
 			if($2 == NULL) $$ = NULL;
 			
 			// unary must be a INT type
-			else if(!check_type_compat($2->type, inttype)){
+			else if(!check_type_compat($2->type, inttype, 0)){
 				$$ = raise("not int type");
 			}
 			
@@ -653,6 +672,9 @@ unary
 				$$ = $1;
 				$$->declclass = _EXP; // integer/char expression
 			}
+			else{
+				$$ = NULL;
+			}
 		}
 
 		| unary DECOP{
@@ -661,12 +683,18 @@ unary
 				$$ = $1;
 				$$->declclass = _EXP; // integer/char expression
 			}
+			else{
+				$$ = NULL;
+			}
 		}
 		| INCOP unary{
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
 				$$->declclass = _EXP; // integer/char expression
+			}
+			else{
+				$$ = NULL;
 			}
 		}
 
@@ -675,6 +703,9 @@ unary
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
 				$$->declclass = _EXP; // integer/char expression
+			}
+			else{
+				$$ = NULL;
 			}
 		}
 
@@ -726,7 +757,7 @@ unary
 				$$ = raise("not array type"); // TODO : error msg?
 			}
 			//exp must be a integer
-			else if(!check_type_compat($3->type, inttype)){
+			else if(!check_type_compat($3->type, inttype, 0)){
 				$$ = raise("not int type");
 			}
 			else{
@@ -878,7 +909,7 @@ int check_function_call(decl* func, decl* args){
 	else{
 		while(formals->prev != NULL && args != NULL){
 			// type check b/w param and arg
-			if(!check_type_compat(formals->decl->type, args->type)){
+			if(!check_type_compat(formals->decl->type, args->type, 0)){
 				return 0;
 			}
 			formals = formals->prev;
@@ -948,7 +979,7 @@ decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){
 
 	//index must be an integer
 	//ASSERTED : const_expr is a constant
-	if(!check_type_compat(const_expr->type, inttype)){
+	if(!check_type_compat(const_expr->type, inttype, 0)){
 		return raise("not int type"); // could have been a constant array!
 	}
 

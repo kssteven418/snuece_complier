@@ -39,8 +39,9 @@ void a(int x){
 	void NULL(int NULL); /* error */ /* error */
 	
 			
-   y = "hello"[0];
-   x = "hello"[0];
+   y = "hello"[0];/* error */
+   x = "hello"[0];/* error */
+
 }
 
 int NULL(){ /* error */
@@ -54,7 +55,7 @@ int NULL(int NULL){ /* error */
 	int NULL; /* error */
 	char x; /* error */
 
-	return NULL;
+	return NULL;/* error */
 }
 
 int x(){
@@ -71,14 +72,13 @@ int* y(){
 	int *p;
 	char* q;
 
-	/* all errors */
-	NULL+1;
-	NULL+NULL;
-	NULL++;
-	NULL==NULL;
-	NULL>NULL;
-	*NULL;
-	&NULL;
+	NULL+1;/* error */
+	NULL+NULL;/* error */
+	NULL++;/* error */
+	NULL==NULL;/* error */
+	NULL>NULL;/* error */
+	*NULL;/* error */
+	&NULL;/* error */
 
 	x = NULL; /* error */
 	p = NULL;

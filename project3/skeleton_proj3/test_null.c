@@ -29,6 +29,10 @@ void fun(){ /* error */
 	return;
 }
 
+int str;
+struct str{} str1;
+struct str str2;
+
 int main(){
 
 	int a;

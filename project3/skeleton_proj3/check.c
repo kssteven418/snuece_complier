@@ -19,22 +19,31 @@ int check_is_declared(id* name, int for_current){
 	else return 1;
 }
 
-int check_type_compat(decl* x, decl* y){
+int check_type_compat(decl* x, decl* y, int arr_to_ptr){
 	if(x==NULL) return 0;
 	if(y==NULL) return 0;
 	if (x==y) return 1;
+
+	// if ptr = arr decl is possible
+	// x : ptr, y : array
+	if (arr_to_ptr){
+			if (x->typeclass == _POINTER && y->typeclass == _ARRAY){
+				return check_type_compat(x->ptrto, y->elementvar->type, 0);
+			}
+	}
 	
 	if (x->typeclass != y->typeclass) return 0;
 	
 	// both are pointers
 	if(x->typeclass == _POINTER){
-		return check_type_compat(x->ptrto, y->ptrto); 
+		return check_type_compat(x->ptrto, y->ptrto, 0); 
 	}
 
 	// assume that this function is not called
 	// in case of both are array
 	return 0;
 }
+
 
 int check_is_var(decl* x, int incl_expr){
 	if(x==NULL) return 0;
@@ -95,8 +104,8 @@ int check_inc_dec(decl* src, decl* dest){
 			return 0;
 	}
 	// unary must be a INT or a CHAR
-	else if (!check_type_compat(src->type, inttype)
-					&& !check_type_compat(src->type, chartype)){
+	else if (!check_type_compat(src->type, inttype, 0)
+					&& !check_type_compat(src->type, chartype, 0)){
 		dest = raise("not int or char type");
 		return 0;
 	}
@@ -121,17 +130,17 @@ int check_add_sub(decl* x, decl* y, decl* dest){
 	}
 
 	// operands(x, y) should be INT
-	if(!check_type_compat(x->type, inttype)){
+	if(!check_type_compat(x->type, inttype, 0)){
 		dest = raise("not int type");
 		return 0;
 	}
-	if(!check_type_compat(y->type, inttype)){
+	if(!check_type_compat(y->type, inttype, 0)){
 		dest = raise("not int type");
 		return 0;
 	}
 
 	// operands should be computable : should have same types
-	if(!check_type_compat(x->type, y->type)){
+	if(!check_type_compat(x->type, y->type, 0)){
 		dest = raise("not computable");
 		return 0;
 	}
@@ -153,7 +162,7 @@ int check_rel_equ(decl* x, decl* y, decl* dest, int op){
 	if(op && check_is_pointer(x)){
 		// if both operands are pointer, than comparable
 		if(check_is_pointer(y)) 
-				if(check_type_compat(x->type, y->type))
+				if(check_type_compat(x->type, y->type, 0))
 						return 1;
 		// otherwise, not comparable
 		dest = raise("not comparable");
@@ -161,19 +170,19 @@ int check_rel_equ(decl* x, decl* y, decl* dest, int op){
 	}
 
 	//otherwise, both operands should be INT or CHAR
-	if(!check_type_compat(x->type, inttype) 
-					&& !check_type_compat(x->type, chartype)){
+	if(!check_type_compat(x->type, inttype, 0) 
+					&& !check_type_compat(x->type, chartype, 0)){
 		dest = raise("not int or char type"); 
 		return 0;
 	}
-	if(!check_type_compat(y->type, inttype) 
-					&& !check_type_compat(y->type, chartype)){
+	if(!check_type_compat(y->type, inttype, 0) 
+					&& !check_type_compat(y->type, chartype, 0)){
 		dest = raise("not int or char type"); 
 		return 0;
 	}
 
 	// operands should be computable : should have same types
-	if(!check_type_compat(x->type, y->type)){
+	if(!check_type_compat(x->type, y->type, 0)){
 		dest = raise("not comparable");
 		return 0;
 	}
@@ -193,8 +202,8 @@ int check_and_or(decl* x, decl* y, decl* dest){
 		}
 
 		//and_list and binary should be both int		
-		else if(!check_type_compat(x->type, inttype)
-						|| !check_type_compat(y->type, inttype)){
+		else if(!check_type_compat(x->type, inttype, 0)
+						|| !check_type_compat(y->type, inttype, 0)){
 			dest = raise("not int type");
 			return 0;
 		}

@@ -4,74 +4,328 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BEGIN	lex.yy.c	125;"	d	file:
+BREAK	subc.tab.c	/^    BREAK = 275,$/;"	e	enum:yytokentype	file:
+BREAK	subc.tab.h	/^    BREAK = 275,$/;"	e	enum:yytokentype
 CC	Makefile	/^CC = gcc$/;"	m
+CHAR_CONST	subc.tab.c	/^    CHAR_CONST = 278,$/;"	e	enum:yytokentype	file:
+CHAR_CONST	subc.tab.h	/^    CHAR_CONST = 278,$/;"	e	enum:yytokentype
+COMMENT	lex.yy.c	521;"	d	file:
 COMPILE_OPTION	Makefile	/^COMPILE_OPTION = -g$/;"	m
+CONTINUE	subc.tab.c	/^    CONTINUE = 276,$/;"	e	enum:yytokentype	file:
+CONTINUE	subc.tab.h	/^    CONTINUE = 276,$/;"	e	enum:yytokentype
+DECOP	subc.tab.c	/^    DECOP = 263,$/;"	e	enum:yytokentype	file:
+DECOP	subc.tab.h	/^    DECOP = 263,$/;"	e	enum:yytokentype
+ECHO	lex.yy.c	617;"	d	file:
+ELSE	subc.tab.c	/^    ELSE = 266,$/;"	e	enum:yytokentype	file:
+ELSE	subc.tab.h	/^    ELSE = 266,$/;"	e	enum:yytokentype
+EOB_ACT_CONTINUE_SCAN	lex.yy.c	173;"	d	file:
+EOB_ACT_END_OF_FILE	lex.yy.c	174;"	d	file:
+EOB_ACT_LAST_MATCH	lex.yy.c	175;"	d	file:
+EQUOP	subc.tab.c	/^    EQUOP = 260,$/;"	e	enum:yytokentype	file:
+EQUOP	subc.tab.h	/^    EQUOP = 260,$/;"	e	enum:yytokentype
+EXIT_SUCCESS	subc.tab.c	304;"	d	file:
+EXIT_SUCCESS	subc.tab.c	332;"	d	file:
+FLEXINT_H	lex.yy.c	29;"	d	file:
+FLEX_BETA	lex.yy.c	13;"	d	file:
+FLEX_SCANNER	lex.yy.c	8;"	d	file:
+FOR	subc.tab.c	/^    FOR = 274,$/;"	e	enum:yytokentype	file:
+FOR	subc.tab.h	/^    FOR = 274,$/;"	e	enum:yytokentype
 HASH_TABLE_SIZE	hash.c	12;"	d	file:
+ID	subc.tab.c	/^    ID = 267,$/;"	e	enum:yytokentype	file:
+ID	subc.tab.h	/^    ID = 267,$/;"	e	enum:yytokentype
+IF	subc.tab.c	/^    IF = 272,$/;"	e	enum:yytokentype	file:
+IF	subc.tab.h	/^    IF = 272,$/;"	e	enum:yytokentype
+IFONLY	subc.tab.c	/^    IFONLY = 265,$/;"	e	enum:yytokentype	file:
+IFONLY	subc.tab.h	/^    IFONLY = 265,$/;"	e	enum:yytokentype
+INCOP	subc.tab.c	/^    INCOP = 262,$/;"	e	enum:yytokentype	file:
+INCOP	subc.tab.h	/^    INCOP = 262,$/;"	e	enum:yytokentype
+INITIAL	lex.yy.c	520;"	d	file:
+INT16_MAX	lex.yy.c	71;"	d	file:
+INT16_MIN	lex.yy.c	62;"	d	file:
+INT32_MAX	lex.yy.c	74;"	d	file:
+INT32_MIN	lex.yy.c	65;"	d	file:
+INT8_MAX	lex.yy.c	68;"	d	file:
+INT8_MIN	lex.yy.c	59;"	d	file:
+INTEGER_CONST	subc.tab.c	/^    INTEGER_CONST = 279$/;"	e	enum:yytokentype	file:
+INTEGER_CONST	subc.tab.h	/^    INTEGER_CONST = 279$/;"	e	enum:yytokentype
 LEX	Makefile	/^LEX = flex$/;"	m
 LINK_OPTION	Makefile	/^LINK_OPTION = -lfl$/;"	m
+LOGICAL_AND	subc.tab.c	/^    LOGICAL_AND = 259,$/;"	e	enum:yytokentype	file:
+LOGICAL_AND	subc.tab.h	/^    LOGICAL_AND = 259,$/;"	e	enum:yytokentype
+LOGICAL_OR	subc.tab.c	/^    LOGICAL_OR = 258,$/;"	e	enum:yytokentype	file:
+LOGICAL_OR	subc.tab.h	/^    LOGICAL_OR = 258,$/;"	e	enum:yytokentype
+NULL	tests/null.c	/^int NULL(){ \/* error *\/$/;"	f
+NULL	tests/null.c	/^int NULL(int NULL){ \/* error *\/$/;"	f
+REDUCE	subc.tab.c	/^void 	REDUCE( char* s)$/;"	f
+REJECT	lex.yy.c	497;"	d	file:
+RELOP	subc.tab.c	/^    RELOP = 261,$/;"	e	enum:yytokentype	file:
+RELOP	subc.tab.h	/^    RELOP = 261,$/;"	e	enum:yytokentype
+RETURN	subc.tab.c	/^    RETURN = 271,$/;"	e	enum:yytokentype	file:
+RETURN	subc.tab.h	/^    RETURN = 271,$/;"	e	enum:yytokentype
+STRING	subc.tab.c	/^    STRING = 277,$/;"	e	enum:yytokentype	file:
+STRING	subc.tab.h	/^    STRING = 277,$/;"	e	enum:yytokentype
+STRUCT	subc.tab.c	/^    STRUCT = 270,$/;"	e	enum:yytokentype	file:
+STRUCT	subc.tab.h	/^    STRUCT = 270,$/;"	e	enum:yytokentype
+STRUCTOP	subc.tab.c	/^    STRUCTOP = 264,$/;"	e	enum:yytokentype	file:
+STRUCTOP	subc.tab.h	/^    STRUCTOP = 264,$/;"	e	enum:yytokentype
+TYPE	subc.tab.c	/^    TYPE = 268,$/;"	e	enum:yytokentype	file:
+TYPE	subc.tab.h	/^    TYPE = 268,$/;"	e	enum:yytokentype
+UINT16_MAX	lex.yy.c	80;"	d	file:
+UINT32_MAX	lex.yy.c	83;"	d	file:
+UINT8_MAX	lex.yy.c	77;"	d	file:
+VOID	subc.tab.c	/^    VOID = 269,$/;"	e	enum:yytokentype	file:
+VOID	subc.tab.h	/^    VOID = 269,$/;"	e	enum:yytokentype
+WHILE	subc.tab.c	/^    WHILE = 273,$/;"	e	enum:yytokentype	file:
+WHILE	subc.tab.h	/^    WHILE = 273,$/;"	e	enum:yytokentype
 YACC	Makefile	/^YACC = bison$/;"	m
 YACC_OPTION	Makefile	/^YACC_OPTION = -vd$/;"	m
-_ARRAY	subc.h	25;"	d
-_CHAR	subc.h	23;"	d
+YYABORT	subc.tab.c	697;"	d	file:
+YYACCEPT	subc.tab.c	696;"	d	file:
+YYBACKUP	subc.tab.c	703;"	d	file:
+YYBISON	subc.tab.c	44;"	d	file:
+YYBISON_VERSION	subc.tab.c	47;"	d	file:
+YYCASE_	subc.tab.c	1044;"	d	file:
+YYCASE_	subc.tab.c	1054;"	d	file:
+YYCOPY	subc.tab.c	396;"	d	file:
+YYCOPY	subc.tab.c	399;"	d	file:
+YYCOPY_NEEDED	subc.tab.c	371;"	d	file:
+YYDEBUG	subc.tab.c	105;"	d	file:
+YYDEBUG	subc.tab.h	37;"	d
+YYDPRINTF	subc.tab.c	734;"	d	file:
+YYDPRINTF	subc.tab.c	849;"	d	file:
+YYEMPTY	subc.tab.c	693;"	d	file:
+YYEOF	subc.tab.c	694;"	d	file:
+YYERRCODE	subc.tab.c	722;"	d	file:
+YYERROR	subc.tab.c	698;"	d	file:
+YYERROR_VERBOSE	subc.tab.c	93;"	d	file:
+YYERROR_VERBOSE	subc.tab.c	94;"	d	file:
+YYERROR_VERBOSE	subc.tab.c	96;"	d	file:
+YYFINAL	subc.tab.c	412;"	d	file:
+YYFPRINTF	subc.tab.c	731;"	d	file:
+YYFREE	subc.tab.c	342;"	d	file:
+YYINITDEPTH	subc.tab.c	858;"	d	file:
+YYLAST	subc.tab.c	414;"	d	file:
+YYMALLOC	subc.tab.c	336;"	d	file:
+YYMAXDEPTH	subc.tab.c	869;"	d	file:
+YYMAXUTOK	subc.tab.c	428;"	d	file:
+YYNNTS	subc.tab.c	419;"	d	file:
+YYNRULES	subc.tab.c	421;"	d	file:
+YYNSTATES	subc.tab.c	423;"	d	file:
+YYNTOKENS	subc.tab.c	417;"	d	file:
+YYPACT_NINF	subc.tab.c	514;"	d	file:
+YYPOPSTACK	subc.tab.c	1169;"	d	file:
+YYPULL	subc.tab.c	59;"	d	file:
+YYPURE	subc.tab.c	53;"	d	file:
+YYPUSH	subc.tab.c	56;"	d	file:
+YYRECOVERING	subc.tab.c	701;"	d	file:
+YYSIZE_MAXIMUM	subc.tab.c	215;"	d	file:
+YYSIZE_T	subc.tab.c	204;"	d	file:
+YYSIZE_T	subc.tab.c	206;"	d	file:
+YYSIZE_T	subc.tab.c	209;"	d	file:
+YYSIZE_T	subc.tab.c	211;"	d	file:
+YYSKELETON_NAME	subc.tab.c	50;"	d	file:
+YYSTACK_ALLOC	subc.tab.c	290;"	d	file:
+YYSTACK_ALLOC	subc.tab.c	294;"	d	file:
+YYSTACK_ALLOC	subc.tab.c	299;"	d	file:
+YYSTACK_ALLOC	subc.tab.c	322;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	subc.tab.c	319;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	subc.tab.c	325;"	d	file:
+YYSTACK_BYTES	subc.tab.c	367;"	d	file:
+YYSTACK_FREE	subc.tab.c	313;"	d	file:
+YYSTACK_FREE	subc.tab.c	323;"	d	file:
+YYSTACK_GAP_MAXIMUM	subc.tab.c	363;"	d	file:
+YYSTACK_RELOCATE	subc.tab.c	378;"	d	file:
+YYSTATE	lex.yy.c	132;"	d	file:
+YYSTYPE	subc.tab.c	/^typedef union YYSTYPE YYSTYPE;$/;"	t	typeref:union:YYSTYPE	file:
+YYSTYPE	subc.tab.c	/^union YYSTYPE$/;"	u	file:
+YYSTYPE	subc.tab.h	/^typedef union YYSTYPE YYSTYPE;$/;"	t	typeref:union:YYSTYPE
+YYSTYPE	subc.tab.h	/^union YYSTYPE$/;"	u
+YYSTYPE_IS_DECLARED	subc.tab.c	160;"	d	file:
+YYSTYPE_IS_DECLARED	subc.tab.h	92;"	d
+YYSTYPE_IS_TRIVIAL	subc.tab.c	159;"	d	file:
+YYSTYPE_IS_TRIVIAL	subc.tab.h	91;"	d
+YYTABLES_NAME	lex.yy.c	1996;"	d	file:
+YYTABLE_NINF	subc.tab.c	519;"	d	file:
+YYTERROR	subc.tab.c	721;"	d	file:
+YYTOKENTYPE	subc.tab.c	113;"	d	file:
+YYTOKENTYPE	subc.tab.h	45;"	d
+YYTRANSLATE	subc.tab.c	430;"	d	file:
+YYUNDEFTOK	subc.tab.c	427;"	d	file:
+YYUSE	subc.tab.c	258;"	d	file:
+YYUSE	subc.tab.c	260;"	d	file:
+YY_	subc.tab.c	221;"	d	file:
+YY_	subc.tab.c	225;"	d	file:
+YY_ATTRIBUTE	subc.tab.c	233;"	d	file:
+YY_ATTRIBUTE	subc.tab.c	235;"	d	file:
+YY_ATTRIBUTE_PURE	subc.tab.c	240;"	d	file:
+YY_ATTRIBUTE_UNUSED	subc.tab.c	244;"	d	file:
+YY_AT_BOL	lex.yy.c	340;"	d	file:
+YY_BREAK	lex.yy.c	696;"	d	file:
+YY_BUFFER_EOF_PENDING	lex.yy.c	256;"	d	file:
+YY_BUFFER_NEW	lex.yy.c	244;"	d	file:
+YY_BUFFER_NORMAL	lex.yy.c	245;"	d	file:
+YY_BUFFER_STATE	lex.yy.c	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	typeref:struct:yy_buffer_state	file:
+YY_BUF_SIZE	lex.yy.c	149;"	d	file:
+YY_BUF_SIZE	lex.yy.c	151;"	d	file:
+YY_CHAR	lex.yy.c	/^typedef unsigned char YY_CHAR;$/;"	t	file:
+YY_CURRENT_BUFFER	lex.yy.c	272;"	d	file:
+YY_CURRENT_BUFFER_LVALUE	lex.yy.c	279;"	d	file:
+YY_DECL	lex.yy.c	684;"	d	file:
+YY_DECL_IS_OURS	lex.yy.c	680;"	d	file:
+YY_DO_BEFORE_ACTION	lex.yy.c	371;"	d	file:
+YY_END_OF_BUFFER	lex.yy.c	379;"	d	file:
+YY_END_OF_BUFFER_CHAR	lex.yy.c	140;"	d	file:
+YY_EXIT_FAILURE	lex.yy.c	1792;"	d	file:
+YY_EXTRA_TYPE	lex.yy.c	532;"	d	file:
+YY_FATAL_ERROR	lex.yy.c	671;"	d	file:
+YY_FLEX_MAJOR_VERSION	lex.yy.c	9;"	d	file:
+YY_FLEX_MINOR_VERSION	lex.yy.c	10;"	d	file:
+YY_FLEX_SUBMINOR_VERSION	lex.yy.c	11;"	d	file:
+YY_FLUSH_BUFFER	lex.yy.c	308;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	subc.tab.c	265;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	subc.tab.c	275;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	subc.tab.c	269;"	d	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	subc.tab.c	276;"	d	file:
+YY_INITIAL_VALUE	subc.tab.c	272;"	d	file:
+YY_INITIAL_VALUE	subc.tab.c	279;"	d	file:
+YY_INPUT	lex.yy.c	624;"	d	file:
+YY_INT_ALIGNED	lex.yy.c	4;"	d	file:
+YY_LESS_LINENO	lex.yy.c	177;"	d	file:
+YY_LINENO_REWIND_TO	lex.yy.c	178;"	d	file:
+YY_LOCATION_PRINT	subc.tab.c	742;"	d	file:
+YY_MORE_ADJ	lex.yy.c	499;"	d	file:
+YY_NEW_FILE	lex.yy.c	138;"	d	file:
+YY_NULL	lex.yy.c	112;"	d	file:
+YY_NULLPTR	subc.tab.c	85;"	d	file:
+YY_NULLPTR	subc.tab.c	87;"	d	file:
+YY_NUM_RULES	lex.yy.c	378;"	d	file:
+YY_READ_BUF_SIZE	lex.yy.c	606;"	d	file:
+YY_READ_BUF_SIZE	lex.yy.c	608;"	d	file:
+YY_REDUCE_PRINT	subc.tab.c	839;"	d	file:
+YY_REDUCE_PRINT	subc.tab.c	852;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	lex.yy.c	500;"	d	file:
+YY_RULE_SETUP	lex.yy.c	699;"	d	file:
+YY_SC_TO_UI	lex.yy.c	119;"	d	file:
+YY_STACK_PRINT	subc.tab.c	808;"	d	file:
+YY_STACK_PRINT	subc.tab.c	851;"	d	file:
+YY_START	lex.yy.c	131;"	d	file:
+YY_START_STACK_INCR	lex.yy.c	666;"	d	file:
+YY_STATE_BUF_SIZE	lex.yy.c	157;"	d	file:
+YY_STATE_EOF	lex.yy.c	135;"	d	file:
+YY_STRUCT_YY_BUFFER_STATE	lex.yy.c	197;"	d	file:
+YY_SYMBOL_PRINT	subc.tab.c	746;"	d	file:
+YY_SYMBOL_PRINT	subc.tab.c	850;"	d	file:
+YY_TYPEDEF_YY_BUFFER_STATE	lex.yy.c	160;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	lex.yy.c	165;"	d	file:
+YY_USER_ACTION	lex.yy.c	691;"	d	file:
+YY_USE_CONST	lex.yy.c	100;"	d	file:
+YY_USE_CONST	lex.yy.c	93;"	d	file:
+YY_YY_SUBC_TAB_H_INCLUDED	subc.tab.c	102;"	d	file:
+YY_YY_SUBC_TAB_H_INCLUDED	subc.tab.h	34;"	d
+_ARRAY	subc.h	26;"	d
+_CHAR	subc.h	24;"	d
 _CONST	subc.h	15;"	d
-_EQ	subc.h	34;"	d
+_EQ	subc.h	35;"	d
 _EXP	subc.h	18;"	d
 _FUNC	subc.h	16;"	d
-_GT	subc.h	32;"	d
-_GTE	subc.h	33;"	d
-_INT	subc.h	22;"	d
-_LT	subc.h	30;"	d
-_LTE	subc.h	31;"	d
-_NE	subc.h	35;"	d
-_POINTER	subc.h	27;"	d
-_STRING	subc.h	24;"	d
-_STRUCT	subc.h	26;"	d
+_GT	subc.h	33;"	d
+_GTE	subc.h	34;"	d
+_INT	subc.h	23;"	d
+_LT	subc.h	31;"	d
+_LTE	subc.h	32;"	d
+_NE	subc.h	36;"	d
+_NULL	subc.h	19;"	d
+_Noreturn	subc.tab.c	250;"	d	file:
+_Noreturn	subc.tab.c	252;"	d	file:
+_POINTER	subc.h	28;"	d
+_STRING	subc.h	25;"	d
+_STRUCT	subc.h	27;"	d
 _TYPE	subc.h	17;"	d
 _VAR	subc.h	14;"	d
-_VOID	subc.h	21;"	d
+_VOID	subc.h	22;"	d
+__STDC_LIMIT_MACROS	lex.yy.c	39;"	d	file:
 __SUBC_H__	subc.h	8;"	d
-a	open_test/array_op.c	/^int a;$/;"	v
-a	open_test/array_op2.c	/^int a;$/;"	v
 a	open_test/assign_op.c	/^int a;$/;"	v
-a	open_test/func_op2.c	/^int a; \/* error *\/$/;"	v
-a	open_test/func_op2.c	/^int a;$/;"	v
-a	open_test/func_op2.c	/^struct st2{} a; \/* error *\/$/;"	v	typeref:struct:st2
-a	open_test/func_op2.c	/^struct st3{int a;} *spf(int x){$/;"	m	struct:st3	file:
-a	open_test/func_op2.c	/^void a(int x, int y){ \/* error redec *\/$/;"	f
-a	open_test/func_op3.c	/^int a; \/* error *\/$/;"	v
-a	open_test/func_op3.c	/^int a;$/;"	v
-a	open_test/func_op3.c	/^struct st2{} a; \/* error *\/$/;"	v	typeref:struct:st2
-a	open_test/func_op3.c	/^struct st3{int a;} *spf(){ $/;"	m	struct:st3	file:
-a	open_test/func_op3.c	/^void a(){ \/* error redec *\/$/;"	f
-a	open_test/str_op3.c	/^		int a;$/;"	m	struct:str::str_in	file:
-a	open_test/var_def.c	/^int a;$/;"	v
-a	open_test/var_op.c	/^char* a; \/* error redec *\/$/;"	v
-a	open_test/var_op.c	/^int a;$/;"	v
-a	open_test/var_op.c	/^int* a; \/* error redec *\/$/;"	v
-a	open_test/var_op2.c	/^int a;$/;"	v
-a	open_test/var_op3.c	/^int a;$/;"	v
-a	open_test/var_op4.c	/^int a;$/;"	v
-a	temp.c	/^int a;$/;"	v
-a	temp.c	/^struct a{} b;$/;"	s	file:
-a	temp.c	/^void a(int x){$/;"	f
-b	open_test/func_op3.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	m	struct:st3	file:
-b	open_test/str_op3.c	/^		int b;$/;"	m	struct:str::str_in	file:
-b	open_test/var_op.c	/^int b; \/* ok *\/$/;"	v
-b	temp.c	/^struct a{} b;$/;"	v	typeref:struct:a
-c	open_test/func_op2.c	/^int c; \/* pass! *\/$/;"	v
-c	open_test/func_op3.c	/^int c; \/* pass! *\/$/;"	v
-c	open_test/str_op.c	/^		char *c;$/;"	m	struct:str2::str3	file:
-c	open_test/str_op.c	/^	char *c;$/;"	m	struct:str2	file:
-c	open_test/str_op.c	/^	char *c;$/;"	m	struct:str3	file:
-c	open_test/str_op.c	/^	char c;$/;"	m	struct:str1	file:
-c	open_test/str_op2.c	/^		char *c;$/;"	m	struct:str2::str3	file:
-c	open_test/str_op2.c	/^	char *c;$/;"	m	struct:str2	file:
-c	open_test/str_op2.c	/^	char *c;$/;"	m	struct:str3	file:
-c	open_test/str_op2.c	/^	char c;$/;"	m	struct:str1	file:
+a	open_test/gar/array_op.c	/^int a;$/;"	v
+a	open_test/gar/array_op2.c	/^int a;$/;"	v
+a	open_test/gar/func_op2.c	/^int a; \/* error *\/$/;"	v
+a	open_test/gar/func_op2.c	/^int a;$/;"	v
+a	open_test/gar/func_op2.c	/^struct st2{} a; \/* error *\/$/;"	v	typeref:struct:st2
+a	open_test/gar/func_op2.c	/^struct st3{int a;} *spf(int x){$/;"	m	struct:st3	file:
+a	open_test/gar/func_op2.c	/^void a(int x, int y){ \/* error redec *\/$/;"	f
+a	open_test/gar/func_op3.c	/^int a; \/* error *\/$/;"	v
+a	open_test/gar/func_op3.c	/^int a;$/;"	v
+a	open_test/gar/func_op3.c	/^struct st2{} a; \/* error *\/$/;"	v	typeref:struct:st2
+a	open_test/gar/func_op3.c	/^struct st3{int a;} *spf(){ $/;"	m	struct:st3	file:
+a	open_test/gar/func_op3.c	/^void a(){ \/* error redec *\/$/;"	f
+a	open_test/gar/str_op3.c	/^		int a;$/;"	m	struct:str::str_in	file:
+a	open_test/gar/var_def.c	/^int a;$/;"	v
+a	open_test/gar/var_op.c	/^char* a; \/* error redec *\/$/;"	v
+a	open_test/gar/var_op.c	/^int a;$/;"	v
+a	open_test/gar/var_op.c	/^int* a; \/* error redec *\/$/;"	v
+a	open_test/gar/var_op2.c	/^int a;$/;"	v
+a	open_test/gar/var_op3.c	/^int a;$/;"	v
+a	open_test/gar/var_op4.c	/^int a;$/;"	v
+a	tests/assign_op.c	/^int a;$/;"	v
+a	tests/func_basic.c	/^int a; \/* error *\/$/;"	v
+a	tests/func_basic.c	/^int a;$/;"	v
+a	tests/func_basic.c	/^struct st2{} a; \/* error *\/$/;"	v	typeref:struct:st2
+a	tests/func_basic.c	/^struct st3{int a;} *spf(int x){$/;"	m	struct:st3	file:
+a	tests/func_basic.c	/^void a(int x, int y){ \/* error redec *\/$/;"	f
+a	tests/func_basic2.c	/^int a; \/* error *\/$/;"	v
+a	tests/func_basic2.c	/^int a;$/;"	v
+a	tests/func_basic2.c	/^struct st2{} a; \/* error *\/$/;"	v	typeref:struct:st2
+a	tests/func_basic2.c	/^struct st3{int a;} *spf(){ $/;"	m	struct:st3	file:
+a	tests/func_basic2.c	/^void a(){ \/* error redec *\/$/;"	f
+a	tests/kwonheong.c	/^    int a;$/;"	m	struct:str	file:
+a	tests/null.c	/^void a(int x){$/;"	f
+a	tests/struct_op.c	/^		int a;$/;"	m	struct:str::str_in	file:
+a	tests/ta_var_def.c	/^int a;$/;"	v
+a	tests/var_adv.c	/^int a;$/;"	v
+a	tests/var_adv.c	/^int* a; \/* error redec *\/$/;"	v
+a	tests/var_basics.c	/^char* a; \/* error redec *\/$/;"	v
+a	tests/var_basics.c	/^int a;$/;"	v
+a	tests/var_basics.c	/^int* a; \/* error redec *\/$/;"	v
+aa	tests/null.c	/^struct aa{} b;$/;"	s	file:
+alloca	subc.tab.c	297;"	d	file:
+b	open_test/gar/func_op3.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	m	struct:st3	file:
+b	open_test/gar/str_op3.c	/^		int b;$/;"	m	struct:str::str_in	file:
+b	open_test/gar/var_op.c	/^int b; \/* ok *\/$/;"	v
+b	tests/func_basic2.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	m	struct:st3	file:
+b	tests/kwonheong.c	/^    int b;$/;"	m	struct:str	file:
+b	tests/null.c	/^struct aa{} b;$/;"	v	typeref:struct:aa
+b	tests/struct_op.c	/^		int b;$/;"	m	struct:str::str_in	file:
+b	tests/var_basics.c	/^int b; \/* ok *\/$/;"	v
+c	open_test/gar/func_op2.c	/^int c; \/* pass! *\/$/;"	v
+c	open_test/gar/func_op3.c	/^int c; \/* pass! *\/$/;"	v
+c	open_test/gar/str_op.c	/^		char *c;$/;"	m	struct:str2::str3	file:
+c	open_test/gar/str_op.c	/^	char *c;$/;"	m	struct:str2	file:
+c	open_test/gar/str_op.c	/^	char *c;$/;"	m	struct:str3	file:
+c	open_test/gar/str_op.c	/^	char c;$/;"	m	struct:str1	file:
+c	open_test/gar/str_op2.c	/^		char *c;$/;"	m	struct:str2::str3	file:
+c	open_test/gar/str_op2.c	/^	char *c;$/;"	m	struct:str2	file:
+c	open_test/gar/str_op2.c	/^	char *c;$/;"	m	struct:str3	file:
+c	open_test/gar/str_op2.c	/^	char c;$/;"	m	struct:str1	file:
+c	tests/func_basic.c	/^int c; \/* pass! *\/$/;"	v
+c	tests/func_basic2.c	/^int c; \/* pass! *\/$/;"	v
+c	tests/struct_decl.c	/^		char *c;$/;"	m	struct:str2::str3	file:
+c	tests/struct_decl.c	/^	char *c;$/;"	m	struct:str2	file:
+c	tests/struct_decl.c	/^	char *c;$/;"	m	struct:str3	file:
+c	tests/struct_decl.c	/^	char c;$/;"	m	struct:str1	file:
+c	tests/ta_str_op.c	/^		char *c;$/;"	m	struct:str2::str3	file:
+c	tests/ta_str_op.c	/^	char *c;$/;"	m	struct:str2	file:
+c	tests/ta_str_op.c	/^	char *c;$/;"	m	struct:str3	file:
+c	tests/ta_str_op.c	/^	char c;$/;"	m	struct:str1	file:
+charVal	subc.tab.c	/^	char	charVal;$/;"	m	union:YYSTYPE	file:
+charVal	subc.tab.h	/^	char	charVal;$/;"	m	union:YYSTYPE
 char_value	subc.h	/^	char char_value;$/;"	m	struct:decl
 chartype	subc.h	/^decl *chartype;$/;"	v
 check_add_sub	check.c	/^int check_add_sub(decl* x, decl* y, decl* dest){$/;"	f
 check_and_or	check.c	/^int check_and_or(decl* x, decl* y, decl* dest){$/;"	f
+check_answer	checker.py	/^def check_answer(real, test):$/;"	f
+check_function	subc.tab.c	/^decl* check_function(decl* func_decl){$/;"	f
+check_function_call	subc.tab.c	/^int check_function_call(decl* func, decl* args){$/;"	f
 check_inc_dec	check.c	/^int check_inc_dec(decl* src, decl* dest){$/;"	f
 check_is_array	check.c	/^int check_is_array(decl* x){$/;"	f
 check_is_const	check.c	/^int check_is_const(decl* x){$/;"	f
@@ -83,10 +337,14 @@ check_is_struct	check.c	/^int check_is_struct(decl* x){$/;"	f
 check_is_struct_type	check.c	/^int check_is_struct_type(decl* x){$/;"	f
 check_is_var	check.c	/^int check_is_var(decl* x, int incl_expr){$/;"	f
 check_rel_equ	check.c	/^int check_rel_equ(decl* x, decl* y, decl* dest, int op){$/;"	f
-check_type_compat	check.c	/^int check_type_compat(decl* x, decl* y){$/;"	f
+check_struct_type	subc.tab.c	/^decl* check_struct_type(decl* type_decl){$/;"	f
+check_type_compat	check.c	/^int check_type_compat(decl* x, decl* y, int arr_to_ptr){$/;"	f
+comment_depth	lex.yy.c	/^static int comment_depth = 0;$/;"	v	file:
+connect_defs	subc.tab.c	/^decl* connect_defs(decl* def_list, decl* def){$/;"	f
 copy	functions.c	/^decl* copy(decl* org){$/;"	f
 copy_ste	functions.c	/^ste* copy_ste(ste* s){$/;"	f
 data	hash.c	/^	id *data;$/;"	m	struct:nlist	file:
+debug_args	subc.tab.c	/^void debug_args(decl* x){$/;"	f
 debugst	functions.c	/^void debugst(ste* st){$/;"	f
 decl	subc.h	/^	struct decl *decl;$/;"	m	struct:ste	typeref:struct:ste::decl
 decl	subc.h	/^typedef struct decl{$/;"	s
@@ -94,65 +352,145 @@ decl	subc.h	/^} decl;$/;"	t	typeref:struct:decl
 declare	functions.c	/^void declare(id* name, decl* decl){$/;"	f
 declare_struct_type	functions.c	/^void declare_struct_type(id* name, decl* decl){$/;"	f
 declclass	subc.h	/^	int declclass;$/;"	m	struct:decl
+declptr	subc.tab.c	/^	decl	*declptr;$/;"	m	union:YYSTYPE	file:
+declptr	subc.tab.h	/^	decl	*declptr;$/;"	m	union:YYSTYPE
+define_array	subc.tab.c	/^decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){$/;"	f
+define_function_no_param	subc.tab.c	/^decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl){$/;"	f
+define_normal	subc.tab.c	/^decl* define_normal(decl* type_decl, int is_ptr, id* id_decl){$/;"	f
 elementvar	subc.h	/^	struct decl *elementvar; \/\/ ARRAY, pointer to VAR decl$/;"	m	struct:decl	typeref:struct:decl::decl
 enter	hash.c	/^id *enter(int tokenType, char *name, int length) {$/;"	f
-f	open_test/func_op2.c	/^void f(int x, int x){ \/* error redec *\/$/;"	f
+f	open_test/gar/func_op2.c	/^void f(int x, int x){ \/* error redec *\/$/;"	f
+f	tests/func_basic.c	/^void f(int x, int x){ \/* error redec *\/$/;"	f
 fields	subc.h	/^	struct ste *fields; \/\/ STRUCT, pointer to field list$/;"	m	struct:decl	typeref:struct:decl::ste
 filename	subc.h	/^char *filename;$/;"	v
+files	checker.py	/^files = []$/;"	v
 find	functions.c	/^ste* find(id* name){$/;"	f
 find_current_scope	functions.c	/^ste* find_current_scope(id* name){$/;"	f
 find_field	functions.c	/^ste* find_field(ste* fields, id* name){$/;"	f
 fint	open_test/return.c	/^int fint(int x){$/;"	f
+fint	tests/return.c	/^int fint(int x){$/;"	f
+flex_int16_t	lex.yy.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
+flex_int16_t	lex.yy.c	/^typedef short int flex_int16_t;$/;"	t	file:
+flex_int32_t	lex.yy.c	/^typedef int flex_int32_t;$/;"	t	file:
+flex_int32_t	lex.yy.c	/^typedef int32_t flex_int32_t;$/;"	t	file:
+flex_int8_t	lex.yy.c	/^typedef int8_t flex_int8_t;$/;"	t	file:
+flex_int8_t	lex.yy.c	/^typedef signed char flex_int8_t;$/;"	t	file:
+flex_uint16_t	lex.yy.c	/^typedef uint16_t flex_uint16_t;$/;"	t	file:
+flex_uint16_t	lex.yy.c	/^typedef unsigned short int flex_uint16_t;$/;"	t	file:
+flex_uint32_t	lex.yy.c	/^typedef uint32_t flex_uint32_t;$/;"	t	file:
+flex_uint32_t	lex.yy.c	/^typedef unsigned int flex_uint32_t;$/;"	t	file:
+flex_uint8_t	lex.yy.c	/^typedef uint8_t flex_uint8_t;$/;"	t	file:
+flex_uint8_t	lex.yy.c	/^typedef unsigned char flex_uint8_t; $/;"	t	file:
 formals	subc.h	/^	struct ste *formals; \/\/ arguments$/;"	m	struct:decl	typeref:struct:decl::ste
 fpint	open_test/return.c	/^int *fpint(int x){$/;"	f
+fpint	tests/return.c	/^int *fpint(int x){$/;"	f
+ftn_type	subc.h	/^decl * ftn_type;$/;"	v
+ftn_type_glob	subc.h	/^decl * ftn_type_glob;$/;"	v
+fun	test_null.c	/^char fun(){ \/* error *\/$/;"	f
+fun	test_null.c	/^int fun(){ \/* error *\/$/;"	f
+fun	test_null.c	/^int fun(){$/;"	f
+fun	test_null.c	/^void fun(){ \/* error *\/$/;"	f
 func	open_test/args.c	/^int func(){$/;"	f
 func	open_test/return.c	/^int func(int x, int y){ \/* error *\/$/;"	f
 func	open_test/return.c	/^void func(int x, int y){$/;"	f
-func1	open_test/func_op.c	/^int func1(int a, char b) {$/;"	f
-func1	open_test/func_op2.c	/^int func1(int a) {$/;"	f
+func	tests/args.c	/^int func(){$/;"	f
+func	tests/kwonheong.c	/^int *func(int *a) {$/;"	f
+func	tests/return.c	/^int func(int x, int y){ \/* error *\/$/;"	f
+func	tests/return.c	/^void func(int x, int y){$/;"	f
+func1	open_test/gar/func_op.c	/^int func1(int a, char b) {$/;"	f
+func1	open_test/gar/func_op2.c	/^int func1(int a) {$/;"	f
+func1	tests/func_basic.c	/^int func1(int a) {$/;"	f
+func1	tests/ta_func_op.c	/^int func1(int a, char b) {$/;"	f
 func2	open_test/args.c	/^char* func2(int x){$/;"	f
-func2	open_test/func_op.c	/^char func2(void) {$/;"	f
-func2	open_test/func_op2.c	/^void func2(int *a, int *b) {$/;"	f
+func2	open_test/gar/func_op.c	/^char func2(void) {$/;"	f
+func2	open_test/gar/func_op2.c	/^void func2(int *a, int *b) {$/;"	f
 func2	open_test/return.c	/^int func2(){$/;"	f
+func2	tests/args.c	/^char* func2(int x){$/;"	f
+func2	tests/func_basic.c	/^void func2(int *a, int *b) {$/;"	f
+func2	tests/kwonheong.c	/^char *func2(void) {$/;"	f
+func2	tests/return.c	/^int func2(){$/;"	f
+func2	tests/ta_func_op.c	/^char func2(void) {$/;"	f
 func3	open_test/args.c	/^char func3(int x, int* y, char z){$/;"	f
-func3	open_test/func_op.c	/^void func3(int *a, int b) {$/;"	f
+func3	open_test/gar/func_op.c	/^void func3(int *a, int b) {$/;"	f
 func3	open_test/return.c	/^void func3(void){$/;"	f
+func3	tests/args.c	/^char func3(int x, int* y, char z){$/;"	f
+func3	tests/return.c	/^void func3(void){$/;"	f
+func3	tests/ta_func_op.c	/^void func3(int *a, int b) {$/;"	f
 func4	open_test/args.c	/^int func4(char* x){$/;"	f
-g	open_test/func_op2.c	/^void g(int g){ \/* pass *\/$/;"	f
+func4	tests/args.c	/^int func4(char* x){$/;"	f
+g	open_test/gar/func_op2.c	/^void g(int g){ \/* pass *\/$/;"	f
+g	tests/func_basic.c	/^void g(int g){ \/* pass *\/$/;"	f
+get_error_lines	checker.py	/^def get_error_lines(fp):$/;"	f
 globaldef	subc.h	/^ste *globaldef;$/;"	v
 hashTable	hash.c	/^static nlist *hashTable[HASH_TABLE_SIZE]; \/\/ initially NULL$/;"	v	file:
-i	open_test/str_op.c	/^		int *i;$/;"	m	struct:str2::str3	file:
-i	open_test/str_op.c	/^	int *i;$/;"	m	struct:str2	file:
-i	open_test/str_op.c	/^	int *i;$/;"	m	struct:str3	file:
-i	open_test/str_op.c	/^	int i;$/;"	m	struct:str1	file:
-i	open_test/str_op2.c	/^		int *i;$/;"	m	struct:str2::str3	file:
-i	open_test/str_op2.c	/^	int *i;$/;"	m	struct:str2	file:
-i	open_test/str_op2.c	/^	int *i;$/;"	m	struct:str3	file:
-i	open_test/str_op2.c	/^	int i;$/;"	m	struct:str1	file:
+i	open_test/gar/str_op.c	/^		int *i;$/;"	m	struct:str2::str3	file:
+i	open_test/gar/str_op.c	/^	int *i;$/;"	m	struct:str2	file:
+i	open_test/gar/str_op.c	/^	int *i;$/;"	m	struct:str3	file:
+i	open_test/gar/str_op.c	/^	int i;$/;"	m	struct:str1	file:
+i	open_test/gar/str_op2.c	/^		int *i;$/;"	m	struct:str2::str3	file:
+i	open_test/gar/str_op2.c	/^	int *i;$/;"	m	struct:str2	file:
+i	open_test/gar/str_op2.c	/^	int *i;$/;"	m	struct:str3	file:
+i	open_test/gar/str_op2.c	/^	int i;$/;"	m	struct:str1	file:
+i	tests/kwonheong.c	/^    char i;$/;"	m	struct:str	file:
+i	tests/struct_decl.c	/^		int *i;$/;"	m	struct:str2::str3	file:
+i	tests/struct_decl.c	/^	int *i;$/;"	m	struct:str2	file:
+i	tests/struct_decl.c	/^	int *i;$/;"	m	struct:str3	file:
+i	tests/struct_decl.c	/^	int i;$/;"	m	struct:str1	file:
+i	tests/ta_str_op.c	/^		int *i;$/;"	m	struct:str2::str3	file:
+i	tests/ta_str_op.c	/^	int *i;$/;"	m	struct:str2	file:
+i	tests/ta_str_op.c	/^	int *i;$/;"	m	struct:str3	file:
+i	tests/ta_str_op.c	/^	int i;$/;"	m	struct:str1	file:
 id	subc.h	/^typedef struct id {$/;"	s
 id	subc.h	/^} id;$/;"	t	typeref:struct:id
+idptr	subc.tab.c	/^	id		*idptr;$/;"	m	union:YYSTYPE	file:
+idptr	subc.tab.h	/^	id		*idptr;$/;"	m	union:YYSTYPE
+init_type	lex.yy.c	/^void init_type(){$/;"	f
+inner_2_str	tests/kwonheong.c	/^        struct inner_2_str {$/;"	s	struct:str::inner_str	file:
+inner_3_str	tests/kwonheong.c	/^            struct inner_3_str {$/;"	s	struct:str::inner_str::inner_2_str	file:
+inner_str	tests/kwonheong.c	/^    struct inner_str {$/;"	s	struct:str	file:
+intVal	subc.tab.c	/^	int		intVal;$/;"	m	union:YYSTYPE	file:
+intVal	subc.tab.h	/^	int		intVal;$/;"	m	union:YYSTYPE
 int_value	subc.h	/^	int int_value;$/;"	m	struct:decl
 inttype	subc.h	/^decl *inttype;$/;"	v
+kk	tests/kwonheong.c	/^    } kk;$/;"	m	struct:str	typeref:struct:str::inner_str	file:
 lextype	subc.h	/^      int lextype;$/;"	m	struct:id
+lineno	lex.yy.c	/^static int lineno = 1;$/;"	v	file:
 lookup	hash.c	/^struct id *lookup(char *name) {$/;"	f
+main	lex.yy.c	/^int main(int argc, char* argv[])$/;"	f
 main	open_test/args.c	/^void main(){$/;"	f
-main	open_test/array_op.c	/^int main() {$/;"	f
-main	open_test/array_op2.c	/^int main() {$/;"	f
 main	open_test/assign_op.c	/^int main() {$/;"	f
-main	open_test/func_op.c	/^int main(void) {$/;"	f
-main	open_test/func_op2.c	/^int main(void) {$/;"	f
-main	open_test/func_op3.c	/^int main(void) {$/;"	f
-main	open_test/ptr_op.c	/^int main(void) {$/;"	f
-main	open_test/str_op.c	/^int main(void) {$/;"	f
-main	open_test/str_op2.c	/^int main(void) {$/;"	f
-main	open_test/str_op3.c	/^void main(){$/;"	f
-main	open_test/str_op4.c	/^void main(){$/;"	f
-main	open_test/var_def.c	/^int main() {$/;"	f
-main	open_test/var_op.c	/^int main() {$/;"	f
-main	open_test/var_op2.c	/^int main() {$/;"	f
-main	open_test/var_op3.c	/^int main() {$/;"	f
-main	open_test/var_op4.c	/^int main() {$/;"	f
-main	test.c	/^void main(){$/;"	f
+main	open_test/gar/array_op.c	/^int main() {$/;"	f
+main	open_test/gar/array_op2.c	/^int main() {$/;"	f
+main	open_test/gar/func_op.c	/^int main(void) {$/;"	f
+main	open_test/gar/func_op2.c	/^int main(void) {$/;"	f
+main	open_test/gar/func_op3.c	/^int main(void) {$/;"	f
+main	open_test/gar/ptr_op.c	/^int main(void) {$/;"	f
+main	open_test/gar/str_op.c	/^int main(void) {$/;"	f
+main	open_test/gar/str_op2.c	/^int main(void) {$/;"	f
+main	open_test/gar/str_op3.c	/^void main(){$/;"	f
+main	open_test/gar/str_op4.c	/^void main(){$/;"	f
+main	open_test/gar/var_def.c	/^int main() {$/;"	f
+main	open_test/gar/var_op.c	/^int main() {$/;"	f
+main	open_test/gar/var_op2.c	/^int main() {$/;"	f
+main	open_test/gar/var_op3.c	/^int main() {$/;"	f
+main	open_test/gar/var_op4.c	/^int main() {$/;"	f
+main	relop.c	/^void main(){$/;"	f
+main	test_null.c	/^int main(){$/;"	f
+main	tests/args.c	/^void main(){$/;"	f
+main	tests/array.c	/^int main() {$/;"	f
+main	tests/assign_op.c	/^int main() {$/;"	f
+main	tests/func_basic.c	/^int main(void) {$/;"	f
+main	tests/func_basic2.c	/^int main(void) {$/;"	f
+main	tests/kwonheong.c	/^int main() { $/;"	f
+main	tests/struct_adv.c	/^void main(){$/;"	f
+main	tests/struct_op.c	/^void main(){$/;"	f
+main	tests/ta_func_op.c	/^int main(void) {$/;"	f
+main	tests/ta_ptr_op.c	/^int main(void) {$/;"	f
+main	tests/ta_str_op.c	/^int main(void) {$/;"	f
+main	tests/ta_var_def.c	/^int main() {$/;"	f
+main	tests/var_adv.c	/^int main() {$/;"	f
+main	tests/var_basics.c	/^int main() {$/;"	f
+main2	tests/var_adv.c	/^int main2(){$/;"	f
 makearraydecl	functions.c	/^decl* makearraydecl(int size, decl* var_decl){$/;"	f
 makeconstdecl	functions.c	/^decl* makeconstdecl(decl* type_decl){$/;"	f
 makeprocdecl	functions.c	/^decl* makeprocdecl(){$/;"	f
@@ -168,139 +506,409 @@ nlist	hash.c	/^typedef struct nlist {$/;"	s	file:
 nlist	hash.c	/^} nlist;$/;"	t	typeref:struct:nlist	file:
 null	subc.h	/^decl *null;$/;"	v
 num_index	subc.h	/^	int num_index;  \/\/ ARRAY, # of elements$/;"	m	struct:decl
-p	open_test/str_op3.c	/^	int *p;$/;"	m	struct:str	file:
+p	checker.py	/^p = subprocess.Popen("make", stdout=subprocess.PIPE, shell=True)$/;"	v
+p	open_test/gar/str_op3.c	/^	int *p;$/;"	m	struct:str	file:
+p	tests/struct_op.c	/^	int *p;$/;"	m	struct:str	file:
 pop_scope	functions.c	/^ste* pop_scope(){$/;"	f
 prev	subc.h	/^	struct scope_stack *prev; \/\/ for pop operation$/;"	m	struct:scope_stack	typeref:struct:scope_stack::scope_stack
 prev	subc.h	/^	struct ste *prev;$/;"	m	struct:ste	typeref:struct:ste::ste
+print_error_msg	checker.py	/^def print_error_msg(fp, fn):$/;"	f
 ptrto	subc.h	/^	struct decl *ptrto; \/\/ POINTER, type of the pointer$/;"	m	struct:decl	typeref:struct:decl::decl
 push_scope	functions.c	/^void push_scope(){$/;"	f
 push_stelist	functions.c	/^void push_stelist(ste* stelist){$/;"	f
-q	open_test/str_op3.c	/^		int *q;$/;"	m	struct:str::str_in	file:
+q	open_test/gar/str_op3.c	/^		int *q;$/;"	m	struct:str::str_in	file:
+q	tests/struct_op.c	/^		int *q;$/;"	m	struct:str::str_in	file:
 raise	functions.c	/^void* raise(char* errormsg){$/;"	f
+read_line	lex.yy.c	/^int read_line()$/;"	f
+returnString	tests/return.c	/^char *returnString(char* p){$/;"	f
 returnid	subc.h	/^id* returnid;$/;"	v
 returntype	subc.h	/^	struct ste *returntype; $/;"	m	struct:decl	typeref:struct:decl::ste
-s	open_test/func_op2.c	/^struct st1 s;$/;"	v	typeref:struct:st1
-s	open_test/func_op3.c	/^struct st1 s;$/;"	v	typeref:struct:st1
-s	open_test/str_op3.c	/^	} s;$/;"	m	struct:str	typeref:struct:str::str_in	file:
-s	open_test/str_op3.c	/^struct str1 s;$/;"	v	typeref:struct:str1
-s	open_test/str_op4.c	/^	} *s[10];$/;"	m	struct:str1	typeref:struct:str1::str3	file:
-s1	open_test/str_op2.c	/^struct str2 s1;$/;"	v	typeref:struct:str2
-s2	open_test/str_op2.c	/^struct str3 s2;$/;"	v	typeref:struct:str3
-s2	open_test/str_op3.c	/^	struct str_in s2;$/;"	m	struct:str	typeref:struct:str::str_in	file:
-s2	open_test/str_op3.c	/^	struct str_in2 s2; \/* error *\/$/;"	m	struct:str	typeref:struct:str::str_in2	file:
-s3	open_test/str_op2.c	/^struct str4 s3; \/* error : not declared *\/$/;"	v	typeref:struct:str4
-s4	open_test/str_op2.c	/^struct x s4; \/* error : not struct type *\/$/;"	v	typeref:struct:x
-sa	open_test/str_op3.c	/^struct str1 sa[10];$/;"	v	typeref:struct:str1
-sa	open_test/str_op4.c	/^struct str1 sa[10];$/;"	v	typeref:struct:str1
-sa1	open_test/str_op3.c	/^} sa1[10];$/;"	v	typeref:struct:str1
-sa1	open_test/str_op4.c	/^} sa1[10];$/;"	v	typeref:struct:str1
+root	checker.py	/^root = "tests"$/;"	v
+s	open_test/gar/func_op2.c	/^struct st1 s;$/;"	v	typeref:struct:st1
+s	open_test/gar/func_op3.c	/^struct st1 s;$/;"	v	typeref:struct:st1
+s	open_test/gar/str_op3.c	/^	} s;$/;"	m	struct:str	typeref:struct:str::str_in	file:
+s	open_test/gar/str_op3.c	/^struct str1 s;$/;"	v	typeref:struct:str1
+s	open_test/gar/str_op4.c	/^	} *s[10];$/;"	m	struct:str1	typeref:struct:str1::str3	file:
+s	tests/func_basic.c	/^struct st1 s;$/;"	v	typeref:struct:st1
+s	tests/func_basic2.c	/^struct st1 s;$/;"	v	typeref:struct:st1
+s	tests/struct_adv.c	/^	struct str3 s;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
+s	tests/struct_adv.c	/^	} *s[10];$/;"	m	struct:str1	typeref:struct:str1::str3	file:
+s	tests/struct_adv.c	/^} s;$/;"	v	typeref:struct:str2
+s	tests/struct_op.c	/^	} s;$/;"	m	struct:str	typeref:struct:str::str_in	file:
+s	tests/struct_op.c	/^struct str1 s;$/;"	v	typeref:struct:str1
+s1	open_test/gar/str_op2.c	/^struct str2 s1;$/;"	v	typeref:struct:str2
+s1	tests/struct_decl.c	/^struct str2 s1;$/;"	v	typeref:struct:str2
+s2	open_test/gar/str_op2.c	/^struct str3 s2;$/;"	v	typeref:struct:str3
+s2	open_test/gar/str_op3.c	/^	struct str_in s2;$/;"	m	struct:str	typeref:struct:str::str_in	file:
+s2	open_test/gar/str_op3.c	/^	struct str_in2 s2; \/* error *\/$/;"	m	struct:str	typeref:struct:str::str_in2	file:
+s2	tests/struct_decl.c	/^struct str3 s2;$/;"	v	typeref:struct:str3
+s2	tests/struct_op.c	/^	struct str_in s2;$/;"	m	struct:str	typeref:struct:str::str_in	file:
+s2	tests/struct_op.c	/^	struct str_in2 s2; \/* error *\/$/;"	m	struct:str	typeref:struct:str::str_in2	file:
+s3	open_test/gar/str_op2.c	/^struct str4 s3; \/* error : not declared *\/$/;"	v	typeref:struct:str4
+s3	tests/struct_decl.c	/^struct str4 s3; \/* error : not declared *\/$/;"	v	typeref:struct:str4
+s4	open_test/gar/str_op2.c	/^struct x s4; \/* error : not struct type *\/$/;"	v	typeref:struct:x
+s4	tests/struct_decl.c	/^struct x s4; \/* error : not struct type *\/$/;"	v	typeref:struct:x
+sa	open_test/gar/str_op3.c	/^struct str1 sa[10];$/;"	v	typeref:struct:str1
+sa	open_test/gar/str_op4.c	/^struct str1 sa[10];$/;"	v	typeref:struct:str1
+sa	tests/struct_adv.c	/^struct str1 sa[10];$/;"	v	typeref:struct:str1
+sa	tests/struct_op.c	/^struct str1 sa[10];$/;"	v	typeref:struct:str1
+sa1	open_test/gar/str_op3.c	/^} sa1[10];$/;"	v	typeref:struct:str1
+sa1	open_test/gar/str_op4.c	/^} sa1[10];$/;"	v	typeref:struct:str1
+sa1	tests/struct_adv.c	/^} sa1[10];$/;"	v	typeref:struct:str1
+sa1	tests/struct_op.c	/^} sa1[10];$/;"	v	typeref:struct:str1
 scope	subc.h	/^	struct ste **scope; \/\/ scope when VAR declared$/;"	m	struct:decl	typeref:struct:decl::ste
 scope_stack	subc.h	/^typedef struct scope_stack{$/;"	s
 scope_stack	subc.h	/^} scope_stack;$/;"	t	typeref:struct:scope_stack
 setprocdecl	functions.c	/^decl* setprocdecl(decl* func, ste* formals){$/;"	f
-sf	open_test/func_op2.c	/^struct st1 sf(int x, int y){$/;"	f
-sf	open_test/func_op2.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	f
-sf	open_test/func_op3.c	/^struct st1 sf(){$/;"	f
-sf2	open_test/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	f
-sf2	open_test/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	f
-sf2_2	open_test/func_op2.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	f
-sf3	open_test/func_op2.c	/^struct st3 sf3(int x){ \/* error *\/$/;"	f
-sf3	open_test/func_op3.c	/^struct st3 sf3(){ \/* error *\/$/;"	f
+sf	open_test/gar/func_op2.c	/^struct st1 sf(int x, int y){$/;"	f
+sf	open_test/gar/func_op2.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	f
+sf	open_test/gar/func_op3.c	/^struct st1 sf(){$/;"	f
+sf	tests/func_basic.c	/^struct st1 sf(int x, int y){$/;"	f
+sf	tests/func_basic.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	f
+sf	tests/func_basic2.c	/^struct st1 sf(){$/;"	f
+sf2	open_test/gar/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	f
+sf2	open_test/gar/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	f
+sf2	tests/func_basic.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	f
+sf2	tests/func_basic2.c	/^struct st2{int x; int y;} sf2(void){$/;"	f
+sf2_2	open_test/gar/func_op2.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	f
+sf2_2	tests/func_basic.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	f
+sf3	open_test/gar/func_op2.c	/^struct st3 sf3(int x){ \/* error *\/$/;"	f
+sf3	open_test/gar/func_op3.c	/^struct st3 sf3(){ \/* error *\/$/;"	f
+sf3	tests/func_basic.c	/^struct st3 sf3(int x){ \/* error *\/$/;"	f
+sf3	tests/func_basic2.c	/^struct st3 sf3(){ \/* error *\/$/;"	f
+short	subc.tab.c	175;"	d	file:
 size	subc.h	/^	int size; \/\/ size in byte$/;"	m	struct:decl
-sp	open_test/str_op3.c	/^	struct str_in *sp;$/;"	m	struct:str	typeref:struct:str::str_in	file:
-sp	open_test/str_op3.c	/^struct str1 *sp;$/;"	v	typeref:struct:str1
-sp3	open_test/str_op3.c	/^} *sp3;$/;"	v	typeref:struct:str3
-spa	open_test/str_op3.c	/^struct str1 *spa[10];$/;"	v	typeref:struct:str1
-spa	open_test/str_op4.c	/^struct str1 *spa[10];$/;"	v	typeref:struct:str1
-spa2	open_test/str_op3.c	/^} *spa2[10];$/;"	v	typeref:struct:str2
-spa2	open_test/str_op4.c	/^} *spa2[10];$/;"	v	typeref:struct:str2
-spf	open_test/func_op2.c	/^struct st3{int a;} *spf(int x){$/;"	f
-spf	open_test/func_op3.c	/^struct st3{int a;} *spf(){ $/;"	f
-spf	open_test/func_op3.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	f
-ss	open_test/func_op2.c	/^struct st2 ss; \/* pass *\/$/;"	v	typeref:struct:st2
-ss	open_test/func_op3.c	/^struct st2 ss; \/* pass *\/$/;"	v	typeref:struct:st2
+sp	open_test/gar/str_op3.c	/^	struct str_in *sp;$/;"	m	struct:str	typeref:struct:str::str_in	file:
+sp	open_test/gar/str_op3.c	/^struct str1 *sp;$/;"	v	typeref:struct:str1
+sp	tests/struct_op.c	/^	struct str_in *sp;$/;"	m	struct:str	typeref:struct:str::str_in	file:
+sp	tests/struct_op.c	/^struct str1 *sp;$/;"	v	typeref:struct:str1
+sp3	open_test/gar/str_op3.c	/^} *sp3;$/;"	v	typeref:struct:str3
+sp3	tests/struct_op.c	/^} *sp3;$/;"	v	typeref:struct:str3
+spa	open_test/gar/str_op3.c	/^struct str1 *spa[10];$/;"	v	typeref:struct:str1
+spa	open_test/gar/str_op4.c	/^struct str1 *spa[10];$/;"	v	typeref:struct:str1
+spa	tests/struct_adv.c	/^struct str1 *spa[10];$/;"	v	typeref:struct:str1
+spa	tests/struct_op.c	/^struct str1 *spa[10];$/;"	v	typeref:struct:str1
+spa2	open_test/gar/str_op3.c	/^} *spa2[10];$/;"	v	typeref:struct:str2
+spa2	open_test/gar/str_op4.c	/^} *spa2[10];$/;"	v	typeref:struct:str2
+spa2	tests/struct_adv.c	/^} *spa2[10];$/;"	v	typeref:struct:str2
+spa2	tests/struct_op.c	/^} *spa2[10];$/;"	v	typeref:struct:str2
+spf	open_test/gar/func_op2.c	/^struct st3{int a;} *spf(int x){$/;"	f
+spf	open_test/gar/func_op3.c	/^struct st3{int a;} *spf(){ $/;"	f
+spf	open_test/gar/func_op3.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	f
+spf	tests/func_basic.c	/^struct st3{int a;} *spf(int x){$/;"	f
+spf	tests/func_basic2.c	/^struct st3{int a;} *spf(){ $/;"	f
+spf	tests/func_basic2.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	f
+ss	open_test/gar/func_op2.c	/^struct st2 ss; \/* pass *\/$/;"	v	typeref:struct:st2
+ss	open_test/gar/func_op3.c	/^struct st2 ss; \/* pass *\/$/;"	v	typeref:struct:st2
+ss	tests/func_basic.c	/^struct st2 ss; \/* pass *\/$/;"	v	typeref:struct:st2
+ss	tests/func_basic2.c	/^struct st2 ss; \/* pass *\/$/;"	v	typeref:struct:st2
 sstop	subc.h	/^scope_stack *sstop;$/;"	v
-st	open_test/str_op.c	/^	} st;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
-st	open_test/str_op2.c	/^		struct str3{} st; \/* error, redec *\/$/;"	m	struct:str4::str_in	typeref:struct:str4::str_in::str3	file:
-st	open_test/str_op2.c	/^		} st;$/;"	m	struct:str2::str3	typeref:struct:str2::str3::str_in	file:
-st	open_test/str_op2.c	/^	} st;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
-st	open_test/str_op2.c	/^	}st;$/;"	m	struct:str4	typeref:struct:str4::str_in	file:
-st1	open_test/func_op2.c	/^struct st1{int x; int y;};$/;"	s	file:
-st1	open_test/func_op3.c	/^struct st1{int x; int y;};$/;"	s	file:
-st2	open_test/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	s	file:
-st2	open_test/func_op2.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	s	file:
-st2	open_test/func_op2.c	/^struct st2{} a; \/* error *\/$/;"	s	file:
-st2	open_test/func_op2.c	/^struct st2{}; \/* error *\/$/;"	s	file:
-st2	open_test/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	s	file:
-st2	open_test/func_op3.c	/^struct st2{} a; \/* error *\/$/;"	s	file:
-st2	open_test/func_op3.c	/^struct st2{}; \/* error *\/$/;"	s	file:
-st2	open_test/str_op2.c	/^		struct str_in st2;$/;"	m	struct:str2::str3	typeref:struct:str2::str3::str_in	file:
-st3	open_test/func_op2.c	/^struct st3{int a;} *spf(int x){$/;"	s	file:
-st3	open_test/func_op3.c	/^struct st3{int a;} *spf(){ $/;"	s	file:
-st3	open_test/func_op3.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	s	file:
+st	open_test/gar/str_op.c	/^	} st;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
+st	open_test/gar/str_op2.c	/^		struct str3{} st; \/* error, redec *\/$/;"	m	struct:str4::str_in	typeref:struct:str4::str_in::str3	file:
+st	open_test/gar/str_op2.c	/^		} st;$/;"	m	struct:str2::str3	typeref:struct:str2::str3::str_in	file:
+st	open_test/gar/str_op2.c	/^	} st;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
+st	open_test/gar/str_op2.c	/^	}st;$/;"	m	struct:str4	typeref:struct:str4::str_in	file:
+st	tests/struct_decl.c	/^		struct str3{} st; \/* error, redec *\/$/;"	m	struct:str4::str_in	typeref:struct:str4::str_in::str3	file:
+st	tests/struct_decl.c	/^		} st;$/;"	m	struct:str2::str3	typeref:struct:str2::str3::str_in	file:
+st	tests/struct_decl.c	/^	} st;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
+st	tests/struct_decl.c	/^	}st;$/;"	m	struct:str4	typeref:struct:str4::str_in	file:
+st	tests/ta_str_op.c	/^	} st;$/;"	m	struct:str2	typeref:struct:str2::str3	file:
+st1	open_test/gar/func_op2.c	/^struct st1{int x; int y;};$/;"	s	file:
+st1	open_test/gar/func_op3.c	/^struct st1{int x; int y;};$/;"	s	file:
+st1	tests/func_basic.c	/^struct st1{int x; int y;};$/;"	s	file:
+st1	tests/func_basic2.c	/^struct st1{int x; int y;};$/;"	s	file:
+st2	open_test/gar/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	s	file:
+st2	open_test/gar/func_op2.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	s	file:
+st2	open_test/gar/func_op2.c	/^struct st2{} a; \/* error *\/$/;"	s	file:
+st2	open_test/gar/func_op2.c	/^struct st2{}; \/* error *\/$/;"	s	file:
+st2	open_test/gar/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	s	file:
+st2	open_test/gar/func_op3.c	/^struct st2{} a; \/* error *\/$/;"	s	file:
+st2	open_test/gar/func_op3.c	/^struct st2{}; \/* error *\/$/;"	s	file:
+st2	open_test/gar/str_op2.c	/^		struct str_in st2;$/;"	m	struct:str2::str3	typeref:struct:str2::str3::str_in	file:
+st2	tests/func_basic.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	s	file:
+st2	tests/func_basic.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	s	file:
+st2	tests/func_basic.c	/^struct st2{} a; \/* error *\/$/;"	s	file:
+st2	tests/func_basic.c	/^struct st2{}; \/* error *\/$/;"	s	file:
+st2	tests/func_basic2.c	/^struct st2{int x; int y;} sf2(void){$/;"	s	file:
+st2	tests/func_basic2.c	/^struct st2{} a; \/* error *\/$/;"	s	file:
+st2	tests/func_basic2.c	/^struct st2{}; \/* error *\/$/;"	s	file:
+st2	tests/struct_decl.c	/^		struct str_in st2;$/;"	m	struct:str2::str3	typeref:struct:str2::str3::str_in	file:
+st3	open_test/gar/func_op2.c	/^struct st3{int a;} *spf(int x){$/;"	s	file:
+st3	open_test/gar/func_op3.c	/^struct st3{int a;} *spf(){ $/;"	s	file:
+st3	open_test/gar/func_op3.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	s	file:
+st3	tests/func_basic.c	/^struct st3{int a;} *spf(int x){$/;"	s	file:
+st3	tests/func_basic2.c	/^struct st3{int a;} *spf(){ $/;"	s	file:
+st3	tests/func_basic2.c	/^struct st3{int b;} spf(){ \/* error *\/$/;"	s	file:
 ste	subc.h	/^typedef struct ste{$/;"	s
 ste	subc.h	/^} ste;$/;"	t	typeref:struct:ste
-str	open_test/str_op3.c	/^struct str{$/;"	s	file:
-str1	open_test/str_op.c	/^struct str1 {$/;"	s	file:
-str1	open_test/str_op2.c	/^struct str1 {$/;"	s	file:
-str1	open_test/str_op3.c	/^struct str1{$/;"	s	file:
-str1	open_test/str_op4.c	/^struct str1{$/;"	s	file:
-str2	open_test/str_op.c	/^struct str2 {$/;"	s	file:
-str2	open_test/str_op2.c	/^struct str2 {$/;"	s	file:
-str2	open_test/str_op3.c	/^struct str2{$/;"	s	file:
-str2	open_test/str_op4.c	/^struct str2{$/;"	s	file:
-str3	open_test/str_op.c	/^	struct str3 {$/;"	s	struct:str2	file:
-str3	open_test/str_op.c	/^struct str3 { \/* error, redeclaration of struct str3 *\/$/;"	s	file:
-str3	open_test/str_op2.c	/^		struct str3{} st; \/* error, redec *\/$/;"	s	struct:str4::str_in	file:
-str3	open_test/str_op2.c	/^	struct str3 {$/;"	s	struct:str2	file:
-str3	open_test/str_op2.c	/^struct str3 { \/* error, redeclaration of struct str3 *\/$/;"	s	file:
-str3	open_test/str_op3.c	/^struct str3{$/;"	s	file:
-str3	open_test/str_op4.c	/^	struct str3{$/;"	s	struct:str1	file:
-str4	open_test/str_op2.c	/^struct str4{$/;"	s	file:
+str	open_test/gar/str_op3.c	/^struct str{$/;"	s	file:
+str	test_null.c	/^int str;$/;"	v
+str	test_null.c	/^struct str{} str1;$/;"	s	file:
+str	tests/kwonheong.c	/^struct str {$/;"	s	file:
+str	tests/struct_op.c	/^struct str{$/;"	s	file:
+str1	open_test/gar/str_op.c	/^struct str1 {$/;"	s	file:
+str1	open_test/gar/str_op2.c	/^struct str1 {$/;"	s	file:
+str1	open_test/gar/str_op3.c	/^struct str1{$/;"	s	file:
+str1	open_test/gar/str_op4.c	/^struct str1{$/;"	s	file:
+str1	test_null.c	/^struct str{} str1;$/;"	v	typeref:struct:str
+str1	tests/kwonheong.c	/^} str1;$/;"	v	typeref:struct:str
+str1	tests/struct_adv.c	/^struct str1{$/;"	s	file:
+str1	tests/struct_decl.c	/^struct str1 {$/;"	s	file:
+str1	tests/struct_op.c	/^struct str1{$/;"	s	file:
+str1	tests/ta_str_op.c	/^struct str1 {$/;"	s	file:
+str2	open_test/gar/str_op.c	/^struct str2 {$/;"	s	file:
+str2	open_test/gar/str_op2.c	/^struct str2 {$/;"	s	file:
+str2	open_test/gar/str_op3.c	/^struct str2{$/;"	s	file:
+str2	open_test/gar/str_op4.c	/^struct str2{$/;"	s	file:
+str2	test_null.c	/^struct str str2;$/;"	v	typeref:struct:str
+str2	tests/struct_adv.c	/^struct str2{ \/* error *\/$/;"	s	file:
+str2	tests/struct_adv.c	/^struct str2{$/;"	s	file:
+str2	tests/struct_decl.c	/^struct str2 {$/;"	s	file:
+str2	tests/struct_op.c	/^struct str2{$/;"	s	file:
+str2	tests/ta_str_op.c	/^struct str2 {$/;"	s	file:
+str3	open_test/gar/str_op.c	/^	struct str3 {$/;"	s	struct:str2	file:
+str3	open_test/gar/str_op.c	/^struct str3 { \/* error, redeclaration of struct str3 *\/$/;"	s	file:
+str3	open_test/gar/str_op2.c	/^		struct str3{} st; \/* error, redec *\/$/;"	s	struct:str4::str_in	file:
+str3	open_test/gar/str_op2.c	/^	struct str3 {$/;"	s	struct:str2	file:
+str3	open_test/gar/str_op2.c	/^struct str3 { \/* error, redeclaration of struct str3 *\/$/;"	s	file:
+str3	open_test/gar/str_op3.c	/^struct str3{$/;"	s	file:
+str3	open_test/gar/str_op4.c	/^	struct str3{$/;"	s	struct:str1	file:
+str3	tests/struct_adv.c	/^	struct str3{$/;"	s	struct:str1	file:
+str3	tests/struct_decl.c	/^		struct str3{} st; \/* error, redec *\/$/;"	s	struct:str4::str_in	file:
+str3	tests/struct_decl.c	/^	struct str3 {$/;"	s	struct:str2	file:
+str3	tests/struct_decl.c	/^struct str3 { \/* error, redeclaration of struct str3 *\/$/;"	s	file:
+str3	tests/struct_op.c	/^struct str3{$/;"	s	file:
+str3	tests/ta_str_op.c	/^	struct str3 {$/;"	s	struct:str2	file:
+str3	tests/ta_str_op.c	/^struct str3 { \/* error, redeclaration of struct str3 *\/$/;"	s	file:
+str4	open_test/gar/str_op2.c	/^struct str4{$/;"	s	file:
+str4	tests/struct_decl.c	/^struct str4{$/;"	s	file:
 strCompare	hash.c	/^int strCompare(char* x, int length, char* y){$/;"	f
 strCompare_no_len	hash.c	/^int strCompare_no_len(char* x, char* y){$/;"	f
-strCompare_no_len	test.c	/^int strCompare_no_len(char* x, char* y){$/;"	f
-str_in	open_test/str_op2.c	/^		struct str_in {$/;"	s	struct:str2::str3	file:
-str_in	open_test/str_op2.c	/^	struct str_in{ \/* error, redec *\/$/;"	s	struct:str4	file:
-str_in	open_test/str_op2.c	/^struct str_in{ \/* error, redec *\/$/;"	s	file:
-str_in	open_test/str_op3.c	/^	struct str_in{$/;"	s	struct:str	file:
-str_in2	open_test/str_op2.c	/^		struct str_in2{$/;"	s	struct:str2::str3	file:
+str_in	open_test/gar/str_op2.c	/^		struct str_in {$/;"	s	struct:str2::str3	file:
+str_in	open_test/gar/str_op2.c	/^	struct str_in{ \/* error, redec *\/$/;"	s	struct:str4	file:
+str_in	open_test/gar/str_op2.c	/^struct str_in{ \/* error, redec *\/$/;"	s	file:
+str_in	open_test/gar/str_op3.c	/^	struct str_in{$/;"	s	struct:str	file:
+str_in	tests/struct_decl.c	/^		struct str_in {$/;"	s	struct:str2::str3	file:
+str_in	tests/struct_decl.c	/^	struct str_in{ \/* error, redec *\/$/;"	s	struct:str4	file:
+str_in	tests/struct_decl.c	/^struct str_in{ \/* error, redec *\/$/;"	s	file:
+str_in	tests/struct_op.c	/^	struct str_in{$/;"	s	struct:str	file:
+str_in2	open_test/gar/str_op2.c	/^		struct str_in2{$/;"	s	struct:str2::str3	file:
+str_in2	tests/struct_decl.c	/^		struct str_in2{$/;"	s	struct:str2::str3	file:
+stringVal	subc.tab.c	/^	char	*stringVal;$/;"	m	union:YYSTYPE	file:
+stringVal	subc.tab.h	/^	char	*stringVal;$/;"	m	union:YYSTYPE
 top	subc.h	/^	struct ste *top; \/\/ top of the ste$/;"	m	struct:scope_stack	typeref:struct:scope_stack::ste
 type	subc.h	/^	struct decl *type;$/;"	m	struct:decl	typeref:struct:decl::decl
 typeclass	subc.h	/^	int typeclass;$/;"	m	struct:decl
+unput	lex.yy.c	194;"	d	file:
 voidtype	subc.h	/^decl *voidtype;$/;"	v
-x	open_test/func_op2.c	/^int x;$/;"	v
-x	open_test/func_op2.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
-x	open_test/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	m	struct:st2	file:
-x	open_test/func_op2.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	m	struct:st2	file:
-x	open_test/func_op2.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	m	struct:x	file:
-x	open_test/func_op2.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	s	file:
-x	open_test/func_op3.c	/^int x;$/;"	v
-x	open_test/func_op3.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
-x	open_test/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	m	struct:st2	file:
-x	open_test/str_op2.c	/^			int x;$/;"	m	struct:str2::str3::str_in	file:
-x	open_test/str_op2.c	/^	int x;$/;"	m	struct:str_in	file:
-x	open_test/str_op2.c	/^int x;$/;"	v
-x	open_test/str_op3.c	/^	int x;$/;"	m	struct:str	file:
-x	open_test/str_op3.c	/^	int x;$/;"	m	struct:str1	file:
-x	open_test/str_op3.c	/^	int x;$/;"	m	struct:str2	file:
-x	open_test/str_op3.c	/^	int x;$/;"	m	struct:str3	file:
-x	open_test/str_op3.c	/^int x;$/;"	v
-x	open_test/str_op4.c	/^		int x;$/;"	m	struct:str1::str3	file:
-x	open_test/str_op4.c	/^	int x;$/;"	m	struct:str1	file:
-x	open_test/str_op4.c	/^	int x;$/;"	m	struct:str2	file:
-x	open_test/str_op4.c	/^int x;$/;"	v
-x2	open_test/str_op2.c	/^			int x2;$/;"	m	struct:str2::str3::str_in2	file:
-y	open_test/func_op2.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
-y	open_test/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	m	struct:st2	file:
-y	open_test/func_op3.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
-y	open_test/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	m	struct:st2	file:
-y	open_test/str_op2.c	/^			int y[10];$/;"	m	struct:str2::str3::str_in	file:
-y	open_test/str_op3.c	/^	int y;$/;"	m	struct:str	file:
-y	open_test/str_op3.c	/^	int y;$/;"	m	struct:str1	file:
-y	open_test/str_op3.c	/^	int y;$/;"	m	struct:str2	file:
-y	open_test/str_op3.c	/^	int y;$/;"	m	struct:str3	file:
-y	open_test/str_op4.c	/^		int y;$/;"	m	struct:str1::str3	file:
-y	open_test/str_op4.c	/^	int y;$/;"	m	struct:str1	file:
-y	open_test/str_op4.c	/^	int y;$/;"	m	struct:str2	file:
-y2	open_test/str_op2.c	/^			int y2;$/;"	m	struct:str2::str3::str_in2	file:
+w	tests/null.c	/^char* w(int NULL){ \/* error *\/$/;"	f
+x	open_test/gar/func_op2.c	/^int x;$/;"	v
+x	open_test/gar/func_op2.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+x	open_test/gar/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	m	struct:st2	file:
+x	open_test/gar/func_op2.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	m	struct:st2	file:
+x	open_test/gar/func_op2.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	m	struct:x	file:
+x	open_test/gar/func_op2.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	s	file:
+x	open_test/gar/func_op3.c	/^int x;$/;"	v
+x	open_test/gar/func_op3.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+x	open_test/gar/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	m	struct:st2	file:
+x	open_test/gar/str_op2.c	/^			int x;$/;"	m	struct:str2::str3::str_in	file:
+x	open_test/gar/str_op2.c	/^	int x;$/;"	m	struct:str_in	file:
+x	open_test/gar/str_op2.c	/^int x;$/;"	v
+x	open_test/gar/str_op3.c	/^	int x;$/;"	m	struct:str	file:
+x	open_test/gar/str_op3.c	/^	int x;$/;"	m	struct:str1	file:
+x	open_test/gar/str_op3.c	/^	int x;$/;"	m	struct:str2	file:
+x	open_test/gar/str_op3.c	/^	int x;$/;"	m	struct:str3	file:
+x	open_test/gar/str_op3.c	/^int x;$/;"	v
+x	open_test/gar/str_op4.c	/^		int x;$/;"	m	struct:str1::str3	file:
+x	open_test/gar/str_op4.c	/^	int x;$/;"	m	struct:str1	file:
+x	open_test/gar/str_op4.c	/^	int x;$/;"	m	struct:str2	file:
+x	open_test/gar/str_op4.c	/^int x;$/;"	v
+x	tests/func_basic.c	/^int x;$/;"	v
+x	tests/func_basic.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+x	tests/func_basic.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	m	struct:st2	file:
+x	tests/func_basic.c	/^struct st2{int x;} sf2_2(int a, int c){ \/* error : redecl *\/$/;"	m	struct:st2	file:
+x	tests/func_basic.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	m	struct:x	file:
+x	tests/func_basic.c	/^struct x{int x;} sf(int a, int c){ \/* error *\/$/;"	s	file:
+x	tests/func_basic2.c	/^int x;$/;"	v
+x	tests/func_basic2.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+x	tests/func_basic2.c	/^struct st2{int x; int y;} sf2(void){$/;"	m	struct:st2	file:
+x	tests/null.c	/^int x(){$/;"	f
+x	tests/struct_adv.c	/^		int x;$/;"	m	struct:str1::str3	file:
+x	tests/struct_adv.c	/^	int x;$/;"	m	struct:str1	file:
+x	tests/struct_adv.c	/^	int x;$/;"	m	struct:str2	file:
+x	tests/struct_adv.c	/^int x;$/;"	v
+x	tests/struct_decl.c	/^			int x;$/;"	m	struct:str2::str3::str_in	file:
+x	tests/struct_decl.c	/^	int x;$/;"	m	struct:str_in	file:
+x	tests/struct_decl.c	/^int x;$/;"	v
+x	tests/struct_op.c	/^	int x;$/;"	m	struct:str	file:
+x	tests/struct_op.c	/^	int x;$/;"	m	struct:str1	file:
+x	tests/struct_op.c	/^	int x;$/;"	m	struct:str2	file:
+x	tests/struct_op.c	/^	int x;$/;"	m	struct:str3	file:
+x	tests/struct_op.c	/^int x;$/;"	v
+x2	open_test/gar/str_op2.c	/^			int x2;$/;"	m	struct:str2::str3::str_in2	file:
+x2	tests/struct_decl.c	/^			int x2;$/;"	m	struct:str2::str3::str_in2	file:
+y	open_test/gar/func_op2.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+y	open_test/gar/func_op2.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	m	struct:st2	file:
+y	open_test/gar/func_op3.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+y	open_test/gar/func_op3.c	/^struct st2{int x; int y;} sf2(void){$/;"	m	struct:st2	file:
+y	open_test/gar/str_op2.c	/^			int y[10];$/;"	m	struct:str2::str3::str_in	file:
+y	open_test/gar/str_op3.c	/^	int y;$/;"	m	struct:str	file:
+y	open_test/gar/str_op3.c	/^	int y;$/;"	m	struct:str1	file:
+y	open_test/gar/str_op3.c	/^	int y;$/;"	m	struct:str2	file:
+y	open_test/gar/str_op3.c	/^	int y;$/;"	m	struct:str3	file:
+y	open_test/gar/str_op4.c	/^		int y;$/;"	m	struct:str1::str3	file:
+y	open_test/gar/str_op4.c	/^	int y;$/;"	m	struct:str1	file:
+y	open_test/gar/str_op4.c	/^	int y;$/;"	m	struct:str2	file:
+y	tests/func_basic.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+y	tests/func_basic.c	/^struct st2{int x; int y;} sf2(int x, int y){$/;"	m	struct:st2	file:
+y	tests/func_basic2.c	/^struct st1{int x; int y;};$/;"	m	struct:st1	file:
+y	tests/func_basic2.c	/^struct st2{int x; int y;} sf2(void){$/;"	m	struct:st2	file:
+y	tests/null.c	/^int* y(){$/;"	f
+y	tests/struct_adv.c	/^		int y;$/;"	m	struct:str1::str3	file:
+y	tests/struct_adv.c	/^	int y;$/;"	m	struct:str1	file:
+y	tests/struct_adv.c	/^	int y;$/;"	m	struct:str2	file:
+y	tests/struct_decl.c	/^			int y[10];$/;"	m	struct:str2::str3::str_in	file:
+y	tests/struct_op.c	/^	int y;$/;"	m	struct:str	file:
+y	tests/struct_op.c	/^	int y;$/;"	m	struct:str1	file:
+y	tests/struct_op.c	/^	int y;$/;"	m	struct:str2	file:
+y	tests/struct_op.c	/^	int y;$/;"	m	struct:str3	file:
+y2	open_test/gar/str_op2.c	/^			int y2;$/;"	m	struct:str2::str3::str_in2	file:
+y2	tests/struct_decl.c	/^			int y2;$/;"	m	struct:str2::str3::str_in2	file:
+yy_accept	lex.yy.c	/^static yyconst flex_int16_t yy_accept[55] =$/;"	v	file:
+yy_at_bol	lex.yy.c	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:
+yy_base	lex.yy.c	/^static yyconst flex_uint16_t yy_base[58] =$/;"	v	file:
+yy_bs_column	lex.yy.c	/^    int yy_bs_column; \/**< The column count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_bs_lineno	lex.yy.c	/^    int yy_bs_lineno; \/**< The line count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_pos	lex.yy.c	/^	char *yy_buf_pos;		\/* current position in input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_size	lex.yy.c	/^	yy_size_t yy_buf_size;$/;"	m	struct:yy_buffer_state	file:
+yy_buffer_stack	lex.yy.c	/^static YY_BUFFER_STATE * yy_buffer_stack = 0; \/**< Stack as an array. *\/$/;"	v	file:
+yy_buffer_stack_max	lex.yy.c	/^static size_t yy_buffer_stack_max = 0; \/**< capacity of stack. *\/$/;"	v	file:
+yy_buffer_stack_top	lex.yy.c	/^static size_t yy_buffer_stack_top = 0; \/**< index of top of stack. *\/$/;"	v	file:
+yy_buffer_state	lex.yy.c	/^struct yy_buffer_state$/;"	s	file:
+yy_buffer_status	lex.yy.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:
+yy_c_buf_p	lex.yy.c	/^static char *yy_c_buf_p = (char *) 0;$/;"	v	file:
+yy_ch_buf	lex.yy.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_chk	lex.yy.c	/^static yyconst flex_int16_t yy_chk[107] =$/;"	v	file:
+yy_create_buffer	lex.yy.c	/^    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )$/;"	f
+yy_def	lex.yy.c	/^static yyconst flex_int16_t yy_def[58] =$/;"	v	file:
+yy_delete_buffer	lex.yy.c	/^    void yy_delete_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_did_buffer_switch_on_eof	lex.yy.c	/^static int yy_did_buffer_switch_on_eof;$/;"	v	file:
+yy_ec	lex.yy.c	/^static yyconst YY_CHAR yy_ec[256] =$/;"	v	file:
+yy_fatal_error	lex.yy.c	/^static void yy_fatal_error (yyconst char* msg )$/;"	f	file:
+yy_fill_buffer	lex.yy.c	/^	int yy_fill_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_flex_debug	lex.yy.c	/^int yy_flex_debug = 0;$/;"	v
+yy_flex_strlen	lex.yy.c	/^static int yy_flex_strlen (yyconst char * s )$/;"	f	file:
+yy_flex_strncpy	lex.yy.c	/^static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )$/;"	f	file:
+yy_flush_buffer	lex.yy.c	/^    void yy_flush_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_get_next_buffer	lex.yy.c	/^static int yy_get_next_buffer (void)$/;"	f	file:
+yy_get_previous_state	lex.yy.c	/^    static yy_state_type yy_get_previous_state (void)$/;"	f	file:
+yy_hold_char	lex.yy.c	/^static char yy_hold_char;$/;"	v	file:
+yy_init	lex.yy.c	/^static int yy_init = 0;		\/* whether we need to initialize *\/$/;"	v	file:
+yy_init_buffer	lex.yy.c	/^    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )$/;"	f	file:
+yy_init_globals	lex.yy.c	/^static int yy_init_globals (void)$/;"	f	file:
+yy_input_file	lex.yy.c	/^	FILE *yy_input_file;$/;"	m	struct:yy_buffer_state	file:
+yy_is_interactive	lex.yy.c	/^	int yy_is_interactive;$/;"	m	struct:yy_buffer_state	file:
+yy_is_our_buffer	lex.yy.c	/^	int yy_is_our_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_last_accepting_cpos	lex.yy.c	/^static char *yy_last_accepting_cpos;$/;"	v	file:
+yy_last_accepting_state	lex.yy.c	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
+yy_load_buffer_state	lex.yy.c	/^static void yy_load_buffer_state  (void)$/;"	f	file:
+yy_meta	lex.yy.c	/^static yyconst YY_CHAR yy_meta[30] =$/;"	v	file:
+yy_n_chars	lex.yy.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:
+yy_n_chars	lex.yy.c	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
+yy_new_buffer	lex.yy.c	318;"	d	file:
+yy_nxt	lex.yy.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:
+yy_nxt	lex.yy.c	/^static yyconst flex_uint16_t yy_nxt[107] =$/;"	v	file:
+yy_reduce_print	subc.tab.c	/^yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)$/;"	f	file:
+yy_scan_buffer	lex.yy.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f
+yy_scan_bytes	lex.yy.c	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )$/;"	f
+yy_scan_string	lex.yy.c	/^YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )$/;"	f
+yy_set_bol	lex.yy.c	330;"	d	file:
+yy_set_interactive	lex.yy.c	320;"	d	file:
+yy_size_t	lex.yy.c	/^typedef size_t yy_size_t;$/;"	t	file:
+yy_stack_print	subc.tab.c	/^yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)$/;"	f	file:
+yy_start	lex.yy.c	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	file:
+yy_state_type	lex.yy.c	/^typedef int yy_state_type;$/;"	t	file:
+yy_switch_to_buffer	lex.yy.c	/^    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )$/;"	f
+yy_symbol_print	subc.tab.c	/^yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	file:
+yy_symbol_value_print	subc.tab.c	/^yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	file:
+yy_trans_info	lex.yy.c	/^struct yy_trans_info$/;"	s	file:
+yy_try_NUL_trans	lex.yy.c	/^    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )$/;"	f	file:
+yy_verify	lex.yy.c	/^	flex_int32_t yy_verify;$/;"	m	struct:yy_trans_info	file:
+yyalloc	lex.yy.c	/^void *yyalloc (yy_size_t  size )$/;"	f
+yyalloc	subc.tab.c	/^union yyalloc$/;"	u	file:
+yychar	subc.tab.c	/^int yychar;$/;"	v
+yycheck	subc.tab.c	/^static const yytype_uint8 yycheck[] =$/;"	v	file:
+yyclearin	subc.tab.c	692;"	d	file:
+yyconst	lex.yy.c	106;"	d	file:
+yyconst	lex.yy.c	108;"	d	file:
+yydebug	subc.tab.c	/^int yydebug;$/;"	v
+yydefact	subc.tab.c	/^static const yytype_uint8 yydefact[] =$/;"	v	file:
+yydefgoto	subc.tab.c	/^static const yytype_int16 yydefgoto[] =$/;"	v	file:
+yydestruct	subc.tab.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	file:
+yyensure_buffer_stack	lex.yy.c	/^static void yyensure_buffer_stack (void)$/;"	f	file:
+yyerrok	subc.tab.c	691;"	d	file:
+yyerror	subc.tab.c	/^int    yyerror (char* s)$/;"	f
+yyfree	lex.yy.c	/^void yyfree (void * ptr )$/;"	f
+yyget_debug	lex.yy.c	/^int yyget_debug  (void)$/;"	f
+yyget_in	lex.yy.c	/^FILE *yyget_in  (void)$/;"	f
+yyget_leng	lex.yy.c	/^yy_size_t yyget_leng  (void)$/;"	f
+yyget_lineno	lex.yy.c	/^int yyget_lineno  (void)$/;"	f
+yyget_out	lex.yy.c	/^FILE *yyget_out  (void)$/;"	f
+yyget_text	lex.yy.c	/^char *yyget_text  (void)$/;"	f
+yyin	lex.yy.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yyinput	lex.yy.c	/^    static int yyinput (void)$/;"	f	file:
+yyleng	lex.yy.c	/^yy_size_t yyleng;$/;"	v
+yyless	lex.yy.c	1803;"	d	file:
+yyless	lex.yy.c	1804;"	d	file:
+yyless	lex.yy.c	181;"	d	file:
+yylex_destroy	lex.yy.c	/^int yylex_destroy  (void)$/;"	f
+yylineno	lex.yy.c	/^int yylineno = 1;$/;"	v
+yylval	subc.tab.c	/^YYSTYPE yylval;$/;"	v
+yymore	lex.yy.c	498;"	d	file:
+yynerrs	subc.tab.c	/^int yynerrs;$/;"	v
+yyout	lex.yy.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yypact	subc.tab.c	/^static const yytype_int16 yypact[] =$/;"	v	file:
+yypact_value_is_default	subc.tab.c	516;"	d	file:
+yyparse	subc.tab.c	/^yyparse (void)$/;"	f
+yypgoto	subc.tab.c	/^static const yytype_int16 yypgoto[] =$/;"	v	file:
+yypop_buffer_state	lex.yy.c	/^void yypop_buffer_state (void)$/;"	f
+yypush_buffer_state	lex.yy.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer )$/;"	f
+yyr1	subc.tab.c	/^static const yytype_uint8 yyr1[] =$/;"	v	file:
+yyr2	subc.tab.c	/^static const yytype_uint8 yyr2[] =$/;"	v	file:
+yyrealloc	lex.yy.c	/^void *yyrealloc  (void * ptr, yy_size_t  size )$/;"	f
+yyrestart	lex.yy.c	/^    void yyrestart  (FILE * input_file )$/;"	f
+yyrline	subc.tab.c	/^static const yytype_uint16 yyrline[] =$/;"	v	file:
+yyset_debug	lex.yy.c	/^void yyset_debug (int  _bdebug )$/;"	f
+yyset_in	lex.yy.c	/^void yyset_in (FILE *  _in_str )$/;"	f
+yyset_lineno	lex.yy.c	/^void yyset_lineno (int  _line_number )$/;"	f
+yyset_out	lex.yy.c	/^void yyset_out (FILE *  _out_str )$/;"	f
+yyss_alloc	subc.tab.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:
+yystos	subc.tab.c	/^static const yytype_uint8 yystos[] =$/;"	v	file:
+yystpcpy	subc.tab.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	file:
+yystpcpy	subc.tab.c	893;"	d	file:
+yystrlen	subc.tab.c	/^yystrlen (const char *yystr)$/;"	f	file:
+yystrlen	subc.tab.c	877;"	d	file:
+yysyntax_error	subc.tab.c	/^yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,$/;"	f	file:
+yytable	subc.tab.c	/^static const yytype_uint8 yytable[] =$/;"	v	file:
+yytable_value_is_error	subc.tab.c	521;"	d	file:
+yyterminate	lex.yy.c	661;"	d	file:
+yytext	lex.yy.c	/^char *yytext;$/;"	v
+yytext_ptr	lex.yy.c	356;"	d	file:
+yytext_ptr	lex.yy.c	358;"	d	file:
+yytname	subc.tab.c	/^static const char *const yytname[] =$/;"	v	file:
+yytnamerr	subc.tab.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	file:
+yytokentype	subc.tab.c	/^  enum yytokentype$/;"	g	file:
+yytokentype	subc.tab.h	/^  enum yytokentype$/;"	g
+yytoknum	subc.tab.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	file:
+yytranslate	subc.tab.c	/^static const yytype_uint8 yytranslate[] =$/;"	v	file:
+yytype_int16	subc.tab.c	/^typedef YYTYPE_INT16 yytype_int16;$/;"	t	file:
+yytype_int16	subc.tab.c	/^typedef short int yytype_int16;$/;"	t	file:
+yytype_int8	subc.tab.c	/^typedef YYTYPE_INT8 yytype_int8;$/;"	t	file:
+yytype_int8	subc.tab.c	/^typedef signed char yytype_int8;$/;"	t	file:
+yytype_uint16	subc.tab.c	/^typedef YYTYPE_UINT16 yytype_uint16;$/;"	t	file:
+yytype_uint16	subc.tab.c	/^typedef unsigned short int yytype_uint16;$/;"	t	file:
+yytype_uint8	subc.tab.c	/^typedef YYTYPE_UINT8 yytype_uint8;$/;"	t	file:
+yytype_uint8	subc.tab.c	/^typedef unsigned char yytype_uint8;$/;"	t	file:
+yyunput	lex.yy.c	/^    static void yyunput (int c, char * yy_bp )$/;"	f	file:
+yyvs_alloc	subc.tab.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:
+z	tests/null.c	/^int z(){$/;"	f
