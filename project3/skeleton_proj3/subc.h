@@ -92,6 +92,9 @@ decl *inttype;
 decl *chartype;
 id* returnid;
 
+decl * ftn_type;
+decl * ftn_type_glob;
+
 /* For hash table */
 unsigned hash(char *name);
 struct id *enter(int lextype, char *name, int length);

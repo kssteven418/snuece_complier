@@ -95,7 +95,9 @@ ext_def
 			$$ = $1;
 		}
 
-		| func_decl compound_stmt {
+		| func_decl {
+				ftn_type_glob = ftn_type;
+			} compound_stmt {
 			$$ = check_function($1);
 			pop_scope();
 		}
@@ -122,6 +124,11 @@ struct_specifier
 		/* when first declared */
 		: STRUCT ID '{' {
 			push_scope(); 
+			// check if the struct type(ID) is declared
+			// must search in every scope
+			if(check_is_declared($2, 0)){
+				$<declptr>$ = raise("redeclared");
+			}
 		}
 			def_list '}' {
 				ste* fields = pop_scope();
@@ -132,11 +139,6 @@ struct_specifier
 					$$ = raise("unqualified id");
 				}
 
-				// check if the struct type(ID) is declared
-				// must search in every scope
-				else if(check_is_declared($2, 0)){
-					$$ = raise("redeclared");
-				}
 				else{
 					$$ = makestructdecl(fields);
 					declare_struct_type($2, $$);
@@ -173,14 +175,17 @@ struct_specifier
 func_decl
 		: type_specifier pointers ID '(' ')'
 		{
+			ftn_type = $1;
 			$$ = define_function_no_param($1, $2, $3);
 		}
 		| type_specifier pointers ID '(' VOID ')'
 		{
+			ftn_type = $1;
 			$$ = define_function_no_param($1, $2, $3);
 		}
 		| type_specifier pointers ID '('
-			{
+		{
+				ftn_type = $1;
 				if ($1 == NULL) { push_scope(); $<declptr>$ = NULL;}
 				else if ($3 == NULL) { push_scope(); $<declptr>$ = NULL;}
 				
@@ -322,6 +327,11 @@ stmt
 					raise("return value is not return type");			
 				}
 			}
+			else{
+				if(!check_type_compat(ftn_type_glob, voidtype)){
+					raise("return value is not return type");
+				}
+			}
 		}
 		| RETURN expr ';' {
 			ste* ret = find_current_scope(returnid);
@@ -340,6 +350,11 @@ stmt
 					raise("return value is not return type");			
 				}
 					
+			}
+			else{
+				if(!check_type_compat(ftn_type_glob, $2->type)){
+					raise("return value is not return type");
+				}
 			}
 		}
 		| ';'
