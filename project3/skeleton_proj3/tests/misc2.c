@@ -30,8 +30,8 @@ void fun(){ /* error */
 }
 
 int str;
-struct str{} str1;
-struct str str2;
+struct str{} str1; /* error */
+struct str str2; /* error */
 
 int main(){
 
