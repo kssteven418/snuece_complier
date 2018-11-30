@@ -97,6 +97,57 @@ int check_is_proc(decl* f){
 	return (f->declclass==_FUNC);
 }
 
+
+int check_function_call(decl* func, decl* args){
+	if(func==NULL) return 0;
+	ste* formals = func->formals;
+
+	// 1. no passing arguments i.e. func()
+	if (args == NULL){
+		return (formals->prev==NULL);
+	}
+	
+	// 2. passing argument i.e. func(1, 2)
+	else{
+		while(formals->prev != NULL && args != NULL){
+			// type check b/w param and arg
+			if(!check_type_compat(formals->decl->type, args->type, 0)){
+				return 0;
+			}
+			formals = formals->prev;
+			args = args->next;
+		}
+	
+		// if # param != # args
+		if(formals->prev != NULL || args != NULL){
+			return 0;
+		}
+			
+		return 1;
+	}
+}
+
+decl* check_struct_type(decl* type_decl){
+	if(type_decl == NULL) return NULL;
+
+	// type-only component, then should be a struct type
+	// int; void; ... are not allowed!
+
+	if(!check_is_struct_type(type_decl)){
+		return raise("not struct type"); // TODO : error message??
+	}
+	else{
+		return type_decl;
+	}
+
+}
+
+decl* check_function(decl* func_decl){
+		if(func_decl == NULL) return NULL;
+		return func_decl;
+}
+
+
 // for INCOP and DECOP
 int check_inc_dec(decl* src, decl* dest){
 	if(src==NULL){

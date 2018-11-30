@@ -135,12 +135,9 @@ void debugst(ste* st);
 
 
 /* functions in subc.y */
- int check_function_call(decl* func, decl* args);
 decl* define_normal(decl* type_decl, int is_ptr, id* id_decl);
 decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr);
 decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl);
-decl* check_struct_type(decl* type_decl);
-decl* check_function(decl* func_decl);
 decl* connect_defs(decl* def_list, decl* def);
 
 
@@ -156,6 +153,10 @@ int check_is_array(decl* x);
 int check_is_struct(decl* x);
 int check_is_struct_type(decl* x);
 int check_is_proc(decl* f);
+
+int check_function_call(decl* func, decl* args);
+decl* check_struct_type(decl* type_decl);
+decl* check_function(decl* func_decl);
 
 int check_inc_dec(decl* src, decl* dest);
 int check_add_sub(decl* x, decl* y, decl* dest);

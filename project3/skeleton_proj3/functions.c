@@ -207,6 +207,142 @@ decl* setprocdecl(decl* func, ste* formals){
 }
 
 
+// definition of normal expressions
+// (int x, int *x, struct temp x, struct temp *x)
+// push entry into the symbol table and return its 
+decl* define_normal(decl* type_decl, int is_ptr, id* id_decl){
+
+	//type undefined
+	if(type_decl==NULL) return NULL; 
+
+	//id parsing error
+	if(id_decl==NULL) return NULL;
+	
+	// id should not be 'NULL'
+	if(strCompare_no_len(id_decl->name, "NULL")){
+		return raise("unqualified id");
+	}
+
+	// id_decl : variable name
+
+	// ID must not be declared in the current scope
+	if (check_is_declared(id_decl, 1)){
+		return raise("redeclared");	
+	}
+
+	decl* temp;
+	
+	if(is_ptr) temp = makeptrdecl(type_decl);
+	else temp = makevardecl(type_decl);
+
+	declare(id_decl, temp);
+	return temp;
+
+}
+
+// definition of array expressions
+// (int x[1], int *x[1], struct temp x[1], struct temp *x[1])
+decl* define_array(decl* type_decl, int is_ptr, id* id_decl, decl* const_expr){
+
+	//type undefined
+	if(type_decl==NULL) return NULL; 
+
+	//id parsing error
+	if(id_decl==NULL) return NULL;
+	
+	//error in constant definition
+	if(const_expr==NULL) return NULL;
+	
+	// id should not be 'NULL'
+	if(strCompare_no_len(id_decl->name, "NULL")){
+		return raise("unqualified id");
+	}
+
+
+	//index must be an integer
+	//ASSERTED : const_expr is a constant
+	if(!check_type_compat(const_expr->type, inttype, 0)){
+		return raise("not int type"); // could have been a constant array!
+	}
+
+	// ID must not be declared in the current scope
+	if (check_is_declared(id_decl, 1)){
+		return raise("redeclared");	
+	}
+
+	decl* var_decl;
+	
+	if(is_ptr) var_decl = makeptrdecl(type_decl);
+	else var_decl = makevardecl(type_decl);
+
+	decl* temp = makearraydecl(const_expr->int_value, var_decl);
+
+	declare(id_decl, temp);
+	
+	return temp;
+}
+
+decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl){
+	if(type_decl==NULL) {
+			push_scope(); // scope for unnecessary func body
+			return NULL;
+	}
+	if(id_decl==NULL){
+			push_scope(); // scope for unnecessary func body
+			return NULL;
+	}
+
+	// id should not be 'NULL'
+	if(strCompare_no_len(id_decl->name, "NULL")){
+			push_scope();
+			return raise("unqualified id");
+	}
+
+	// function name must have not defined before
+	if (check_is_declared(id_decl, 1)){
+		push_scope(); // scope for unnecessary func body
+		return raise("redeclared");
+	}
+
+	decl* func = makeprocdecl();
+	declare(id_decl, func);
+	push_scope();
+
+	decl* returntype;
+
+	// if pointer, encapsule type_specifier into ptr type decl
+	if(is_ptr){
+		returntype = (decl*)malloc(sizeof(decl));
+		returntype->declclass = _TYPE;
+		returntype->typeclass = _POINTER;
+		returntype->ptrto = type_decl;
+	}
+	else{
+		returntype = type_decl;
+	}
+	declare(returnid, returntype);
+
+	// pop out the fake scope
+	ste* formals = pop_scope();
+	// set returntype and formals information of the function
+	setprocdecl(func, formals);
+	// new scope for local declarations and formals
+	push_scope();
+	// enter all the formal variables into the stack
+	push_stelist(formals);
+	
+	return func;
+
+}
+
+decl* connect_defs(decl* def_list, decl* def){
+	if(def==NULL) return NULL;
+
+	//connect def->def_list, def_list might be a null value
+	def->next = def_list;
+	return def;
+}
+
 // for debugging
 void debugst(ste* st){
 	ste *temp = st;
