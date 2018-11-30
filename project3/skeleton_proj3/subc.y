@@ -250,7 +250,6 @@ func_decl
 				else{
 					// pop out the fake scope
 					ste* formals = pop_scope();
-					//debugst(formals);
 					// set returntype and formals information of the function
 					setprocdecl(func, formals); 
 					// new scope for local declarations and formals
@@ -419,7 +418,7 @@ expr
 						$$ = $1;
 					}
 					else{
-						$$ = raise("LHS and RHS are not same type");
+						$$ = raise("RHS is not a const or variable");
 					}
 				}
 
@@ -455,7 +454,6 @@ or_list
 			if(check_and_or($1, $3, $$)){
 				$$ = makevardecl(inttype); // output must be a integer type
 				if(check_is_const($1) && check_is_const($3)){
-					//ASSERT : $$->declclass = _CONST
 					// in case of addition of two integer constants
 					$$->int_value = $1->int_value || $3->int_value;
 					$$->declclass = _CONST;
@@ -463,6 +461,9 @@ or_list
 				else{
 					$$->declclass = _EXP;
 				}
+			}
+			else{
+					$$ = NULL;
 			}
 		}
 		| and_expr{
@@ -481,7 +482,6 @@ and_list
 			if(check_and_or($1, $3, $$)){
 				$$ = makevardecl(inttype); // output must be a integer type
 				if(check_is_const($1) && check_is_const($3)){
-					//ASSERT : $$->declclass = _CONST
 					// in case of addition of two integer constants
 					$$->int_value = $1->int_value && $3->int_value;
 					$$->declclass = _CONST;
@@ -489,6 +489,9 @@ and_list
 				else{
 					$$->declclass = _EXP;
 				}
+			}
+			else{
+				$$ = NULL;
 			}
 		}
 		| binary{
@@ -755,7 +758,7 @@ unary
 			}
 
 			else if(!check_is_array($1)){
-				$$ = raise("not array type"); // TODO : error msg?
+				$$ = raise("not array type"); 
 			}
 			//exp must be a integer
 			else if(!check_type_compat($3->type, inttype, 0)){
@@ -796,7 +799,7 @@ unary
 
 			// unary must be a pointer value
 			else if(!check_is_pointer($1)){
-				$$ = raise("not a pointer"); // TODO : error message?
+				$$ = raise("not a pointer"); 
 			}
 
 			else{
@@ -819,8 +822,6 @@ unary
 
 		}
 		| unary '(' args ')'{
-		
-			//debug_args($3);
 			
 			if($1==NULL) { $$ = NULL; }
 			else if ($3==NULL) { $$ = NULL; }
