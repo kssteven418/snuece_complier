@@ -39,6 +39,10 @@ int check_type_compat(decl* x, decl* y, int arr_to_ptr){
 		return check_type_compat(x->ptrto, y->ptrto, 0); 
 	}
 
+	if(x->typeclass == _ARRAY){
+		return check_type_compat(x->elementvar->type, y->elementvar->type, 0);
+	}
+
 	// assume that this function is not called
 	// in case of both are array
 	return 0;
@@ -111,7 +115,7 @@ int check_function_call(decl* func, decl* args){
 	else{
 		while(formals->prev != NULL && args != NULL){
 			// type check b/w param and arg
-			if(!check_type_compat(formals->decl->type, args->type, 0)){
+			if(!check_type_compat(formals->decl->type, args->type, 1)){
 				return 0;
 			}
 			formals = formals->prev;

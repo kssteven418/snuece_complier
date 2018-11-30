@@ -347,26 +347,31 @@ stmt
 			}
 		}
 		| RETURN expr ';' {
-			ste* ret = find_current_scope(returnid);
-
-			// expression must be a constant, a variable or a pointer
-			// cannot be func, array constant, or type
-			if (ret != NULL){
-
-				// if the expr is NULL
-				if($2->declclass == _NULL){
-					if (!(ret->decl->typeclass == _POINTER)){
-						raise("return value is not return type");
-					}
-				}
-				else if(!check_type_compat(ret->decl, $2->type, 0)){
-					raise("return value is not return type");			
-				}
-					
+			
+			if($2==NULL){
 			}
 			else{
-				if(!check_type_compat(ftn_type_glob, $2->type, 0)){
-					raise("return value is not return type");
+				ste* ret = find_current_scope(returnid);
+
+				// expression must be a constant, a variable or a pointer
+				// cannot be func, array constant, or type
+				if (ret != NULL){
+	
+					// if the expr is NULL
+					if($2->declclass == _NULL){
+						if (!(ret->decl->typeclass == _POINTER)){
+							raise("return value is not return type");
+						}
+					}
+					else if(!check_type_compat(ret->decl, $2->type, 0)){
+						raise("return value is not return type");			
+					}
+					
+				}
+				else{
+					if(!check_type_compat(ftn_type_glob, $2->type, 0)){
+						raise("return value is not return type");
+					}
 				}
 			}
 		}
@@ -818,6 +823,7 @@ unary
 			//debug_args($3);
 			
 			if($1==NULL) { $$ = NULL; }
+			else if ($3==NULL) { $$ = NULL; }
 
 			// unary must be a function 
 			else if (!check_is_proc($1)){
@@ -861,11 +867,24 @@ unary
 
 args    /* actual parameters(function arguments) transferred to function */
 		: expr{
-			$$ = copy($1);
+			if($1 == NULL){
+				$$ = NULL;
+			}
+			else{
+				$$ = copy($1);
+			}
 		}
 		| expr ',' args{
-			$$ = copy($1);
-			$$->next = $3;	
+			if($1==NULL){
+				$$ = NULL;
+			}
+			else if ($3 == NULL){
+				$$ = NULL;
+			}
+			else{
+				$$ = copy($1);
+				$$->next = $3;	
+			}
 		}
 ;
 
