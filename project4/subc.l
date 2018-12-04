@@ -163,6 +163,9 @@ int main(int argc, char* argv[])
 	temp->decl = NULL;
 	sstop->top = temp; 
 	sstop->prev->top = temp;
+
+	// set global scope
+	global_scope = sstop;
 	
 	// insert keywords in the hash table
    static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue", "NULL",  NULL };
@@ -173,9 +176,9 @@ int main(int argc, char* argv[])
 
    // init types
    init_type();
-
-	 // START UP CODE
-	 printStartUp();
+	
+   // START UP CODE
+   printStartUp();
 	
    //debug
    //debugst(sstop->top);

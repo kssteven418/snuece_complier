@@ -62,6 +62,15 @@ void push_stelist(ste* stelist){
 		ste* copy = copy_ste(temp);
 		copy->prev = sstop->top;
 		sstop->top = copy;
+		if(copy->decl != NULL) {
+			// parameter is allocated
+			// only if variable or (const)array
+			if(copy->decl->declclass==_VAR 
+				 || (copy->decl->declclass==_CONST
+							&&copy->decl->type->typeclass==_ARRAY)){
+				sstop->size += copy->decl->size; 
+			}
+		}
 		temp = temp->prev;
 	}
 
@@ -85,7 +94,9 @@ void declare(id* name, decl* decl){
 		decl->offset = sstop->size;
 		// add the decl's size to the scope size
 		sstop->size += decl->size;
-		printf("%d, %d\n", decl->offset, sstop->size);
+		// DEBUG
+		//printf("offset : %d, sstop size : %d, isglob : %d\n",
+		//		decl->offset, sstop->size, decl->is_glob);
 	}
 }
 
@@ -140,6 +151,7 @@ decl* maketypedecl(int type){
 	decl* temp = (decl*)malloc(sizeof(decl));	
 	temp->declclass = _TYPE;
 	temp->typeclass = type;
+	temp->size = 1;
 	return temp;
 }
 
@@ -147,7 +159,13 @@ decl* makevardecl(decl* type_decl){
 	decl* temp = (decl*)malloc(sizeof(decl));
 	temp->declclass = _VAR;
 	temp->type = type_decl;
-	temp->size = 1;
+	temp->size = type_decl->size;
+	if (sstop==global_scope){
+		temp->is_glob = 1;
+	}
+	else{
+		temp->is_glob = 0;
+	}
 	return temp;
 
 }
@@ -169,6 +187,12 @@ decl* makeptrdecl(decl* type_decl){
 	var->declclass = _VAR;
 	var->type = type;
 	var->size = 1;
+	if (sstop==global_scope){
+		var->is_glob = 1;
+	}
+	else{
+		var->is_glob = 0;
+	}
 
 	// type decl : pointer
 	type->declclass = _TYPE;
@@ -196,6 +220,12 @@ decl* makearraydecl(int size, decl* var_decl){
 	// = var_size (elmt size : canbe non-1 value if struct array!
 	//   * size (the number of elements)
 	cons->size = var_size * size; 
+	if (sstop==global_scope){
+		cons->is_glob = 1;
+	}
+	else{
+		cons->is_glob = 0;
+	}
 	return cons;
 }
 
@@ -204,6 +234,8 @@ decl* makestructdecl(ste* fields){
 	type->declclass = _TYPE;
 	type->typeclass= _STRUCT;
 	type->fields = fields;
+
+	type->size = 100; // TODO
 	return type;
 	
 }
@@ -360,6 +392,22 @@ decl* connect_defs(decl* def_list, decl* def){
 	//connect def->def_list, def_list might be a null value
 	def->next = def_list;
 	return def;
+}
+
+id* find_id(decl* _decl){
+	ste* temp = sstop->top;
+	decl* dtemp = NULL;
+
+	while(temp!=NULL){
+		dtemp = temp->decl;
+		if(dtemp!=NULL){
+			if(dtemp==_decl){
+				return temp->name;
+			}
+		}
+		temp = temp->prev;
+	}
+	return NULL;
 }
 
 // for debugging

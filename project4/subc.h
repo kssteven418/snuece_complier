@@ -77,7 +77,8 @@ typedef struct decl{
 	
 	/* ALL */
 	int size; // size in byte
-	int offset;
+	int offset; // offset from the gp or fp
+	int is_glob;
 
 	/* VAR */
 	struct ste **scope; // scope when VAR declared
@@ -93,12 +94,14 @@ typedef struct scope_stack{
 } scope_stack;
 
 scope_stack *sstop;
+scope_stack *global_scope;
 ste *globaldef;
 decl *null;
 decl *voidtype;
 decl *inttype;
 decl *chartype;
 id* returnid;
+id* ftn_name;
 
 decl * ftn_type;
 decl * ftn_type_glob;
@@ -139,6 +142,7 @@ decl* makestructdecl(ste* fields);
 decl* makeprocdecl();
 decl* setprocdecl(decl* func, ste* formals);
 
+id* find_id(decl* _decl);
 void debugst(ste* st);
 
 
@@ -178,6 +182,12 @@ void printStartUp();
 void printGlobals();
 void printRelEqu(int op);
 void printArithmetic(int op);
+void printLoadVar(decl* var);
+
+void addrToVar(decl* decl);
+void printAssign();
+void moveSP(int n);
+void afterExpr(decl* expr);
 
 #endif
 

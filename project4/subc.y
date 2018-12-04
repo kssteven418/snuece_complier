@@ -97,9 +97,19 @@ ext_def
 
 		| func_decl {
 				ftn_type_glob = ftn_type;
+				ftn_name = find_id($1);
+				P("%s:\n", ftn_name->name);
+
 			} compound_stmt {
 			$$ = check_function($1);
 			pop_scope();
+
+			P("%s_final:\n", find_id($1)->name);
+			P("\tpush_reg fp\n");
+			P("\tpop_reg sp\n");
+			P("\tpop_reg fp\n");
+			P("\tpop_reg pc\n");
+			P("%s_end:\n", find_id($1)->name);
 		}
 ; 
 
@@ -315,7 +325,17 @@ def
 ;
 
 compound_stmt
-		: '{' local_defs stmt_list '}'
+		: '{' local_defs{
+			int size = sstop->size;
+			// allocate memory for local variables
+			if(size>0){
+				P("\tshift_sp %d\n", size);
+			}
+			P("%s_start:\n", ftn_name->name);
+		}
+		
+		stmt_list '}'
+
 ;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
@@ -330,7 +350,11 @@ stmt_list
 ;
 
 stmt
-		: expr ';'
+		: expr ';'{
+			/* TODO : change all expr by addrToVar */
+			/* TODO : shift sp after the expression */
+			afterExpr($1);
+		}
 		| compound_stmt
 		| RETURN ';'{
 			ste* ret = find_current_scope(returnid);				
@@ -393,6 +417,7 @@ const_expr
 			//should be a constant
 			if(check_is_const($1)){
 				$$ = $1;
+				afterExpr($$);
 			}
 			else{
 				$$ = raise("not constant");
@@ -401,9 +426,14 @@ const_expr
 ;
 
 expr
-		: unary '=' expr{
+		: unary {
+				// address of unary(variable) will be at the stack top
+				P("\tpush_reg sp\n");
+				P("\tfetch\n"); // copy yhe address
+
+			}'=' expr{
 				if ($1==NULL) {$$=NULL;}
-				else if ($3==NULL) {$$=NULL;}
+				else if ($4==NULL) {$$=NULL;}
 				
 				// LHS unary must be a pure variable
 				// array is not allowed since it is a CONST
@@ -412,7 +442,7 @@ expr
 				}
 					
 				// if RHS is NULL
-				else if($3->declclass==_NULL){
+				else if($4->declclass==_NULL){
 					// the LHS must be a pointer
 					if ($1->type->typeclass == _POINTER){
 						$$ = $1;
@@ -423,19 +453,21 @@ expr
 				}
 
 				// RHS expr must be a variable(+expr) or a const
-				else if (!check_is_const_var($3, 1)
-								&& $3->type->typeclass != _ARRAY){
+				else if (!check_is_const_var($4, 1)
+								&& $4->type->typeclass != _ARRAY){
 						$$ = raise("RHS is not a const or variable");	
 				}
 
 				// RHS and LHS must have same type
-				else if (!check_type_compat($1->type, $3->type, 1)){
+				else if (!check_type_compat($1->type, $4->type, 1)){
 					$$ = raise("LHS and RHS are not same type");
 				}
 				
 				// otherwise, return the unary itself
 				else{
 					$$ = $1;
+					addrToVar($4);
+					printAssign();
 				}
 		}
 		| or_expr{
@@ -461,6 +493,7 @@ or_list
 				else{
 					$$->declclass = _EXP;
 				}
+				P("\tor\n");
 			}
 			else{
 					$$ = NULL;
@@ -489,9 +522,7 @@ and_list
 				else{
 					$$->declclass = _EXP;
 				}
-
-
-
+				P("\tand\n");
 			}
 			else{
 				$$ = NULL;
@@ -583,7 +614,11 @@ binary
 			
 		}
 		| unary %prec '='{
-			$$ = $1;
+			$$ = copy($1);
+			addrToVar($$);
+			if($$->declclass==_VAR){ //TODO : correct?
+					$$->declclass = _EXP;
+			}
 		}
 
 unary
@@ -635,6 +670,7 @@ unary
 			else{
 				// copy declaration : not in the symbol table
 				$$ = copy(id_ste->decl);
+				printLoadVar($$);
 			}
 		
 		}
@@ -761,6 +797,9 @@ unary
 				decl* temp = makevardecl($2->type->ptrto);		
 				$$ = temp;
 				$$->declclass = _VAR;
+
+				// stack top is the variable(unary) addr
+				P("\tfetch\n");
 			}
 		}
 
