@@ -77,6 +77,7 @@ typedef struct decl{
 	
 	/* ALL */
 	int size; // size in byte
+	int offset;
 
 	/* VAR */
 	struct ste **scope; // scope when VAR declared
@@ -88,6 +89,7 @@ typedef struct decl{
 typedef struct scope_stack{
 	struct scope_stack *prev; // for pop operation
 	struct ste *top; // top of the ste
+	int size; // size of all declarations in the given scope
 } scope_stack;
 
 scope_stack *sstop;
@@ -172,6 +174,8 @@ int check_and_or(decl* x, decl* y, decl* dest);
 
 /* print functions */
 /* defined in printftn.c */
+void printStartUp();
+void printGlobals();
 void printRelEqu(int op);
 void printArithmetic(int op);
 

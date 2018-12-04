@@ -77,6 +77,16 @@ void declare(id* name, decl* decl){
 
 	// modify scopestack
 	sstop->top = temp;
+
+	// only if integer or array
+	if(decl->declclass==_VAR || 
+			(decl->declclass==_CONST && decl->type->typeclass==_ARRAY)){
+		// set the global decl's offset
+		decl->offset = sstop->size;
+		// add the decl's size to the scope size
+		sstop->size += decl->size;
+		printf("%d, %d\n", decl->offset, sstop->size);
+	}
 }
 
 //insert declare of struct type
@@ -137,6 +147,7 @@ decl* makevardecl(decl* type_decl){
 	decl* temp = (decl*)malloc(sizeof(decl));
 	temp->declclass = _VAR;
 	temp->type = type_decl;
+	temp->size = 1;
 	return temp;
 
 }
@@ -145,6 +156,7 @@ decl* makeconstdecl(decl* type_decl){
 	decl* temp = (decl*)malloc(sizeof(decl));
 	temp->declclass = _CONST;
 	temp->type = type_decl;
+	temp->size = 1;
 	return temp;
 }
 
@@ -156,6 +168,7 @@ decl* makeptrdecl(decl* type_decl){
 	// variable decl
 	var->declclass = _VAR;
 	var->type = type;
+	var->size = 1;
 
 	// type decl : pointer
 	type->declclass = _TYPE;
@@ -176,7 +189,13 @@ decl* makearraydecl(int size, decl* var_decl){
 	type->declclass = _TYPE;
 	type->typeclass = _ARRAY;
 	type->elementvar = var_decl;
+
 	type->size = size;
+	int var_size = var_decl->size;
+	// total array size 
+	// = var_size (elmt size : canbe non-1 value if struct array!
+	//   * size (the number of elements)
+	cons->size = var_size * size; 
 	return cons;
 }
 

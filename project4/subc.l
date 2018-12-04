@@ -173,129 +173,14 @@ int main(int argc, char* argv[])
 
    // init types
    init_type();
+
+	 // START UP CODE
+	 printStartUp();
 	
    //debug
    //debugst(sstop->top);
    ste* s;
    id* name;
-
-   /*
-   debugst(sstop->top);
-
-   push_scope();
-
-   declare(enter(ID, "x", 1), NULL);
-   declare(enter(ID, "int", 3), NULL);
-   declare(enter(ID, "y", 1), NULL);
-   declare(enter(ID, "z", 1), NULL);
-
-   debugst(sstop->top);
-
-   ste* stetemp = pop_scope();
-
-   debugst(sstop->top);
-   printf("\n");
-   debugst(stetemp);
-	*/
-	/*
-	name = enter(ID, "int", 3);
-	s = find_current_scope(name);
-	printf("%s\n", s->name->name);
-
-	name = enter(ID, "void", 4);
-	s = find_current_scope(name);
-	printf("%s\n", s->name->name);
-
-	name = enter(ID, "string", 6);
-	s = find_current_scope(name);
-	printf("%s\n", s->name->name);
-
-	name = enter(ID, "soid", 4);
-	s = find_current_scope(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-	*/
-
-   /*
-   printf("PUSH\n");
-	push_scope();
-	declare(enter(ID, "hello", 5), NULL);	
-	declare(enter(ID, "hello2", 6), NULL);	
-	debugst(sstop->top);
-
-	name = lookup("void");
-	s = find_current_scope(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	s = find(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	name = lookup("hello");
-	s = find_current_scope(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	s = find(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	ste* sttemp = pop_scope();
-
-   printf("\nPOP\n");
-	debugst(sstop->top);
-	debugst(sttemp);
-
-	name = lookup("void");
-	s = find_current_scope(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	s = find(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	name = lookup("hello");
-	s = find_current_scope(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	s = find(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-	
-	name = lookup("char");
-	s = find_current_scope(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-
-	s = find(name);
-	if(s!=NULL)
-		printf("%s\n", s->name->name);
-	else
-		printf("NULL\n");
-	*/
 
    if(argc >= 2) {
 	   yyin = fopen(argv[1], "r");
@@ -311,6 +196,11 @@ int main(int argc, char* argv[])
    }
 	
    yyparse();
+
+	 // GLOBAL AREA
+	 printGlobals();
+
+
    fclose(yyin);
    return 0;
 }
