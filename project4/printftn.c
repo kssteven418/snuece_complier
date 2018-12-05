@@ -25,8 +25,8 @@ void printRelEqu(int op){
 }
 
 void printArithmetic(int op){
-	if(op==_PLUS) P("\tadd");
-	if(op==_MINUS) P("\tsub");
+	if(op==_PLUS) P("\tadd\n");
+	if(op==_MINUS) P("\tsub\n");
 }
 
 void printLoadVar(decl* var){
@@ -43,6 +43,51 @@ void printLoadVar(decl* var){
 			P("\tadd\n");
 	}
 }
+
+void printIncDec(int isInc, int isOpFst){
+	// stack top is address
+	// ++a, --a
+	if(isOpFst){
+		P("\tpush_reg sp\n");
+		P("\tfetch\n");
+		P("\tpush_reg sp\n");
+		P("\tfetch\n");
+		// stack top : addr addr addr #
+		P("\tfetch\n");
+		// stack top : var addr #
+		P("\tpush_const 1\n");
+		if(isInc) P("\tadd\n");
+		else P("\tsub\n");
+		// stack top : var+1 addr addr #
+		P("\tassign\n");
+		// stack top : addr # and addr->var+1
+	}
+
+	// a++, a--
+	else{
+		P("\tpush_reg sp\n");
+		P("\tfetch\n");
+		P("\tpush_reg sp\n");
+		P("\tfetch\n");
+		// stack top : addr addr addr #
+		P("\tfetch\n");
+		// stack top : var addr #
+		P("\tpush_const 1\n");
+		if(isInc) P("\tadd\n");
+		else P("\tsub\n");
+		// stack top : var+1 addr addr #
+		P("\tassign\n");
+		// stack top : addr # and addr->var+1
+		P("\tfetch\n");
+		// stack top : var+1 #
+		P("\tpush_const 1\n");
+		if(isInc) P("\tsub\n");
+		else P("\tadd\n");
+		// stack top : var #
+		
+	}
+}
+
 
 void addrToVar(decl* decl){
 	

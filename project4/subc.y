@@ -102,6 +102,9 @@ ext_def
 				ftn_name = find_id($1);
 				P("%s:\n", ftn_name->name);
 
+				// to make offset + 1 (due ro saved FP is @ FP+0)
+				sstop->size = 1;
+
 				// start up code and start position is @ compound_stmt definition
 			} compound_stmt {
 			$$ = check_function($1);
@@ -330,7 +333,8 @@ def
 
 compound_stmt
 		: '{' local_defs{
-			int size = sstop->size;
+				// -1 since size is assigned size+1 for the correct offset
+			int size = sstop->size-1;
 			// allocate memory for local variables
 			if(size>0){
 				P("\tshift_sp %d\n", size);
@@ -703,6 +707,8 @@ unary
 			else{
 				// copy declaration : not in the symbol table
 				$$ = copy(id_ste->decl);
+
+				// Load address of the variable
 				printLoadVar($$);
 			}
 		
@@ -730,6 +736,10 @@ unary
 				else{
 					$$->declclass = _EXP; // integer expression
 				}
+
+				addrToVar($2);
+				P("\tnegate\t");
+
 			}
 		}
 
@@ -755,6 +765,9 @@ unary
 				else{
 					$$->declclass = _EXP; // integer expression
 				}
+
+				addrToVar($2);
+				P("\tnot\t");
 			}
 		}
 
@@ -762,6 +775,8 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($1, $$)){
 				$$ = $1;
+				$$->declclass = _EXP;
+				printIncDec(1, 0);
 			}
 			else{
 				$$ = NULL;
@@ -772,6 +787,8 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($1, $$)){
 				$$ = $1;
+				$$->declclass = _EXP;
+				printIncDec(0, 0);
 			}
 			else{
 				$$ = NULL;
@@ -781,6 +798,7 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
+				printIncDec(1, 1);
 			}
 			else{
 				$$ = NULL;
@@ -791,6 +809,7 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
+				printIncDec(0, 1);
 			}
 			else{
 				$$ = NULL;
@@ -855,6 +874,17 @@ unary
 				decl* temp = copy($1->type->elementvar);
 				$$ = temp;
 				$$->declclass = _VAR;
+
+				// stack top will be : expr unary(addr) #
+				// if expr is an address, e.g. a[x], then get the value
+				addrToVar($3); 
+				// in case of struct array, the size is not 1
+				if ($$->size>1){
+						P("\tpush_const %d\n", $$->size);
+						P("\tmul\n");
+				}
+				P("\tadd\n");
+
 			}
 		}
 

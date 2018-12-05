@@ -184,6 +184,8 @@ void printGlobals();
 void printRelEqu(int op);
 void printArithmetic(int op);
 void printLoadVar(decl* var);
+void printIncDec(int isInc, int isOpFst);
+
 
 void addrToVar(decl* decl);
 void printAssign();
