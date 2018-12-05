@@ -55,7 +55,7 @@ special-char	\\[nt]
 '({special-char}|[^\\'\n])'	{
 	/* Character Variable */
 	// printf("LEX %s\n", yytext); 
-	yylval.charVal = yytext[0];
+	yylval.charVal = yytext[1];
 	return CHAR_CONST; }
 
 {logical_or} {
@@ -168,8 +168,11 @@ int main(int argc, char* argv[])
 	global_scope = sstop;
 	
 	// insert keywords in the hash table
-   static char *keyword[] = { "int", "char", "void", "struct", "return", "if", "else", "while", "for", "break", "continue", "NULL",  NULL };
-   static int tokentype[] = { TYPE, TYPE, VOID, STRUCT, RETURN, IF, ELSE, WHILE, FOR, BREAK, CONTINUE, ID, 0 };
+   static char *keyword[] = { "int", "char", "void", "struct", "return", 
+	   "if", "else", "while", "for", "break", "continue", "NULL",  
+	    "read_int", "read_char", "write_int", "write_string", "write_char", NULL };
+   static int tokentype[] = { TYPE, TYPE, VOID, STRUCT, RETURN, IF, ELSE, WHILE, FOR, BREAK, CONTINUE, ID,
+	   							READINT, READCHAR, WRITEINT, WRITESTR, WRITECHAR, 0 };
    int i;
    for(i = 0; keyword[i] != NULL; i++)
       enter(tokentype[i], keyword[i], strlen(keyword[i]));

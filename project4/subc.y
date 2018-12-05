@@ -11,6 +11,7 @@ int    yylex ();
 int    yyerror (char* s);
 void 	REDUCE(char* s);
 
+int str_cnt;
 
 %}
 
@@ -50,6 +51,7 @@ void 	REDUCE(char* s);
 %type<declptr> binary unary
 
 %token<idptr> ID
+%token READINT READCHAR WRITEINT WRITESTR WRITECHAR
 %token<idptr> TYPE VOID STRUCT 
 %token<idptr> RETURN IF ELSE WHILE FOR BREAK CONTINUE 
 %token<stringVal> LOGICAL_OR LOGICAL_AND INCOP DECOP STRUCTOP 
@@ -100,10 +102,12 @@ ext_def
 				ftn_name = find_id($1);
 				P("%s:\n", ftn_name->name);
 
+				// start up code and start position is @ compound_stmt definition
 			} compound_stmt {
 			$$ = check_function($1);
 			pop_scope();
 
+			// end up code and final position
 			P("%s_final:\n", find_id($1)->name);
 			P("\tpush_reg fp\n");
 			P("\tpop_reg sp\n");
@@ -331,6 +335,7 @@ compound_stmt
 			if(size>0){
 				P("\tshift_sp %d\n", size);
 			}
+			// and then, start position
 			P("%s_start:\n", ftn_name->name);
 		}
 		
@@ -405,6 +410,30 @@ stmt
 		| FOR '(' expr_e ';' expr_e ';' expr_e ')' stmt
 		| BREAK ';'
 		| CONTINUE ';'
+
+		/* I/O statements */
+		| READINT '(' unary ')'{
+			// address is at the stack top
+			P("\tread_int\n");
+			P("\tassign\n");
+		}
+		| READCHAR '(' unary ')'{
+			P("\tread_char\n");
+			P("\tassign\n");
+		}
+		| WRITEINT '(' unary ')'{
+			addrToVar($3);
+			P("\twrite_int\n");
+		}
+		| WRITECHAR '(' unary ')'{
+			addrToVar($3);
+			P("\twrite_char\n");
+		}
+		| WRITESTR '(' unary ')'{
+			addrToVar($3);
+			P("\twrite_string\n");
+		
+		}
 ;
 
 expr_e
@@ -656,6 +685,10 @@ unary
 
 			$$ = makeptrdecl(typedecl);
 			$$->declclass = _EXP; 
+
+			P("str_%d. string %s\n", str_cnt, $1);
+			P("\tpush_const str_%d\n", str_cnt++);
+
 		}
 
 
