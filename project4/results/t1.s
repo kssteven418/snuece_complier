@@ -13,6 +13,7 @@ main_start:
 	fetch
 	push_const Lglob+1
 	fetch
+	fetch
 	assign
 	fetch
 	shift_sp -1

@@ -500,7 +500,7 @@ expr
 				else{
 					$$ = $1;
 					addrToVar($4);
-					printAssign();
+					printAssign($4);
 				}
 		}
 		| or_expr{
@@ -850,8 +850,7 @@ unary
 				$$ = temp;
 				$$->declclass = _VAR;
 
-				// stack top is the variable(unary) addr
-				P("\tfetch\n");
+				printFetchPtr($2);
 			}
 		}
 
@@ -906,6 +905,9 @@ unary
 				}
 				else{
 					$$ = copy(field->decl);
+					int offset = $$->offset;
+					P("\tpush_const %d\n", $$->offset);
+					P("\tadd\n");
 				}
 			}
 		}
@@ -933,6 +935,11 @@ unary
 					}
 					else{
 					$$ = copy(field->decl);
+					printFetchPtr($1);
+					int offset = $$->offset;
+					P("\tpush_const %d\n", $$->offset);
+					P("\tadd\n");
+
 					}
 				}
 			}

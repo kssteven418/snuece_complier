@@ -89,18 +89,43 @@ void printIncDec(int isInc, int isOpFst){
 }
 
 
-void addrToVar(decl* decl){
+void addrToVar(decl* var){
 	
 	// if variable, stack top is addr. of the variable
 	// must fetch the value
-	if(decl->declclass==_VAR){
-		P("\tfetch\n");
+	if(var->declclass==_VAR){
+		if(var->type->typeclass != _STRUCT){
+			P("\tfetch\n");
+		}
+		else{
+
+		}
 	}
 
 }
 
-void printAssign(){
-		P("\tassign\n");
+void printAssign(decl* var){
+		if(var->type->typeclass != _STRUCT){
+			P("\tassign\n");
+		}
+		else{
+
+		}
+}
+
+void printFetchPtr(decl* var){
+	// if the stack top is exp 
+	// e.g. *(&a)
+	if(var->declclass == _EXP){
+		/* stack top itself is the location */
+	}
+	
+	// otherwise, stack top is the variable(unary) addr
+	// e.g. *p
+	else{
+		/* fetch location from the stack top variable */
+		P("\tfetch\n");
+	}
 }
 
 void moveSP(int n){
@@ -108,6 +133,7 @@ void moveSP(int n){
 			P("\tshift_sp %d\n", n);
 		}
 }
+
 
 // post processing after expression ended
 void afterExpr(decl* expr){

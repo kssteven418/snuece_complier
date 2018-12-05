@@ -234,8 +234,18 @@ decl* makestructdecl(ste* fields){
 	type->declclass = _TYPE;
 	type->typeclass= _STRUCT;
 	type->fields = fields;
+	
+	// get the size of fields
+	ste* iter = fields;
+	int size = 0;
+	while(iter!=NULL){
+		if(iter->decl != NULL){
+			size += iter->decl->size;
+		}
+		iter = iter->prev;
+	}
 
-	type->size = 100; // TODO
+	type->size = size; // TODO
 	return type;
 	
 }
