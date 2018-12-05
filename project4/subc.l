@@ -67,17 +67,17 @@ special-char	\\[nt]
 	return LOGICAL_AND;}
 
 {relop} { 
-	// printf("LEX %s\n", yytext); 
-	if(strcmp(yytext, "<")) yylval.intVal = _LT;
-	if(strcmp(yytext, "<=")) yylval.intVal = _LTE;
-	if(strcmp(yytext, ">")) yylval.intVal = _GT;
-	if(strcmp(yytext, ">=")) yylval.intVal = _GTE;
+	//printf("LEX %s\n", yytext); 
+	if(!strcmp(yytext, "<")) yylval.intVal = _LT;
+	if(!strcmp(yytext, "<=")) yylval.intVal = _LTE;
+	if(!strcmp(yytext, ">")) yylval.intVal = _GT;
+	if(!strcmp(yytext, ">=")) yylval.intVal = _GTE;
 	return RELOP;}
 
 {equop} {
 	// printf("LEX %s\n", yytext); 
-	if(strcmp(yytext, "==")) yylval.intVal = _EQ;
-	if(strcmp(yytext, "!=")) yylval.intVal = _NE;
+	if(!strcmp(yytext, "==")) yylval.intVal = _EQ;
+	if(!strcmp(yytext, "!=")) yylval.intVal = _NE;
 	return EQUOP;}
 
 {incop} {

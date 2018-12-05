@@ -22,6 +22,7 @@ if len(sys.argv)>2:
 if rmode==False:
 	p = subprocess.Popen("./subc "+test_path+fname+".c > "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
 	(output, err) = p.communicate()
+	print output
 
 if smode==False:
 	print "./sim/sim "+test_path+fname+".s"

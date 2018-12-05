@@ -18,10 +18,12 @@ void printGlobals(){
 }
 
 void printRelEqu(int op){
-	if(op==_LT)	P("\tless");
-	if(op==_LTE) P("\tless_equal");
-	if(op==_GT)	P("\tgreater");
-	if(op==_GTE) P("\tgreater_than");
+	if(op==_LT)	P("\tless\n");
+	if(op==_LTE) P("\tless_equal\n");
+	if(op==_GT)	P("\tgreater\n");
+	if(op==_GTE) P("\tgreater_equal\n");
+	if(op==_EQ) P("\tequal\n");
+	if(op==_NE) P("\tnot_equal\n");
 }
 
 void printArithmetic(int op){

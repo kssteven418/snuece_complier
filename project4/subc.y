@@ -12,6 +12,15 @@ int    yyerror (char* s);
 void 	REDUCE(char* s);
 
 int str_cnt;
+int label_cnt;
+
+int loop_start;
+int loop_finish;
+
+int for_cond;
+int for_change;
+int for_stmt;
+int for_end;
 
 %}
 
@@ -47,8 +56,9 @@ int str_cnt;
 %type<declptr> def def_list ext_def ext_def_list local_defs
 %type<declptr> func_decl param_decl param_list
 %type<declptr> type_specifier struct_specifier
-%type<declptr> const_expr expr or_expr or_list and_expr and_list args
+%type<declptr> const_expr expr_e expr or_expr or_list and_expr and_list args
 %type<declptr> binary unary
+%type<intVal> if_cond
 
 %token<idptr> ID
 %token READINT READCHAR WRITEINT WRITESTR WRITECHAR
@@ -106,7 +116,7 @@ ext_def
 				sstop->size = 1;
 
 				// start up code and start position is @ compound_stmt definition
-			} compound_stmt {
+			} ftn_compound_stmt {
 			$$ = check_function($1);
 			pop_scope();
 
@@ -331,7 +341,14 @@ def
 		}
 ;
 
-compound_stmt
+compound_stmt /* TODO assume no local defs..? */
+		: '{' local_defs stmt_list '}' {
+		
+
+		}
+;
+
+ftn_compound_stmt
 		: '{' local_defs{
 				// -1 since size is assigned size+1 for the correct offset
 			int size = sstop->size-1;
@@ -342,10 +359,7 @@ compound_stmt
 			// and then, start position
 			P("%s_start:\n", ftn_name->name);
 		}
-		
 		stmt_list '}'
-
-;
 
 local_defs  /* local definitions, of which scope is only inside of compound statement */
 		:	def_list {
@@ -364,7 +378,9 @@ stmt
 			/* TODO : shift sp after the expression */
 			afterExpr($1);
 		}
+
 		| compound_stmt
+
 		| RETURN ';'{
 			ste* ret = find_current_scope(returnid);				
 			if (ret != NULL){
@@ -378,8 +394,8 @@ stmt
 				}
 			}
 		}
+
 		| RETURN expr ';' {
-			
 			if($2==NULL){
 			}
 			else{
@@ -407,13 +423,88 @@ stmt
 				}
 			}
 		}
+
 		| ';'
-		| IF '(' expr ')' stmt
-		| IF '(' expr ')' stmt ELSE stmt
-		| WHILE '(' expr ')' stmt
-		| FOR '(' expr_e ';' expr_e ';' expr_e ')' stmt
-		| BREAK ';'
-		| CONTINUE ';'
+
+		| if_cond stmt{
+				P("label_%d:\n",$1);
+			}	%prec IFONLY
+				
+		| if_cond stmt ELSE{
+				// allocate label counter to mark the end of the false branch
+				$<intVal>$ = label_cnt; 
+				P("\tjump label_%d\n", label_cnt++);
+
+				// label for the false branch
+				P("label_%d:\n",$1);
+			}
+			stmt{
+				P("label_%d:\n", $<intVal>4);
+			}
+
+		| WHILE {
+				// assign label counts for the loop start & finish labels
+				loop_start = label_cnt++;
+				loop_finish = label_cnt++;
+
+				// while start label
+				P("label_%d:\n", loop_start);
+			}
+			'(' expr ')' {
+				addrToVar($4);
+				P("\tbranch_false label_%d\n",loop_finish);
+			}
+			stmt{
+				// if following the true branch,
+				// jump back to the start point
+				P("\tjump label_%d\n", loop_start);
+				// finish label for the false point
+				P("label_%d:\n", loop_finish);
+			}
+
+		| FOR {
+				// allocate labels
+				for_cond = label_cnt++;
+				for_change = label_cnt++;
+				for_stmt = label_cnt++;
+				for_end = label_cnt++;
+				// for break and continue statement
+				loop_start = for_change;
+				loop_finish = for_end;
+
+			}'(' expr_e ';' {
+				// pop out the expression
+				afterExpr($4);		
+				P("label_%d:\n", for_cond);
+			} 
+
+			expr_e ';' {
+				// if condition false, jump out of the for statement
+				P("\tbranch_false label_%d\n", for_end);
+				// if true, keep going
+				P("\tjump label_%d\n", for_stmt);
+				P("label_%d:\n", for_change);
+			}
+			
+			expr_e ')' {
+				// pop out the expression
+				afterExpr($4);		
+				P("\tjump label_%d\n", for_cond);
+				P("label_%d:\n", for_stmt);
+			}
+
+			stmt{
+				P("\tjump label_%d\n", for_change);
+				P("label_%d:\n", for_end);
+			}
+
+		| BREAK ';'{
+			P("\tjump label_%d\n", loop_finish);
+		}
+		
+		| CONTINUE ';'{
+			P("\tjump label_%d\n", loop_start);
+		}
 
 		/* I/O statements */
 		| READINT '(' unary ')'{
@@ -421,28 +512,44 @@ stmt
 			P("\tread_int\n");
 			P("\tassign\n");
 		}
+
 		| READCHAR '(' unary ')'{
 			P("\tread_char\n");
 			P("\tassign\n");
 		}
+
 		| WRITEINT '(' unary ')'{
 			addrToVar($3);
 			P("\twrite_int\n");
 		}
+
 		| WRITECHAR '(' unary ')'{
 			addrToVar($3);
 			P("\twrite_char\n");
 		}
+				
 		| WRITESTR '(' unary ')'{
 			addrToVar($3);
 			P("\twrite_string\n");
-		
 		}
 ;
 
+if_cond
+		: IF '(' expr ')' {
+				addrToVar($3);
+				P("\tbranch_false label_%d\n",label_cnt);
+				$$ = label_cnt++;
+		}
+	;
+
 expr_e
-		: expr
-		| /* empty */
+		: expr{
+			$$ = $1;
+		}
+		| /* empty */{
+			$$ = makeconstdecl(inttype); 
+			P("\tpush_const 1\n");
+		}
 ;
 
 const_expr
