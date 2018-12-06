@@ -214,7 +214,7 @@ decl* makearraydecl(int size, decl* var_decl){
 	type->typeclass = _ARRAY;
 	type->elementvar = var_decl;
 
-	type->size = size;
+	type->num_index = size;
 	int var_size = var_decl->size;
 	// total array size 
 	// = var_size (elmt size : canbe non-1 value if struct array!

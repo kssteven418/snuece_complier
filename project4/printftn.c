@@ -99,19 +99,99 @@ void addrToVar(decl* var){
 		if(var->type->typeclass != _STRUCT){
 			P("\tfetch\n");
 		}
+		// in case of struct
 		else{
-
 		}
 	}
-
 }
 
+/*
+void fetchArray(decl* array){
+	
+		decl* elmt = array->type->elementvar;
+		int num_index = array->num_index;
+		int var_size = elmt->size;
+
+		for(int i=num_index-1; i>=0; i--){
+			// push the base address
+			printLoadVar(array);	
+			// add the offset
+			P("\tpush_const %d\n", var_size*i);
+			P("\tadd\n");
+			// fetch the value
+			addrToVar(elmt);
+		}
+}
+*/
+
 void printAssign(decl* var){
-		if(var->type->typeclass != _STRUCT){
+		// assigning value
+		// stack top : var addr #
+		if(var->type->typeclass != _STRUCT &&
+						var->type->typeclass != _ARRAY){
 			P("\tassign\n");
 		}
-		else{
+		// assigning array
+		// stack top : addr_src addr_dest #
+		else if(var->type->typeclass == _ARRAY){
+			decl* elmt = var->type->elementvar;
+			int num_index = var->num_index;
+			int var_size = elmt->size;
 
+			for(int i=0; i<num_index; i++){
+				P("\tpush_reg sp\n");
+				P("\tpush_const -1\n");
+				P("\tadd\n");
+				P("\tfetch\n");
+				// addr_dest addr_src addr_dest#
+				P("\tpush_const %d\n", i*var_size);
+				P("\tadd\n");
+				// addr_dest+i addr_src addr_dest#
+				P("\tpush_reg sp\n");
+				P("\tpush_const -1\n");
+				P("\tadd\n");
+				P("\tfetch\n");
+				// addr_src addr_dest+i addr_src addr_dest#
+				P("\tpush_const %d\n", i*var_size);
+				P("\tadd\n");
+				// addr_src+1 addr_dest+i addr_src addr_dest#
+				addrToVar(elmt);
+				printAssign(elmt);
+			}
+			// pop out src and dest addresses
+			P("\tshift_sp -2\n");
+		}
+
+		// assigning struct
+		// stack top : addr_src addr_dest #
+		else{
+			ste* field = var->type->fields;
+			while(field!=NULL && field->decl!=NULL){
+				decl* elmt = field->decl;
+				int offset = field->decl->offset;
+				//printf(">>>>>>>>>>>>>>>>>>>>>>>>> %d <<<<<<<<<\n", offset);
+				P("\tpush_reg sp\n");
+				P("\tpush_const -1\n");
+				P("\tadd\n");
+				P("\tfetch\n");
+				// addr_dest addr_src addr_dest#
+				P("\tpush_const %d\n", offset);
+				P("\tadd\n");
+				// addr_dest+i addr_src addr_dest#
+				P("\tpush_reg sp\n");
+				P("\tpush_const -1\n");
+				P("\tadd\n");
+				P("\tfetch\n");
+				// addr_src addr_dest+i addr_src addr_dest#
+				P("\tpush_const %d\n", offset);
+				P("\tadd\n");
+				// addr_src+1 addr_dest+i addr_src addr_dest#
+				addrToVar(elmt);
+				printAssign(elmt);
+				field = field->prev;
+			}
+			// pop out src and dest addresses
+			P("\tshift_sp -2\n");
 		}
 }
 
@@ -140,5 +220,5 @@ void moveSP(int n){
 // post processing after expression ended
 void afterExpr(decl* expr){
 		addrToVar(expr);
-		moveSP(-expr->size);
+		moveSP(-1);
 }
