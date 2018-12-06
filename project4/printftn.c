@@ -135,7 +135,7 @@ void printAssign(decl* var){
 		// stack top : addr_src addr_dest #
 		else if(var->type->typeclass == _ARRAY){
 			decl* elmt = var->type->elementvar;
-			int num_index = var->num_index;
+			int num_index = var->type->num_index;
 			int var_size = elmt->size;
 
 			for(int i=0; i<num_index; i++){
@@ -169,7 +169,6 @@ void printAssign(decl* var){
 			while(field!=NULL && field->decl!=NULL){
 				decl* elmt = field->decl;
 				int offset = field->decl->offset;
-				//printf(">>>>>>>>>>>>>>>>>>>>>>>>> %d <<<<<<<<<\n", offset);
 				P("\tpush_reg sp\n");
 				P("\tpush_const -1\n");
 				P("\tadd\n");
