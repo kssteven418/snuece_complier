@@ -56,6 +56,7 @@ typedef struct ste{
 typedef struct decl{
 	/* ALL */
 	int declclass;
+	int declclass2;
 	
 	/* VAR, CONST */
 	struct decl *type;
@@ -189,6 +190,7 @@ void printIncDec(int isInc, int isOpFst);
 
 
 void addrToVar(decl* decl);
+void fetchStruct(decl* str);
 void addrToVarParam(decl* decl);
 void printAssign();
 void printFetchPtr(decl* var);

@@ -62,6 +62,8 @@ void push_stelist(ste* stelist){
 		ste* copy = copy_ste(temp);
 		copy->prev = sstop->top;
 		sstop->top = copy;
+		sstop->size = 1;
+
 		if(copy->decl != NULL) {
 			copy->decl->is_param = 1;
 			// parameter is allocated
@@ -70,6 +72,7 @@ void push_stelist(ste* stelist){
 				 || (copy->decl->declclass==_CONST
 							&&copy->decl->type->typeclass==_ARRAY)){
 				sstop->size += copy->decl->size; 
+				copy->decl->offset += 1;
 			}
 		}
 		temp = temp->prev;

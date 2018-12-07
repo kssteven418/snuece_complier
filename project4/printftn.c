@@ -125,6 +125,24 @@ void addrToVar(decl* var){
 	}
 }
 
+
+void fetchStruct(decl* str){
+	if(str->type->typeclass==_STRUCT){
+			int size = str->size;
+			P("\tshift_sp %d\n", (size-1));
+			P("\tpush_reg sp\n");
+			P("\tpush_const -%d\n", (size-1));
+			P("\tadd\n");
+			P("\tpush_reg sp\n");
+			P("\tpush_const -%d\n", size);
+			P("\tadd\n");
+			P("\tfetch\n");
+
+			printAssign(str);
+			//printf("%d\n", str->size);
+	}
+}
+
 /*
 void fetchArray(decl* array){
 	
@@ -314,7 +332,6 @@ void printParams(decl* actuals){
 						}
 				}
 				else{ // _VAR
-						temp->declclass = _VAR;
 						//printf("DECLASS : %d\n", temp->declclass);
 						printLoadVarParam(temp);
 						addrToVar(temp);

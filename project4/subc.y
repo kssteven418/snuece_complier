@@ -621,6 +621,9 @@ expr
 		}
 		| or_expr{
 				$$ = $1;
+				if($$->declclass2 == _VAR && $$->type->typeclass==_STRUCT){
+					fetchStruct($$);
+				}
 		}
 ;
 
@@ -765,6 +768,7 @@ binary
 		| unary %prec '='{
 			$$ = copy($1);
 			addrToVar($$);
+			$$->declclass2 = $$->declclass;
 			if($$->declclass==_VAR){ //TODO : correct?
 					$$->declclass = _EXP;
 			}
@@ -1077,10 +1081,6 @@ unary
 				P("\tpush_reg fp\n"); // frame pointer
 				P("\tpush_const 0\n"); // safety buffer
 
-				// fp->current sp
-				P("\tpush_reg sp\n");
-				P("\tpop_reg fp\n");
-
 		
 			} args ')'{
 			
@@ -1104,7 +1104,22 @@ unary
 
 					decl* actuals = $4;
 
-					printParams(actuals);
+					int size = 0;
+					while(actuals != NULL) {
+						//printf("%d %d\n", actuals->size, actuals->declclass);
+						size += actuals->size;
+						actuals = actuals->next;
+					}
+
+					P("\tpush_reg sp\n");
+					P("\tpush_const -%d\n", size);
+					P("\tadd\n");
+					P("\tpop_reg fp\n");
+
+
+					
+
+					//printParams(actuals);
 
 					//printf("hello~~\n");
 					P("\tjump %s\n", find_id($1)->name);
@@ -1129,7 +1144,7 @@ unary
 				}
 				else {
 					// return value is same as return type 
-					// and should be a expression
+					// ane should be a expression
 					$$ = makevardecl($1->returntype->decl/* this is type */);
 					$$->declclass = _EXP;
 
@@ -1162,7 +1177,7 @@ args    /* actual parameters(function arguments) transferred to function */
 			}
 			else{
 				$$ = copy($1);
-				afterExpr($1);
+				$$->declclass = _VAR;
 			}
 		}
 		| expr ',' args{
@@ -1175,7 +1190,8 @@ args    /* actual parameters(function arguments) transferred to function */
 			else{
 				$$ = copy($1);
 				$$->next = $3;	
-				afterExpr($1);
+				$$->declclass = _VAR;
+	
 			}
 		}
 ;

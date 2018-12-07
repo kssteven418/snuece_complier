@@ -156,6 +156,7 @@ label_6:
 	add
 	assign
 	fetch
+	fetch
 	shift_sp -1
 	jump label_5
 label_7:
@@ -388,7 +389,6 @@ str_10. string "\n"
 main_final:
 	push_reg fp
 	pop_reg sp
-	pop_reg fp
 	pop_reg fp
 	pop_reg pc
 main_end:
