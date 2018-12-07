@@ -56,7 +56,7 @@ int for_end;
 %type<declptr> def def_list ext_def ext_def_list local_defs
 %type<declptr> func_decl param_decl param_list
 %type<declptr> type_specifier struct_specifier
-%type<declptr> const_expr expr_e expr or_expr or_list and_expr and_list args
+%type<declptr> const_expr expr_e expr expr_arg or_expr or_list and_expr and_list args
 %type<declptr> binary unary
 %type<intVal> if_cond
 
@@ -109,18 +109,18 @@ ext_def
 
 		| func_decl {
 				ftn_type_glob = ftn_type;
+				ftn_decl = $1;
 				ftn_name = find_id($1);
 				P("%s:\n", ftn_name->name);
 
 				// to make offset + 1 (due ro saved FP is @ FP+0)
 				//sstop->size = 1;
+				//printf("%dasdsad\n", sstop->size);
 
 				// start up code and start position is @ compound_stmt definition
 			} ftn_compound_stmt {
 			$$ = check_function($1);
 			pop_scope();
-
-
 
 
 			// end up code and final position
@@ -277,6 +277,7 @@ func_decl
 			 param_list ')'
 			{
 				decl* func = $<declptr>5;
+				int ssize = sstop->size;
 				if(func==NULL){ 
 						pop_scope(); // must pop unnecessary declarations
 						$$ = NULL; 
@@ -289,6 +290,7 @@ func_decl
 					setprocdecl(func, formals); 
 					// new scope for local declarations and formals
 					push_scope();
+					sstop->size = ssize;
 					// enter all the formal variables into the stack
 					push_stelist(formals);
 					$$ = func;
@@ -402,35 +404,85 @@ stmt
 					raise("return value is not return type");
 				}
 			}
+			P("\tjump %s_final\n", ftn_name->name);
 		}
 
-		| RETURN expr ';' {
-			if($2==NULL){
-			}
-			else{
-				ste* ret = find_current_scope(returnid);
+		| RETURN {
+				//printf("asdsdsd\n");
+			
+				// address to store the return value
+				P("\tpush_reg fp\n");
+				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
+				P("\tadd\n");
 
-				// expression must be a constant, a variable or a pointer
-				// cannot be func, array constant, or type
-				if (ret != NULL){
-	
-					// if the expr is NULL
-					if($2->declclass == _NULL){
-						if (!(ret->decl->typeclass == _POINTER)){
+				/* debug 
+				P("\tpush_reg fp\n");
+				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size);
+				P("\tadd\n");
+				P("\tfetch\n");
+				P("\twrite_int\n");
+				P("\tpush_const 777777777\n");
+				P("\twrite_int\n");
+
+
+				P("\tpush_reg fp\n");
+				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+1);
+				P("\tadd\n");
+				P("\tfetch\n");
+				P("\twrite_int\n");
+				P("\tpush_const 777777777\n");
+				P("\twrite_int\n");
+
+				P("\tpush_reg fp\n");
+				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
+				P("\tadd\n");
+				P("\tfetch\n");
+				P("\twrite_int\n");
+				P("\tpush_const 777777777\n");
+				P("\twrite_int\n");
+
+				P("\tpush_reg fp\n");
+				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+3);
+				P("\tadd\n");
+				P("\tfetch\n");
+				P("\twrite_int\n");
+				P("\tpush_const 777777777\n");
+				P("\twrite_int\n");
+				*/
+
+			} expr_arg ';' {
+				if($3==NULL){
+				}
+				else{
+					ste* ret = find_current_scope(returnid);
+  
+					// expression must be a constant, a variable or a pointer
+					// cannot be func, array constant, or type
+					if (ret != NULL){
+		
+						// if the expr is NULL
+						if($3->declclass == _NULL){
+							if (!(ret->decl->typeclass == _POINTER)){
+								raise("return value is not return type");
+							}
+						}
+						else if(!check_type_compat(ret->decl, $3->type, 0)){
+							raise("return value is not return type");			
+						}
+						
+					}
+					else{
+						if(!check_type_compat(ftn_type_glob, $3->type, 0)){
 							raise("return value is not return type");
 						}
 					}
-					else if(!check_type_compat(ret->decl, $2->type, 0)){
-						raise("return value is not return type");			
-					}
-					
 				}
-				else{
-					if(!check_type_compat(ftn_type_glob, $2->type, 0)){
-						raise("return value is not return type");
-					}
-				}
-			}
+
+				// stack top will be a value
+				printAssign($3);	
+
+				P("\tjump %s_final\n", ftn_name->name);
+  
 		}
 
 		| ';'
@@ -574,6 +626,14 @@ const_expr
 		}
 ;
 
+expr_arg
+	: expr {
+				$$ = $1;
+				if($$->declclass2 == _VAR && $$->type->typeclass==_STRUCT){
+					fetchStruct($$);
+				}
+	}
+;
 expr
 		: unary {
 				// address of unary(variable) will be at the stack top
@@ -621,9 +681,6 @@ expr
 		}
 		| or_expr{
 				$$ = $1;
-				if($$->declclass2 == _VAR && $$->type->typeclass==_STRUCT){
-					fetchStruct($$);
-				}
 		}
 ;
 
@@ -835,7 +892,9 @@ unary
 					$$ = copy(id_ste->decl); 
 				}
 				// Load address of the variable
-				printLoadVar($$);
+				if($$->declclass!=_FUNC){
+					printLoadVar($$);
+				}
 
 			}
 			//printf("ID end\n");
@@ -1125,7 +1184,7 @@ unary
 					P("\tjump %s\n", find_id($1)->name);
 
 					// mark the label to set the return address
-					P("\tlabel_%d:\n",label_cnt++);
+					P("label_%d:\n",label_cnt++);
 				}
 			}
 		}
@@ -1164,14 +1223,14 @@ unary
 					P("\tjump %s\n", find_id($1)->name);
 
 					// mark the label to set the return address
-					P("\tlabel_%d:\n",label_cnt++);
+					P("label_%d:\n",label_cnt++);
 				}
 			}
 		}
 ;
 
 args    /* actual parameters(function arguments) transferred to function */
-		: expr{
+		: expr_arg{
 			if($1 == NULL){
 				$$ = NULL;
 			}
@@ -1180,7 +1239,7 @@ args    /* actual parameters(function arguments) transferred to function */
 				$$->declclass = _VAR;
 			}
 		}
-		| expr ',' args{
+		| expr_arg ',' args{
 			if($1==NULL){
 				$$ = NULL;
 			}

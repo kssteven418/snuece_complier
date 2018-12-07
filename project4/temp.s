@@ -7,7 +7,7 @@
 EXIT:
 	exit
 h:
-	shift_sp 2
+	shift_sp 4
 h_start:
 	push_reg fp
 	push_const 1
@@ -41,7 +41,7 @@ h_final:
 	pop_reg pc
 h_end:
 g:
-	shift_sp 2
+	shift_sp 4
 g_start:
 	push_reg fp
 	push_const 3
@@ -59,10 +59,10 @@ g_final:
 	pop_reg pc
 g_end:
 f:
-	shift_sp 3
+	shift_sp 9
 f_start:
 	push_reg fp
-	push_const 2
+	push_const 8
 	add
 	push_reg sp
 	fetch
@@ -142,7 +142,7 @@ str_16. string "-123\n"
 	push_const str_16
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 8
 	add
 	fetch
 	write_int
@@ -196,9 +196,6 @@ main_start:
 str_20. string "jump!\n"
 	push_const str_20
 	write_string
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
 	push_const label_0
 	push_reg fp
@@ -218,11 +215,8 @@ str_20. string "jump!\n"
 	add
 	pop_reg fp
 	jump h
-	label_0:
+label_0:
 	shift_sp -1
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
 	push_const label_1
 	push_reg fp
@@ -230,7 +224,7 @@ str_20. string "jump!\n"
 	push_const Lglob+1
 	shift_sp 1
 	push_reg sp
-	push_const -2
+	push_const -1
 	add
 	push_reg sp
 	push_const -2
@@ -274,11 +268,8 @@ str_20. string "jump!\n"
 	add
 	pop_reg fp
 	jump g
-	label_1:
+label_1:
 	shift_sp -1
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
 	push_const label_2
 	push_reg fp
@@ -286,7 +277,7 @@ str_20. string "jump!\n"
 	push_const Lglob+1
 	shift_sp 1
 	push_reg sp
-	push_const -2
+	push_const -1
 	add
 	push_reg sp
 	push_const -2
@@ -346,7 +337,7 @@ str_20. string "jump!\n"
 	add
 	pop_reg fp
 	jump f
-	label_2:
+label_2:
 	shift_sp -1
 main_final:
 	push_reg fp

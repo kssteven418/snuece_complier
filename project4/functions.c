@@ -57,12 +57,12 @@ void push_stelist(ste* stelist){
 	if(stelist==NULL) return;
 
 	ste* temp = stelist;
+	sstop->size = 1;
 	while(1){
 		if(temp->prev == NULL) break; // dummy
 		ste* copy = copy_ste(temp);
 		copy->prev = sstop->top;
 		sstop->top = copy;
-		sstop->size = 1;
 
 		if(copy->decl != NULL) {
 			copy->decl->is_param = 1;
@@ -100,8 +100,8 @@ void declare(id* name, decl* decl){
 		// add the decl's size to the scope size
 		sstop->size += decl->size;
 		// DEBUG
-		//printf("offset : %d, sstop size : %d, isglob : %d\n",
-		//		decl->offset, sstop->size, decl->is_glob);
+		//printf("%s, offset : %d, sstop size : %d, isglob : %d\n",
+		//		name->name, decl->offset, sstop->size, decl->is_glob);
 	}
 }
 

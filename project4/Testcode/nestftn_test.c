@@ -11,31 +11,48 @@ int f(int* x){
 }
 
 int g(int* x){
-	int y;
-	int z;
-	y = 10;
-	z = *x;
-	write_int(z);
+	write_int(*x);
 	write_string("\n");
-
-
+	f(x);
+	write_int(*x);
+	write_string("\n");
 }
 
+void recursive(int* x){
+	(*x)++;
+	
+	if((*x)<10){
+
+		write_string("Recursion going with ");
+		write_int(*x);
+		write_string("\n");
+		recursive(x);
+	}
+	else{
+		write_string("Recursion ended with ");
+		write_int(*x);
+		write_string("\n");
+	}
+
+}
 void main(){
 	int x;
-	int y;
-	int* z;
 	x = 100;
-	y = 200;
-	z = &x;
-	*(&x) = 300;
 
+
+	write_string("NESTED FUNCTION..! : 100 100 100 101 101 101\n");
 	write_int(x);
 	write_string("\n");
-	g(z);
+	g(&x);
 	write_int(x);
 	write_string("\n");
-	write_int(y);
+
+
+	write_string("\n");
+	write_string("RECURSIVE FUNCTION..!\n");
+	x = x-101;
+	recursive(&x);
+	write_int(x);
 	write_string("\n");
 }
 

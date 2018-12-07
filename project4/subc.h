@@ -104,6 +104,7 @@ decl *inttype;
 decl *chartype;
 id* returnid;
 id* ftn_name;
+decl* ftn_decl;
 
 decl * ftn_type;
 decl * ftn_type_glob;
