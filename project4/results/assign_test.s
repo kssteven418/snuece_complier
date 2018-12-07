@@ -18,18 +18,18 @@ main:
 	shift_sp 342
 main_start:
 	push_reg fp
-	push_const 10
+	push_const 9
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	assign
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_const 0
 	add
@@ -40,7 +40,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_const 1
 	add
@@ -51,7 +51,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 10
+	push_const 9
 	add
 	fetch
 	push_const 2
@@ -63,7 +63,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 10
+	push_const 9
 	add
 	fetch
 	push_const 3
@@ -71,7 +71,7 @@ main_start:
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 10
+	push_const 9
 	add
 	fetch
 	push_const 0
@@ -83,7 +83,7 @@ str_0. string "simple assignments... ans : 10 20 A 10\n"
 	push_const str_0
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_const 0
 	add
@@ -93,7 +93,7 @@ str_1. string "\n"
 	push_const str_1
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_const 1
 	add
@@ -103,7 +103,7 @@ str_2. string "\n"
 	push_const str_2
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_const 2
 	add
@@ -113,7 +113,7 @@ str_3. string "\n"
 	push_const str_3
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_const 3
 	add
@@ -133,7 +133,7 @@ str_6. string "simple struct assignment... ans : 10 20 A 10 X3\n"
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	push_const -1
@@ -230,12 +230,12 @@ str_11. string "\n"
 	push_const str_11
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	push_const -1
@@ -296,7 +296,7 @@ str_11. string "\n"
 	shift_sp -2
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 0
 	add
@@ -306,7 +306,7 @@ str_12. string "\n"
 	push_const str_12
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 1
 	add
@@ -316,7 +316,7 @@ str_13. string "\n"
 	push_const str_13
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 2
 	add
@@ -326,7 +326,7 @@ str_14. string "\n"
 	push_const str_14
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 3
 	add
@@ -340,12 +340,12 @@ str_16. string "\n"
 	push_const str_16
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 10
+	push_const 9
 	add
 	fetch
 	push_reg sp
@@ -407,7 +407,7 @@ str_16. string "\n"
 	shift_sp -2
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 0
 	add
@@ -417,7 +417,7 @@ str_17. string "\n"
 	push_const str_17
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 1
 	add
@@ -427,7 +427,7 @@ str_18. string "\n"
 	push_const str_18
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 2
 	add
@@ -437,7 +437,7 @@ str_19. string "\n"
 	push_const str_19
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 5
 	add
 	push_const 3
 	add
@@ -454,7 +454,7 @@ str_22. string "array in struct... ans : 0 1 ... 9 10 20 \n"
 	push_const str_22
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 10
 	add
 	push_const 0
 	add
@@ -465,7 +465,7 @@ str_22. string "array in struct... ans : 0 1 ... 9 10 20 \n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 10
 	add
 	push_const 11
 	add
@@ -476,7 +476,7 @@ str_22. string "array in struct... ans : 0 1 ... 9 10 20 \n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -486,7 +486,7 @@ str_22. string "array in struct... ans : 0 1 ... 9 10 20 \n"
 	shift_sp -1
 label_0:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
@@ -495,7 +495,7 @@ label_0:
 	jump label_2
 label_1:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -513,19 +513,19 @@ label_1:
 	jump label_0
 label_2:
 	push_reg fp
-	push_const 11
+	push_const 10
 	add
 	push_const 1
 	add
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	assign
@@ -534,12 +534,12 @@ label_2:
 	jump label_1
 label_3:
 	push_reg fp
-	push_const 23
+	push_const 22
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 11
+	push_const 10
 	add
 	push_reg sp
 	push_const -1
@@ -725,7 +725,7 @@ label_3:
 	shift_sp -2
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -735,7 +735,7 @@ label_3:
 	shift_sp -1
 label_4:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
@@ -744,7 +744,7 @@ label_4:
 	jump label_6
 label_5:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -762,12 +762,12 @@ label_5:
 	jump label_4
 label_6:
 	push_reg fp
-	push_const 23
+	push_const 22
 	add
 	push_const 1
 	add
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -779,7 +779,7 @@ str_23. string "\n"
 	jump label_5
 label_7:
 	push_reg fp
-	push_const 23
+	push_const 22
 	add
 	push_const 0
 	add
@@ -789,7 +789,7 @@ str_24. string "\n"
 	push_const str_24
 	write_string
 	push_reg fp
-	push_const 23
+	push_const 22
 	add
 	push_const 11
 	add
@@ -802,7 +802,7 @@ str_26. string "struct in struct... ans : 1 2 10 11 ... 19 100 101 ... 109 \n"
 	push_const str_26
 	write_string
 	push_reg fp
-	push_const 35
+	push_const 34
 	add
 	push_const 0
 	add
@@ -813,7 +813,7 @@ str_26. string "struct in struct... ans : 1 2 10 11 ... 19 100 101 ... 109 \n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 35
+	push_const 34
 	add
 	push_const 143
 	add
@@ -826,7 +826,7 @@ str_26. string "struct in struct... ans : 1 2 10 11 ... 19 100 101 ... 109 \n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -836,7 +836,7 @@ str_26. string "struct in struct... ans : 1 2 10 11 ... 19 100 101 ... 109 \n"
 	shift_sp -1
 label_8:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
@@ -845,7 +845,7 @@ label_8:
 	jump label_10
 label_9:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -863,14 +863,14 @@ label_9:
 	jump label_8
 label_10:
 	push_reg fp
-	push_const 35
+	push_const 34
 	add
 	push_const 11
 	add
 	push_const 1
 	add
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -878,7 +878,7 @@ label_10:
 	fetch
 	push_const 10
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -886,7 +886,7 @@ label_10:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 35
+	push_const 34
 	add
 	push_const 23
 	add
@@ -897,7 +897,7 @@ label_10:
 	push_const 1
 	add
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -905,7 +905,7 @@ label_10:
 	fetch
 	push_const 100
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -915,12 +915,12 @@ label_10:
 	jump label_9
 label_11:
 	push_reg fp
-	push_const 189
+	push_const 188
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 35
+	push_const 34
 	add
 	push_reg sp
 	push_const -1
@@ -3406,7 +3406,7 @@ label_11:
 	shift_sp -2
 	shift_sp -1
 	push_reg fp
-	push_const 189
+	push_const 188
 	add
 	push_const 0
 	add
@@ -3416,7 +3416,7 @@ str_27. string "\n"
 	push_const str_27
 	write_string
 	push_reg fp
-	push_const 189
+	push_const 188
 	add
 	push_const 143
 	add
@@ -3428,7 +3428,7 @@ str_28. string "\n"
 	push_const str_28
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -3438,7 +3438,7 @@ str_28. string "\n"
 	shift_sp -1
 label_12:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
@@ -3447,7 +3447,7 @@ label_12:
 	jump label_14
 label_13:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -3465,14 +3465,14 @@ label_13:
 	jump label_12
 label_14:
 	push_reg fp
-	push_const 189
+	push_const 188
 	add
 	push_const 11
 	add
 	push_const 1
 	add
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -3484,7 +3484,7 @@ str_29. string "\n"
 	jump label_13
 label_15:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -3494,7 +3494,7 @@ label_15:
 	shift_sp -1
 label_16:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
@@ -3503,7 +3503,7 @@ label_16:
 	jump label_18
 label_17:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -3521,7 +3521,7 @@ label_17:
 	jump label_16
 label_18:
 	push_reg fp
-	push_const 189
+	push_const 188
 	add
 	push_const 23
 	add
@@ -3532,7 +3532,7 @@ label_18:
 	push_const 1
 	add
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add

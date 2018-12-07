@@ -46,6 +46,33 @@ void printLoadVar(decl* var){
 	}
 }
 
+void printLoadVarParam(decl* var){
+	// loading global variable
+	if(var->is_glob){
+			P("\tpush_const Lglob+%d\n", var->offset);
+	}
+	// loading local variable
+	// should be indexed from the frame pointer
+	// so, load the frame pointer first
+	else{
+			/* debugg 
+			P("\tpush_reg fp\n");
+			P("\tpush_const -1\n");
+			P("\tadd\n");
+			P("\tfetch\n");
+			P("\twrite_int\n");
+			P("\tpush_const 88888\n");
+			P("\twrite_int\n");
+			*/
+
+			P("\tpush_reg fp\n");
+			P("\tfetch\n"); // get the old fp
+			
+			P("\tpush_const %d\n", var->offset); // offset from the fp
+			P("\tadd\n");
+	}
+}
+
 void printIncDec(int isInc, int isOpFst){
 	// stack top is address
 	// ++a, --a
@@ -220,4 +247,126 @@ void moveSP(int n){
 void afterExpr(decl* expr){
 		addrToVar(expr);
 		moveSP(-1);
+}
+
+
+void printParams(decl* actuals){
+		//printf("actuals_end\n");
+		decl* temp = actuals;
+		int size = 0;
+		while(temp != NULL){
+				size += temp->size;
+				temp = temp->next;
+		}
+		temp = actuals;
+		P("\tshift_sp %d\n", size);
+
+		P("\tpush_reg sp\n");
+		P("\tpush_const %d\n", size);
+		P("\tsub\n");
+
+		size = 0;
+		//printf("---------\n");
+
+		
+		/*
+		P("push_const 6666\n");
+		P("\twrite_int\n");
+		P("\tpush_reg fp\n");
+		P("\twrite_int\n");
+		P("push_const 6666\n");
+		P("\twrite_int\n");
+		P("\tpush_reg sp\n");
+		P("\twrite_int\n");
+		P("push_const 66666\n");
+		P("\twrite_int\n");
+
+		P("\tpush_reg fp\n");
+		P("\tpush_const 0\n");
+		P("\tadd\n");
+		P("\tfetch\n");
+		P("\tfetch\n");
+		P("\twrite_int\n");
+		P("push_const 77777\n");
+		P("\twrite_int\n");
+
+		P("\tpush_reg fp\n");
+		P("\tfetch\n");
+		P("\tpush_const 1\n");
+		P("\tadd\n");
+
+		P("\tfetch\n");
+		P("\twrite_int\n");
+		P("push_const 77777\n");
+		P("\twrite_int\n");
+		*/
+
+		while(temp != NULL){
+				
+				// source address
+				P("\tpush_reg sp\n");
+				P("\tfetch\n");
+				P("\tpush_const %d\n", size);
+				P("\tadd\n");
+
+				size += temp->size;
+
+				// push 
+				if(temp->declclass==_CONST){
+						if(temp->type==inttype){
+							P("\tpush_const %d\n", temp->int_value);
+						}
+						if(temp->type==chartype){
+							P("\tpush_const %d\n", temp->char_value);
+						}
+				}
+				else{ // _VAR
+						temp->declclass = _VAR;
+						//printf("DECLASS : %d\n", temp->declclass);
+						printLoadVarParam(temp);
+						addrToVar(temp);
+				}
+				P("\tpush_reg fp\n"); // deb
+				P("\twrite_int\n"); // deb
+				P("\tpush_const 0\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_reg fp\n"); // deb
+				P("\tpush_const -1\n");
+				P("\tadd\n");
+				P("\tfetch\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_const 0\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_reg fp\n"); // deb
+				P("\tpush_const -1\n");
+				P("\tadd\n");
+				P("\tfetch\n");
+				P("\tfetch\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_const 0\n");
+				P("\twrite_int\n"); // deb
+
+				printAssign(temp);
+				//printf("---------\n");
+
+				temp = temp->next;
+				P("\tpush_reg fp\n"); // deb
+				P("\twrite_int\n"); // deb
+				P("\tpush_const 0\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_reg fp\n"); // deb
+				P("\tfetch\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_const 0\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_reg fp\n"); // deb
+				P("\tfetch\n");
+				P("\tfetch\n");
+				P("\twrite_int\n"); // deb
+				P("\tpush_const 0\n");
+				P("\twrite_int\n"); // deb
+		}
+
+		P("\tshift_sp -1\n");
+		//printf("actuals_end\n");
 }

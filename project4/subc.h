@@ -79,6 +79,7 @@ typedef struct decl{
 	int size; // size in byte
 	int offset; // offset from the gp or fp
 	int is_glob;
+	int is_param;
 
 	/* VAR */
 	struct ste **scope; // scope when VAR declared
@@ -185,13 +186,15 @@ void printRelEqu(int op);
 void printArithmetic(int op);
 void printLoadVar(decl* var);
 void printIncDec(int isInc, int isOpFst);
-void printFetchPtr(decl* var);
 
 
 void addrToVar(decl* decl);
+void addrToVarParam(decl* decl);
 void printAssign();
+void printFetchPtr(decl* var);
 void moveSP(int n);
 void afterExpr(decl* expr);
+void printParams(decl* actuals);
 
 #endif
 

@@ -113,7 +113,7 @@ ext_def
 				P("%s:\n", ftn_name->name);
 
 				// to make offset + 1 (due ro saved FP is @ FP+0)
-				sstop->size = 1;
+				//sstop->size = 1;
 
 				// start up code and start position is @ compound_stmt definition
 			} ftn_compound_stmt {
@@ -350,8 +350,9 @@ compound_stmt /* TODO assume no local defs..? */
 
 ftn_compound_stmt
 		: '{' local_defs{
+				//debugst(sstop->top);
 				// -1 since size is assigned size+1 for the correct offset
-			int size = sstop->size-1;
+			int size = sstop->size;
 			// allocate memory for local variables
 			if(size>0){
 				P("\tshift_sp %d\n", size);
@@ -804,6 +805,8 @@ unary
 
 
 		| ID{
+			//printf("ID start\n");
+
 			id* name = $1;	
 			// find in all scopes
 			ste* id_ste = find(name); 
@@ -813,11 +816,17 @@ unary
 			}
 			else{
 				// copy declaration : not in the symbol table
-				$$ = copy(id_ste->decl);
-
+				if(id_ste->decl->declclass==_FUNC){
+						$$ = id_ste->decl; 
+				}
+				else{ 
+					$$ = copy(id_ste->decl); 
+				}
 				// Load address of the variable
 				printLoadVar($$);
+
 			}
+			//printf("ID end\n");
 		
 		}
 
@@ -1052,10 +1061,22 @@ unary
 			}
 
 		}
-		| unary '(' args ')'{
+		| unary '('{
+		
+				// CALLER's responsibility
+				P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
+				P("\tpush_const label_%d\n", label_cnt); // ret address
+				P("\tpush_reg fp\n"); // frame pointer
+
+				// fp->current sp
+				P("\tpush_reg sp\n");
+				P("\tpop_reg fp\n");
+
+		
+			} args ')'{
 			
 			if($1==NULL) { $$ = NULL; }
-			else if ($3==NULL) { $$ = NULL; }
+			else if ($4==NULL) { $$ = NULL; }
 
 			// unary must be a function 
 			else if (!check_is_proc($1)){
@@ -1063,7 +1084,7 @@ unary
 			}
 			else{
 				//check argument
-				if(!check_function_call($1, $3)){
+				if(!check_function_call($1, $4)){
 					$$ = raise("actual args are not equal to formal args");
 				}
 				else {
@@ -1071,6 +1092,16 @@ unary
 					// and should be a expression
 					$$ = makevardecl($1->returntype->decl/* this is type */);
 					$$->declclass = _EXP;
+
+					decl* actuals = $4;
+
+					printParams(actuals);
+
+					//printf("hello~~\n");
+					P("\tjump %s\n", find_id($1)->name);
+
+					// mark the label to set the return address
+					P("\tlabel_%d:\n",label_cnt++);
 				}
 			}
 		}
@@ -1092,6 +1123,23 @@ unary
 					// and should be a expression
 					$$ = makevardecl($1->returntype->decl/* this is type */);
 					$$->declclass = _EXP;
+
+					// CALLER's responsibility
+					P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
+					P("\tpush_const label_%d\n", label_cnt); // ret address
+					P("\tpush_reg fp\n"); // frame pointer
+
+					// fp->current sp
+					P("\tpush_reg sp\n");
+					P("\tpop_reg fp\n");
+
+					// jump to the target address
+					// debugst(sstop->top);
+					//printf("%d\n", $1->declclass);
+					P("\tjump %s\n", find_id($1)->name);
+
+					// mark the label to set the return address
+					P("\tlabel_%d:\n",label_cnt++);
 				}
 			}
 		}
@@ -1104,6 +1152,7 @@ args    /* actual parameters(function arguments) transferred to function */
 			}
 			else{
 				$$ = copy($1);
+				afterExpr($1);
 			}
 		}
 		| expr ',' args{
@@ -1116,6 +1165,7 @@ args    /* actual parameters(function arguments) transferred to function */
 			else{
 				$$ = copy($1);
 				$$->next = $3;	
+				afterExpr($1);
 			}
 		}
 ;

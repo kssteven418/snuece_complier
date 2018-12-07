@@ -63,6 +63,7 @@ void push_stelist(ste* stelist){
 		copy->prev = sstop->top;
 		sstop->top = copy;
 		if(copy->decl != NULL) {
+			copy->decl->is_param = 1;
 			// parameter is allocated
 			// only if variable or (const)array
 			if(copy->decl->declclass==_VAR 
@@ -79,6 +80,7 @@ void push_stelist(ste* stelist){
 //insert declare into the symbol table
 void declare(id* name, decl* decl){
 	// make a new ste
+	decl->is_param = 0;
 	ste* temp = (ste*)malloc(sizeof(ste));
 	temp->decl = decl;
 	temp->name = name;
@@ -189,6 +191,7 @@ decl* makeptrdecl(decl* type_decl){
 	var->size = 1;
 	if (sstop==global_scope){
 		var->is_glob = 1;
+		
 	}
 	else{
 		var->is_glob = 0;
@@ -411,6 +414,7 @@ id* find_id(decl* _decl){
 	while(temp!=NULL){
 		dtemp = temp->decl;
 		if(dtemp!=NULL){
+			//printf("->%s\n", temp->name->name);
 			if(dtemp==_decl){
 				return temp->name;
 			}
@@ -426,7 +430,8 @@ void debugst(ste* st){
 	while(1){
 		if(temp==NULL) break;
 		if(temp->name!=NULL) 
-			printf("%s\n", temp->name->name);
+			printf("%s %d %d\n", temp->name->name, 
+					temp->decl->offset, temp->decl->is_param);
 		temp = temp->prev;
 	}
 	printf("\n");

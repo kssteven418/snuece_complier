@@ -51,7 +51,7 @@ str_4. string "\n"
 label_5:
 label_3:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -60,7 +60,7 @@ label_3:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
@@ -69,12 +69,12 @@ label_3:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	branch_false label_6
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	branch_false label_7
@@ -85,7 +85,7 @@ str_5. string "\n"
 	write_string
 label_7:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	branch_false label_8
@@ -97,12 +97,12 @@ str_6. string "\n"
 label_8:
 label_6:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	branch_false label_9
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	branch_false label_10
@@ -113,7 +113,7 @@ str_7. string "\n"
 	write_string
 label_10:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	branch_false label_11
@@ -229,7 +229,7 @@ str_22. string "while statement... ans : 10 45 2 1 10 45\n"
 	push_const str_22
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -238,7 +238,7 @@ str_22. string "while statement... ans : 10 45 2 1 10 45\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
@@ -248,23 +248,23 @@ str_22. string "while statement... ans : 10 45 2 1 10 45\n"
 	shift_sp -1
 label_27:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
 	less
 	branch_false label_28
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -272,7 +272,7 @@ label_27:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -289,7 +289,7 @@ label_27:
 	jump label_27
 label_28:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	write_int
@@ -297,7 +297,7 @@ str_23. string "\n"
 	push_const str_23
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	write_int
@@ -305,7 +305,7 @@ str_24. string "\n"
 	push_const str_24
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -314,7 +314,7 @@ str_24. string "\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
@@ -324,23 +324,23 @@ str_24. string "\n"
 	shift_sp -1
 label_29:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 1
 	equal
 	branch_false label_30
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -348,7 +348,7 @@ label_29:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -365,7 +365,7 @@ label_29:
 	jump label_29
 label_30:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	write_int
@@ -373,7 +373,7 @@ str_25. string "\n"
 	push_const str_25
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	write_int
@@ -381,7 +381,7 @@ str_26. string "\n"
 	push_const str_26
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -390,7 +390,7 @@ str_26. string "\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
@@ -400,23 +400,23 @@ str_26. string "\n"
 	shift_sp -1
 label_31:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
 	not_equal
 	branch_false label_32
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -424,7 +424,7 @@ label_31:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -441,7 +441,7 @@ label_31:
 	jump label_31
 label_32:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	write_int
@@ -449,7 +449,7 @@ str_27. string "\n"
 	push_const str_27
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	write_int
@@ -460,7 +460,7 @@ str_29. string "while statement w/ b/c... ans : 7 21 70 30\n"
 	push_const str_29
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -469,7 +469,7 @@ str_29. string "while statement w/ b/c... ans : 7 21 70 30\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
@@ -479,23 +479,23 @@ str_29. string "while statement w/ b/c... ans : 7 21 70 30\n"
 	shift_sp -1
 label_33:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
 	less
 	branch_false label_34
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -503,7 +503,7 @@ label_33:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -518,7 +518,7 @@ label_33:
 	sub
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	push_const 20
@@ -529,7 +529,7 @@ label_35:
 	jump label_33
 label_34:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	write_int
@@ -537,7 +537,7 @@ str_30. string "\n"
 	push_const str_30
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	write_int
@@ -545,7 +545,7 @@ str_31. string "\n"
 	push_const str_31
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -554,7 +554,7 @@ str_31. string "\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
@@ -564,14 +564,14 @@ str_31. string "\n"
 	shift_sp -1
 label_36:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 100
 	less_equal
 	branch_false label_37
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	push_reg sp
 	fetch
@@ -586,7 +586,7 @@ label_36:
 	sub
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 70
@@ -596,12 +596,12 @@ label_36:
 label_38:
 	push_const 5
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	greater_equal
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	push_const 10
@@ -611,16 +611,16 @@ label_38:
 	jump label_36
 label_39:
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	add
@@ -630,7 +630,7 @@ label_39:
 	jump label_36
 label_37:
 	push_reg fp
-	push_const 1
+	push_const 0
 	add
 	fetch
 	write_int
@@ -638,7 +638,7 @@ str_32. string "\n"
 	push_const str_32
 	write_string
 	push_reg fp
-	push_const 2
+	push_const 1
 	add
 	fetch
 	write_int
