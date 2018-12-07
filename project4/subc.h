@@ -19,6 +19,7 @@
 #define _TYPE 3
 #define _EXP 4
 #define _NULL 5
+#define _STREXP 5
 
 // type classes
 #define _VOID 0

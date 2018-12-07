@@ -25,20 +25,24 @@ void f(int x, int *y){
 
 struct str{
 	int x;
-	int a[10];
 	int y;
+	int y1;
+	int y2;
+	int y3;
+	int y4;
+	int y5;
+	int y6;
+	int y7;
+	int y8;
 } s;
 
-struct str soo(int x, struct str s, struct str* sp){
-	s.x = 100;
-	s.y = 200;
-	s.a[5] = 500;
+struct str soo(int x, struct str s){
+	struct str temp;
 
-	sp->x = x;
-	sp->y = x+x;
-	sp->a[5] = x+x+x+x+x;
+	temp.x = 100;
+	temp.y = 200;
 
-	return s;
+	return temp;
 	
 }
 
@@ -55,11 +59,9 @@ void main(){
 
 	s1.x = 1;
 	s1.y = 2;
-	s1.a[5] = 5;
 
 	s2.x = 10;
 	s2.y = 20;
-	s2.a[5] = 50;
 
 	write_string("Testing for RETURN; statement... Ans : 10, 20, 100, 10, 100\n");
 	f(x, &y);
@@ -74,30 +76,17 @@ void main(){
 	write_string("\n");
 	write_int(s1.y);
 	write_string("\n");
-	write_int(s1.a[5]);
-	write_string("\n");
 
-	s3 = soo(1000, s1, &s2);
+	s3 = soo(1000, s1);
 
 	write_int(s1.x);
 	write_string("\n");
 	write_int(s1.y);
 	write_string("\n");
-	write_int(s1.a[5]);
-	write_string("\n");
-
-	write_int(s2.x);
-	write_string("\n");
-	write_int(s2.y);
-	write_string("\n");
-	write_int(s2.a[5]);
-	write_string("\n");
 
 	write_int(s3.x);
 	write_string("\n");
 	write_int(s3.y);
-	write_string("\n");
-	write_int(s3.a[5]);
 	write_string("\n");
 
 }

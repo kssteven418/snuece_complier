@@ -450,7 +450,7 @@ stmt
 				P("\twrite_int\n");
 				*/
 
-			} expr_arg ';' {
+			} expr ';' {
 				if($3==NULL){
 				}
 				else{
@@ -478,6 +478,20 @@ stmt
 					}
 				}
 
+				/*
+				P("\tpush_reg sp\n");
+				P("\twrite_int\n");
+				P("\tpush_const 777777777\n");
+				P("\twrite_int\n");
+
+				P("\tpush_reg sp\n");
+				P("\tfetch\n");
+				P("\tfetch\n");
+				P("\twrite_int\n");
+				P("\tpush_const 777777777\n");
+				P("\twrite_int\n");
+				*/
+				
 				// stack top will be a value
 				printAssign($3);	
 
@@ -1135,6 +1149,8 @@ unary
 		| unary '('{
 		
 				// CALLER's responsibility
+				int retsize = $1->returntype->decl->size;
+				
 				P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
 				P("\tpush_const label_%d\n", label_cnt); // ret address
 				P("\tpush_reg fp\n"); // frame pointer
@@ -1176,11 +1192,6 @@ unary
 					P("\tpop_reg fp\n");
 
 
-					
-
-					//printParams(actuals);
-
-					//printf("hello~~\n");
 					P("\tjump %s\n", find_id($1)->name);
 
 					// mark the label to set the return address

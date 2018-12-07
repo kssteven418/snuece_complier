@@ -62,9 +62,6 @@ g_start:
 str_2. string "\n"
 	push_const str_2
 	write_string
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
 	push_const label_0
 	push_reg fp
@@ -78,7 +75,7 @@ str_2. string "\n"
 	add
 	pop_reg fp
 	jump f
-	label_0:
+label_0:
 	shift_sp -1
 	push_reg fp
 	push_const 1
@@ -135,9 +132,6 @@ str_4. string "Recursion going with "
 str_5. string "\n"
 	push_const str_5
 	write_string
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
 	push_const label_2
 	push_reg fp
@@ -151,7 +145,7 @@ str_5. string "\n"
 	add
 	pop_reg fp
 	jump recursive
-	label_2:
+label_2:
 	shift_sp -1
 	jump label_3
 label_1:
@@ -175,6 +169,110 @@ recursive_final:
 	pop_reg fp
 	pop_reg pc
 recursive_end:
+fib:
+	shift_sp 4
+fib_start:
+	push_reg fp
+	push_const 2
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 1
+	sub
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 3
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_const 1
+	sub
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 0
+	equal
+	branch_false label_4
+	push_reg fp
+	push_const -3
+	add
+	push_const 1
+	assign
+	jump fib_final
+	jump label_5
+label_4:
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 1
+	equal
+	branch_false label_6
+	push_reg fp
+	push_const -3
+	add
+	push_const 1
+	assign
+	jump fib_final
+	jump label_7
+label_6:
+	push_reg fp
+	push_const -3
+	add
+	shift_sp 1
+	push_const label_8
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_reg sp
+	push_const -1
+	add
+	pop_reg fp
+	jump fib
+label_8:
+	shift_sp 1
+	push_const label_9
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	push_reg sp
+	push_const -1
+	add
+	pop_reg fp
+	jump fib
+label_9:
+	add
+	assign
+	jump fib_final
+label_7:
+label_5:
+fib_final:
+	push_reg fp
+	pop_reg sp
+	pop_reg fp
+	pop_reg fp
+	pop_reg pc
+fib_end:
 main:
 	shift_sp 2
 main_start:
@@ -198,11 +296,8 @@ str_8. string "NESTED FUNCTION..! : 100 100 100 101 101 101\n"
 str_9. string "\n"
 	push_const str_9
 	write_string
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
-	push_const label_4
+	push_const label_10
 	push_reg fp
 	push_const 0
 	push_reg fp
@@ -213,7 +308,7 @@ str_9. string "\n"
 	add
 	pop_reg fp
 	jump g
-	label_4:
+label_10:
 	shift_sp -1
 	push_reg fp
 	push_const 1
@@ -243,11 +338,8 @@ str_12. string "RECURSIVE FUNCTION..!\n"
 	assign
 	fetch
 	shift_sp -1
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
-	push_const label_5
+	push_const label_11
 	push_reg fp
 	push_const 0
 	push_reg fp
@@ -258,7 +350,7 @@ str_12. string "RECURSIVE FUNCTION..!\n"
 	add
 	pop_reg fp
 	jump recursive
-	label_5:
+label_11:
 	shift_sp -1
 	push_reg fp
 	push_const 1
@@ -267,6 +359,39 @@ str_12. string "RECURSIVE FUNCTION..!\n"
 	write_int
 str_13. string "\n"
 	push_const str_13
+	write_string
+str_14. string "\n"
+	push_const str_14
+	write_string
+str_15. string "FIBONACCI FUNCTION..! ans = fib(6)\n"
+	push_const str_15
+	write_string
+	push_reg fp
+	push_const 1
+	add
+	push_reg sp
+	fetch
+	shift_sp 1
+	push_const label_12
+	push_reg fp
+	push_const 0
+	push_const 7
+	push_reg sp
+	push_const -1
+	add
+	pop_reg fp
+	jump fib
+label_12:
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	write_int
+str_16. string "\n"
+	push_const str_16
 	write_string
 main_final:
 	push_reg fp

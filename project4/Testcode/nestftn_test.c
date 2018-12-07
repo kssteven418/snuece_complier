@@ -33,8 +33,28 @@ void recursive(int* x){
 		write_int(*x);
 		write_string("\n");
 	}
-
 }
+
+int fib(int n){
+	int x;
+	int y;
+	x = n-1;
+	y = x-1;
+	if(n==0){
+		return 1;
+	}
+	else{
+		if(n==1){
+			return 1;
+		}
+		else{
+			return fib(x)+fib(y);
+		}
+	}
+}
+	
+
+
 void main(){
 	int x;
 	x = 100;
@@ -54,5 +74,12 @@ void main(){
 	recursive(&x);
 	write_int(x);
 	write_string("\n");
+	write_string("\n");
+	
+	write_string("FIBONACCI FUNCTION..! ans = fib(6)\n");
+	x = fib(7);
+	write_int(x);
+	write_string("\n");
+
 }
 
