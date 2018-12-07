@@ -389,6 +389,7 @@ main_final:
 	push_reg fp
 	pop_reg sp
 	pop_reg fp
+	pop_reg fp
 	pop_reg pc
 main_end:
 Lglob.	data 0

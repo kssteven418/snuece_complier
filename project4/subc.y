@@ -120,11 +120,19 @@ ext_def
 			$$ = check_function($1);
 			pop_scope();
 
+
+
+
 			// end up code and final position
 			P("%s_final:\n", find_id($1)->name);
 			P("\tpush_reg fp\n");
 			P("\tpop_reg sp\n");
 			P("\tpop_reg fp\n");
+
+			if(!strCompare_no_len("main", ftn_name->name)){
+				P("\tpop_reg fp\n");
+			}
+
 			P("\tpop_reg pc\n");
 			P("%s_end:\n", find_id($1)->name);
 		}
@@ -1067,6 +1075,7 @@ unary
 				P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
 				P("\tpush_const label_%d\n", label_cnt); // ret address
 				P("\tpush_reg fp\n"); // frame pointer
+				P("\tpush_const 0\n"); // safety buffer
 
 				// fp->current sp
 				P("\tpush_reg sp\n");
@@ -1128,6 +1137,7 @@ unary
 					P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
 					P("\tpush_const label_%d\n", label_cnt); // ret address
 					P("\tpush_reg fp\n"); // frame pointer
+					P("\tpush_const 0\n"); // safety buffer
 
 					// fp->current sp
 					P("\tpush_reg sp\n");

@@ -55,17 +55,10 @@ void printLoadVarParam(decl* var){
 	// should be indexed from the frame pointer
 	// so, load the frame pointer first
 	else{
-			/* debugg 
-			P("\tpush_reg fp\n");
-			P("\tpush_const -1\n");
-			P("\tadd\n");
-			P("\tfetch\n");
-			P("\twrite_int\n");
-			P("\tpush_const 88888\n");
-			P("\twrite_int\n");
-			*/
 
 			P("\tpush_reg fp\n");
+			P("\tpush_const -1\n"); // ret address
+			P("\tadd\n");
 			P("\tfetch\n"); // get the old fp
 			
 			P("\tpush_const %d\n", var->offset); // offset from the fp
@@ -326,45 +319,58 @@ void printParams(decl* actuals){
 						printLoadVarParam(temp);
 						addrToVar(temp);
 				}
+				/*
 				P("\tpush_reg fp\n"); // deb
 				P("\twrite_int\n"); // deb
-				P("\tpush_const 0\n");
+				P("\tpush_const 7\n");
 				P("\twrite_int\n"); // deb
+
 				P("\tpush_reg fp\n"); // deb
-				P("\tpush_const -1\n");
+				P("\tpush_const -1\n"); // ret address
 				P("\tadd\n");
 				P("\tfetch\n");
 				P("\twrite_int\n"); // deb
-				P("\tpush_const 0\n");
+				P("\tpush_const 7\n");
 				P("\twrite_int\n"); // deb
+
 				P("\tpush_reg fp\n"); // deb
-				P("\tpush_const -1\n");
+				P("\tpush_const -1\n"); // ret address
 				P("\tadd\n");
 				P("\tfetch\n");
 				P("\tfetch\n");
 				P("\twrite_int\n"); // deb
-				P("\tpush_const 0\n");
+				P("\tpush_const 7\n");
 				P("\twrite_int\n"); // deb
+				*/
 
 				printAssign(temp);
 				//printf("---------\n");
 
 				temp = temp->next;
+
+				/*
 				P("\tpush_reg fp\n"); // deb
 				P("\twrite_int\n"); // deb
-				P("\tpush_const 0\n");
+				P("\tpush_const 7\n");
 				P("\twrite_int\n"); // deb
+
 				P("\tpush_reg fp\n"); // deb
+				P("\tpush_const -1\n"); // ret address
+				P("\tadd\n");
 				P("\tfetch\n");
 				P("\twrite_int\n"); // deb
-				P("\tpush_const 0\n");
+				P("\tpush_const 7\n");
 				P("\twrite_int\n"); // deb
+
 				P("\tpush_reg fp\n"); // deb
+				P("\tpush_const -1\n"); // ret address
+				P("\tadd\n");
 				P("\tfetch\n");
 				P("\tfetch\n");
 				P("\twrite_int\n"); // deb
-				P("\tpush_const 0\n");
+				P("\tpush_const 7\n");
 				P("\twrite_int\n"); // deb
+				*/
 		}
 
 		P("\tshift_sp -1\n");

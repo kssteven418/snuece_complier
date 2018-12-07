@@ -17,6 +17,7 @@ foo_final:
 	push_reg fp
 	pop_reg sp
 	pop_reg fp
+	pop_reg fp
 	pop_reg pc
 foo_end:
 main:

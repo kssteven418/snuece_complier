@@ -1,0 +1,40 @@
+functions.c:27:	temp->top = sstop->top;
+functions.c:34:	ste* from = sstop->top;
+functions.c:35:	ste* to = sstop->prev->top;
+functions.c:50:	sstop = sstop->prev;
+functions.c:63:		copy->prev = sstop->top;
+functions.c:64:		sstop->top = copy;
+functions.c:72:				sstop->size += copy->decl->size; 
+functions.c:87:	temp->prev = sstop->top;
+functions.c:90:	sstop->top = temp;
+functions.c:96:		decl->offset = sstop->size;
+functions.c:98:		sstop->size += decl->size;
+functions.c:101:		//		decl->offset, sstop->size, decl->is_glob);
+functions.c:122:	ste* temp = sstop->top;
+functions.c:131:	ste* temp = sstop->top;
+functions.c:132:	ste* bottom = sstop->prev->top;
+functions.c:411:	ste* temp = sstop->top;
+printftn.c:17:	P("Lglob.\tdata %d\n", sstop->size); 
+Binary file .subc.l.swp matches
+subc.tab.c:1471:				//sstop->size = 1;
+subc.tab.c:1792:				//debugst(sstop->top);
+subc.tab.c:1794:			int size = sstop->size;
+subc.tab.c:2801:					// debugst(sstop->top);
+subc.y:116:				//sstop->size = 1;
+subc.y:353:				//debugst(sstop->top);
+subc.y:355:			int size = sstop->size;
+subc.y:1137:					// debugst(sstop->top);
+subc.l:144:	globaldef = sstop->top;
+subc.l:158:	sstop->prev = dummy;
+subc.l:164:	sstop->top = temp; 
+subc.l:165:	sstop->prev->top = temp;
+subc.l:187:   //debugst(sstop->top);
+Binary file .printftn.c.swp matches
+Binary file .printftn.c.swo matches
+Binary file .functions.c.swp matches
+Binary file .subc.y.swp matches
+lex.yy.c:2018:	globaldef = sstop->top;
+lex.yy.c:2032:	sstop->prev = dummy;
+lex.yy.c:2038:	sstop->top = temp; 
+lex.yy.c:2039:	sstop->prev->top = temp;
+lex.yy.c:2061:   //debugst(sstop->top);
