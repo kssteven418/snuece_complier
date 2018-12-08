@@ -593,15 +593,11 @@ const_expr
 
 expr_arg
 	: expr {
+				//printStack();
 				$$ = $1;
-				if($$->declclass == _EXP && $$->type->typeclass==_STRUCT 
-								&& $$->is_expanded){
-				}
 				if($$->declclass2 == _VAR && $$->type->typeclass==_STRUCT){
 					if(!$$->is_expanded){
 						fetchStruct($$);
-					}
-					else{
 					}
 				}
 	}
@@ -1072,6 +1068,9 @@ unary
 						P("\tpush_const %d\n", $$->offset);
 						P("\tadd\n");
 					}
+
+					// direct use of struct return value.
+					// than the stack top is not the address, but the expanded form
 					else{
 						$$->declclass = _EXP;
 						int size = $1->size;
@@ -1137,7 +1136,7 @@ unary
 				P("\tpush_const label_%d\n", label_cnt); // ret address
 				P("\tpush_reg fp\n"); // frame pointer
 				P("\tpush_const 0\n"); // safety buffer
-
+				$<intVal>$ = label_cnt++;
 		
 			} args ')'{
 			
@@ -1177,12 +1176,10 @@ unary
 					P("\tadd\n");
 					P("\tpop_reg fp\n");
 
-
 					P("\tjump %s\n", find_id($1)->name);
 
 					// mark the label to set the return address
-					P("label_%d:\n",label_cnt++);
-					//printStack();
+					P("label_%d:\n",$<intVal>3);
 				}
 			}
 		}

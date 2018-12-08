@@ -11,7 +11,7 @@ EXIT:
 	push_const 10
 	shift_sp -1
 foo:
-	shift_sp 1
+	shift_sp 2
 foo_start:
 foo_final:
 	push_reg fp
@@ -27,10 +27,10 @@ main:
 	shift_sp -1
 	push_const 5
 	shift_sp -1
-	shift_sp 19
+	shift_sp 20
 main_start:
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -41,7 +41,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 1
 	add
@@ -52,7 +52,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 2
 	add
@@ -63,7 +63,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 3
 	add
@@ -74,7 +74,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 4
 	add
@@ -85,7 +85,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 0
 	add
@@ -96,7 +96,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 1
 	add
@@ -107,7 +107,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 2
 	add
@@ -118,7 +118,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 3
 	add
@@ -129,7 +129,7 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 4
 	add
@@ -143,7 +143,7 @@ str_0. string "Testing array basics...\n"
 	push_const str_0
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -153,7 +153,7 @@ str_1. string "\n"
 	push_const str_1
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 1
 	add
@@ -163,7 +163,7 @@ str_2. string "\n"
 	push_const str_2
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 2
 	add
@@ -173,7 +173,7 @@ str_3. string "\n"
 	push_const str_3
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 3
 	add
@@ -183,7 +183,7 @@ str_4. string "\n"
 	push_const str_4
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 4
 	add
@@ -193,7 +193,7 @@ str_5. string "\n"
 	push_const str_5
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 0
 	add
@@ -203,7 +203,7 @@ str_6. string "\n"
 	push_const str_6
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 1
 	add
@@ -213,7 +213,7 @@ str_7. string "\n"
 	push_const str_7
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 2
 	add
@@ -223,7 +223,7 @@ str_8. string "\n"
 	push_const str_8
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 3
 	add
@@ -233,7 +233,7 @@ str_9. string "\n"
 	push_const str_9
 	write_string
 	push_reg fp
-	push_const 6
+	push_const 7
 	add
 	push_const 4
 	add
@@ -246,7 +246,7 @@ str_11. string "Testing array & inc dec...\n"
 	push_const str_11
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -266,7 +266,7 @@ str_12. string "\n"
 	push_const str_12
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 1
 	add
@@ -286,7 +286,7 @@ str_13. string "\n"
 	push_const str_13
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 2
 	add
@@ -304,7 +304,7 @@ str_14. string "\n"
 	push_const str_14
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 3
 	add
@@ -322,7 +322,7 @@ str_15. string "\n"
 	push_const str_15
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -332,7 +332,7 @@ str_16. string "\n"
 	push_const str_16
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 1
 	add
@@ -342,7 +342,7 @@ str_17. string "\n"
 	push_const str_17
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 2
 	add
@@ -352,7 +352,7 @@ str_18. string "\n"
 	push_const str_18
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 3
 	add
@@ -365,7 +365,7 @@ str_20. string "Testing pointer array with inc dec...\n"
 	push_const str_20
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -376,7 +376,7 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 1
 	add
@@ -387,7 +387,7 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 2
 	add
@@ -398,7 +398,7 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 3
 	add
@@ -409,7 +409,7 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 4
 	add
@@ -420,14 +420,14 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 0
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -435,14 +435,14 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 1
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 1
 	add
@@ -450,14 +450,14 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 2
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 2
 	add
@@ -465,14 +465,14 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 3
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 3
 	add
@@ -480,14 +480,14 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 4
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 4
 	add
@@ -495,7 +495,7 @@ str_20. string "Testing pointer array with inc dec...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 0
 	add
@@ -506,7 +506,7 @@ str_21. string "\n"
 	push_const str_21
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 1
 	add
@@ -517,7 +517,7 @@ str_22. string "\n"
 	push_const str_22
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 2
 	add
@@ -528,7 +528,7 @@ str_23. string "\n"
 	push_const str_23
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 3
 	add
@@ -539,7 +539,7 @@ str_24. string "\n"
 	push_const str_24
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 4
 	add
@@ -549,7 +549,7 @@ str_25. string "\n"
 	push_const str_25
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 0
 	add
@@ -570,7 +570,7 @@ str_26. string "\n"
 	push_const str_26
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 1
 	add
@@ -591,7 +591,7 @@ str_27. string "\n"
 	push_const str_27
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 2
 	add
@@ -610,7 +610,7 @@ str_28. string "\n"
 	push_const str_28
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 3
 	add
@@ -629,7 +629,7 @@ str_29. string "\n"
 	push_const str_29
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 0
 	add
@@ -640,7 +640,7 @@ str_30. string "\n"
 	push_const str_30
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 1
 	add
@@ -651,7 +651,7 @@ str_31. string "\n"
 	push_const str_31
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 2
 	add
@@ -662,7 +662,7 @@ str_32. string "\n"
 	push_const str_32
 	write_string
 	push_reg fp
-	push_const 11
+	push_const 12
 	add
 	push_const 3
 	add
@@ -676,7 +676,7 @@ str_34. string "Testing unary pointer ...\n"
 	push_const str_34
 	write_string
 	push_reg fp
-	push_const 16
+	push_const 17
 	add
 	push_reg sp
 	fetch
@@ -685,7 +685,7 @@ str_34. string "Testing unary pointer ...\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 16
+	push_const 17
 	add
 	fetch
 	write_int
@@ -693,7 +693,7 @@ str_35. string "\n"
 	push_const str_35
 	write_string
 	push_reg fp
-	push_const 16
+	push_const 17
 	add
 	fetch
 	write_int
@@ -704,7 +704,7 @@ str_36. string "\n"
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 16
+	push_const 17
 	add
 	assign
 	fetch
@@ -717,7 +717,7 @@ str_37. string "\n"
 	push_const str_37
 	write_string
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -727,12 +727,12 @@ str_38. string "\n"
 	push_const str_38
 	write_string
 	push_reg fp
-	push_const 18
+	push_const 19
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -740,7 +740,7 @@ str_38. string "\n"
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 18
+	push_const 19
 	add
 	fetch
 	fetch
@@ -753,19 +753,19 @@ str_39. string "\n"
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
 	fetch
 	push_reg fp
-	push_const 18
+	push_const 19
 	add
 	fetch
 	fetch
 	sub
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_const 0
 	add
@@ -789,7 +789,7 @@ str_41. string "\n"
 	push_const str_41
 	write_string
 	push_reg fp
-	push_const 16
+	push_const 17
 	add
 	fetch
 	write_int

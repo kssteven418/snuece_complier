@@ -143,24 +143,6 @@ void fetchStruct(decl* str){
 	}
 }
 
-/*
-void fetchArray(decl* array){
-	
-		decl* elmt = array->type->elementvar;
-		int num_index = array->num_index;
-		int var_size = elmt->size;
-
-		for(int i=num_index-1; i>=0; i--){
-			// push the base address
-			printLoadVar(array);	
-			// add the offset
-			P("\tpush_const %d\n", var_size*i);
-			P("\tadd\n");
-			// fetch the value
-			addrToVar(elmt);
-		}
-}
-*/
 
 void printAssignStruct(decl* str){
 	int size = str->size;
@@ -172,22 +154,16 @@ void printAssignStruct(decl* str){
 	P("\tpush_const -%d\n", size);
 	P("\tadd\n");
 
-	//printStack();
 	printAssign(str);
 
 	P("\tshift_sp %d\n", size+1);
-	//printStack();
 	
 }
 
 
 void printStack(){
-	P("\tpush_const 1000\n");
-	P("\tpush_reg fp\n");
+	P("\tpush_const 77777\n");
 	P("\twrite_int\n");
-	P("\tpush_const 1000\n");
-	P("\twrite_int\n");
-	
 
 	P("\tpush_reg sp\n");
 	P("\tpush_const 0\n");
@@ -439,135 +415,3 @@ void afterExpr(decl* expr){
 }
 
 
-void printParams(decl* actuals){
-		//printf("actuals_end\n");
-		decl* temp = actuals;
-		int size = 0;
-		while(temp != NULL){
-				size += temp->size;
-				temp = temp->next;
-		}
-		temp = actuals;
-		P("\tshift_sp %d\n", size);
-
-		P("\tpush_reg sp\n");
-		P("\tpush_const %d\n", size);
-		P("\tsub\n");
-
-		size = 0;
-		//printf("---------\n");
-
-		
-		/*
-		P("push_const 6666\n");
-		P("\twrite_int\n");
-		P("\tpush_reg fp\n");
-		P("\twrite_int\n");
-		P("push_const 6666\n");
-		P("\twrite_int\n");
-		P("\tpush_reg sp\n");
-		P("\twrite_int\n");
-		P("push_const 66666\n");
-		P("\twrite_int\n");
-
-		P("\tpush_reg fp\n");
-		P("\tpush_const 0\n");
-		P("\tadd\n");
-		P("\tfetch\n");
-		P("\tfetch\n");
-		P("\twrite_int\n");
-		P("push_const 77777\n");
-		P("\twrite_int\n");
-
-		P("\tpush_reg fp\n");
-		P("\tfetch\n");
-		P("\tpush_const 1\n");
-		P("\tadd\n");
-
-		P("\tfetch\n");
-		P("\twrite_int\n");
-		P("push_const 77777\n");
-		P("\twrite_int\n");
-		*/
-
-		while(temp != NULL){
-				
-				// source address
-				P("\tpush_reg sp\n");
-				P("\tfetch\n");
-				P("\tpush_const %d\n", size);
-				P("\tadd\n");
-
-				size += temp->size;
-
-				// push 
-				if(temp->declclass==_CONST){
-						if(temp->type==inttype){
-							P("\tpush_const %d\n", temp->int_value);
-						}
-						if(temp->type==chartype){
-							P("\tpush_const %d\n", temp->char_value);
-						}
-				}
-				else{ // _VAR
-						//printf("DECLASS : %d\n", temp->declclass);
-						printLoadVarParam(temp);
-						addrToVar(temp);
-				}
-				/*
-				P("\tpush_reg fp\n"); // deb
-				P("\twrite_int\n"); // deb
-				P("\tpush_const 7\n");
-				P("\twrite_int\n"); // deb
-
-				P("\tpush_reg fp\n"); // deb
-				P("\tpush_const -1\n"); // ret address
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\twrite_int\n"); // deb
-				P("\tpush_const 7\n");
-				P("\twrite_int\n"); // deb
-
-				P("\tpush_reg fp\n"); // deb
-				P("\tpush_const -1\n"); // ret address
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\tfetch\n");
-				P("\twrite_int\n"); // deb
-				P("\tpush_const 7\n");
-				P("\twrite_int\n"); // deb
-				*/
-
-				printAssign(temp);
-				//printf("---------\n");
-
-				temp = temp->next;
-
-				/*
-				P("\tpush_reg fp\n"); // deb
-				P("\twrite_int\n"); // deb
-				P("\tpush_const 7\n");
-				P("\twrite_int\n"); // deb
-
-				P("\tpush_reg fp\n"); // deb
-				P("\tpush_const -1\n"); // ret address
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\twrite_int\n"); // deb
-				P("\tpush_const 7\n");
-				P("\twrite_int\n"); // deb
-
-				P("\tpush_reg fp\n"); // deb
-				P("\tpush_const -1\n"); // ret address
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\tfetch\n");
-				P("\twrite_int\n"); // deb
-				P("\tpush_const 7\n");
-				P("\twrite_int\n"); // deb
-				*/
-		}
-
-		P("\tshift_sp -1\n");
-		//printf("actuals_end\n");
-}
