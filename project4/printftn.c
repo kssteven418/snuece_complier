@@ -162,7 +162,174 @@ void fetchArray(decl* array){
 }
 */
 
+void printAssignStruct(decl* str){
+	int size = str->size;
+	P("\tpush_reg sp\n");
+	P("\tpush_const -%d\n", size+1);
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -%d\n", size);
+	P("\tadd\n");
+
+	//printStack();
+	printAssign(str);
+
+	P("\tshift_sp %d\n", size+1);
+	//printStack();
+	
+}
+
+
+void printStack(){
+	P("\tpush_const 1000\n");
+	P("\tpush_reg fp\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const 0\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const 0\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -1\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -1\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -2\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -2\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -3\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -3\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -4\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -4\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -5\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -5\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -6\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -6\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -7\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -7\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+	P("\tpush_reg sp\n");
+	P("\tpush_const -8\n");
+	P("\tadd\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+	P("\tpush_reg sp\n");
+	P("\tpush_const -8\n");
+	P("\tadd\n");
+	P("\tfetch\n");
+	P("\twrite_int\n");
+	P("\tpush_const 1000\n");
+	P("\twrite_int\n");
+
+
+}
+
 void printAssign(decl* var){
+
+		//printStack();
+		
+		decl* temp = copy(var);
+		temp->is_expanded = 0;
+
+		if(var->is_expanded){
+				printAssignStruct(temp);
+				return;
+		}
+
 		// assigning value
 		// stack top : var addr #
 		if(var->type->typeclass != _STRUCT &&
@@ -203,6 +370,7 @@ void printAssign(decl* var){
 		// assigning struct
 		// stack top : addr_src addr_dest #
 		else{
+			//printf("THIS IS STACK\n");
 			ste* field = var->type->fields;
 			while(field!=NULL && field->decl!=NULL){
 				decl* elmt = field->decl;
@@ -229,6 +397,8 @@ void printAssign(decl* var){
 			}
 			// pop out src and dest addresses
 			P("\tshift_sp -2\n");
+			//printf("THIS IS STACK DONE\n");
+			//printStack();
 		}
 }
 
@@ -256,8 +426,16 @@ void moveSP(int n){
 
 // post processing after expression ended
 void afterExpr(decl* expr){
-		addrToVar(expr);
-		moveSP(-1);
+		if(expr!=NULL){
+			addrToVar(expr);
+			if(expr->type->typeclass==_STRUCT 
+							&& expr->is_expanded){
+					moveSP(-expr->size);
+			}
+			else{
+				moveSP(-1);
+			}
+		}
 }
 
 

@@ -12,6 +12,7 @@ int f(struct str s1, int a, int b, struct str s2, int c, int d, int e){
 
 	write_string("Parameter Passing...\n");
 	write_string("ans : 777 33 22 888 33 55 88 123 11\n");
+	write_string("ans : 777 10000 20000 888 33 55 50000 123 11\n");
 	xx = 123;
 	write_int(s1.a[5]);
 	write_string("\n");

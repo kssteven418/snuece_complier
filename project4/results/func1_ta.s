@@ -7,16 +7,16 @@
 EXIT:
 	exit
 outprint:
-	shift_sp 1
+	shift_sp 2
 outprint_start:
 	push_reg fp
-	push_const 0
+	push_const 1
 	add
 	fetch
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 0
+	push_const 1
 	add
 	fetch
 	fetch
@@ -33,10 +33,10 @@ outprint_final:
 	pop_reg pc
 outprint_end:
 main:
-	shift_sp 3
+	shift_sp 4
 main_start:
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	push_reg sp
 	fetch
@@ -45,59 +45,40 @@ main_start:
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 2
+	push_const 3
 	add
 	push_reg sp
 	fetch
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	assign
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 0
+	push_const 1
 	add
 	push_reg sp
 	fetch
-	push_reg fp
-	push_const 0
-	add
 	shift_sp 1
 	push_const label_0
 	push_reg fp
 	push_const 0
-	push_reg sp
-	pop_reg fp
 	push_reg fp
-	push_const 2
+	push_const 3
 	add
 	fetch
-	shift_sp -1
-	shift_sp 1
 	push_reg sp
-	push_const 1
-	sub
-	push_reg sp
-	fetch
-	push_const 0
-	add
-	push_reg fp
 	push_const -1
 	add
-	fetch
-	push_const 2
-	add
-	fetch
-	assign
-	shift_sp -1
+	pop_reg fp
 	jump outprint
-	label_0:
+label_0:
 	assign
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 1
+	push_const 2
 	add
 	fetch
 	write_int

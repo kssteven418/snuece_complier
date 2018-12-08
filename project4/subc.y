@@ -415,41 +415,6 @@ stmt
 				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
 				P("\tadd\n");
 
-				/* debug 
-				P("\tpush_reg fp\n");
-				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size);
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\twrite_int\n");
-				P("\tpush_const 777777777\n");
-				P("\twrite_int\n");
-
-
-				P("\tpush_reg fp\n");
-				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+1);
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\twrite_int\n");
-				P("\tpush_const 777777777\n");
-				P("\twrite_int\n");
-
-				P("\tpush_reg fp\n");
-				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\twrite_int\n");
-				P("\tpush_const 777777777\n");
-				P("\twrite_int\n");
-
-				P("\tpush_reg fp\n");
-				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+3);
-				P("\tadd\n");
-				P("\tfetch\n");
-				P("\twrite_int\n");
-				P("\tpush_const 777777777\n");
-				P("\twrite_int\n");
-				*/
-
 			} expr ';' {
 				if($3==NULL){
 				}
@@ -478,20 +443,6 @@ stmt
 					}
 				}
 
-				/*
-				P("\tpush_reg sp\n");
-				P("\twrite_int\n");
-				P("\tpush_const 777777777\n");
-				P("\twrite_int\n");
-
-				P("\tpush_reg sp\n");
-				P("\tfetch\n");
-				P("\tfetch\n");
-				P("\twrite_int\n");
-				P("\tpush_const 777777777\n");
-				P("\twrite_int\n");
-				*/
-				
 				// stack top will be a value
 				printAssign($3);	
 
@@ -643,8 +594,15 @@ const_expr
 expr_arg
 	: expr {
 				$$ = $1;
+				if($$->declclass == _EXP && $$->type->typeclass==_STRUCT 
+								&& $$->is_expanded){
+				}
 				if($$->declclass2 == _VAR && $$->type->typeclass==_STRUCT){
-					fetchStruct($$);
+					if(!$$->is_expanded){
+						fetchStruct($$);
+					}
+					else{
+					}
 				}
 	}
 ;
@@ -689,6 +647,8 @@ expr
 				// otherwise, return the unary itself
 				else{
 					$$ = $1;
+					$$->is_expanded = 0;
+					//printf("expanded? : %d %d\n", $$->is_expanded, $4->is_expanded);
 					addrToVar($4);
 					printAssign($4);
 				}
@@ -1107,8 +1067,30 @@ unary
 				else{
 					$$ = copy(field->decl);
 					int offset = $$->offset;
-					P("\tpush_const %d\n", $$->offset);
-					P("\tadd\n");
+
+					if(!$1->is_expanded)	{
+						P("\tpush_const %d\n", $$->offset);
+						P("\tadd\n");
+					}
+					else{
+						$$->declclass = _EXP;
+						int size = $1->size;
+						printf("\tpush_reg sp\n");
+						printf("\tpush_const -%d\n", size-1);
+						printf("\tadd\n");
+						printf("\tpush_const %d\n", offset);
+						printf("\tadd\n");
+						printf("\tfetch\n");
+						printf("\tshift_sp -%d\n", size+1);
+
+						printf("\tpush_reg sp\n");
+						printf("\tpush_const %d\n", size+1);
+						printf("\tadd\n");
+						printf("\tfetch\n");
+
+						//printf("SADDSADSAD %d %d\n",size, offset);
+
+					}
 				}
 			}
 		}
@@ -1149,8 +1131,8 @@ unary
 		| unary '('{
 		
 				// CALLER's responsibility
-				int retsize = $1->returntype->decl->size;
-				
+				//int retsize = $1->returntype->decl->size;
+				//printf("%d, %d\n", $1->returntype->decl->typeclass, retsize);
 				P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
 				P("\tpush_const label_%d\n", label_cnt); // ret address
 				P("\tpush_reg fp\n"); // frame pointer
@@ -1176,6 +1158,10 @@ unary
 					// and should be a expression
 					$$ = makevardecl($1->returntype->decl/* this is type */);
 					$$->declclass = _EXP;
+					if($$->type->typeclass==_STRUCT){
+							$$->is_expanded = 1;
+					}
+
 
 					decl* actuals = $4;
 
@@ -1196,6 +1182,7 @@ unary
 
 					// mark the label to set the return address
 					P("label_%d:\n",label_cnt++);
+					//printStack();
 				}
 			}
 		}
@@ -1217,6 +1204,7 @@ unary
 					// ane should be a expression
 					$$ = makevardecl($1->returntype->decl/* this is type */);
 					$$->declclass = _EXP;
+					if($$->type->typeclass==_STRUCT) $$->is_expanded = 1;
 
 					// CALLER's responsibility
 					P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
@@ -1235,6 +1223,7 @@ unary
 
 					// mark the label to set the return address
 					P("label_%d:\n",label_cnt++);
+					//printStack();
 				}
 			}
 		}

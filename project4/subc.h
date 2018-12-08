@@ -19,7 +19,6 @@
 #define _TYPE 3
 #define _EXP 4
 #define _NULL 5
-#define _STREXP 5
 
 // type classes
 #define _VOID 0
@@ -58,6 +57,9 @@ typedef struct decl{
 	/* ALL */
 	int declclass;
 	int declclass2;
+
+	/* STRUCT VAR */
+	int is_expanded;
 	
 	/* VAR, CONST */
 	struct decl *type;
@@ -200,5 +202,6 @@ void moveSP(int n);
 void afterExpr(decl* expr);
 void printParams(decl* actuals);
 
+void printStack();
 #endif
 

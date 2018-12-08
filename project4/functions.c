@@ -165,6 +165,7 @@ decl* makevardecl(decl* type_decl){
 	temp->declclass = _VAR;
 	temp->type = type_decl;
 	temp->size = type_decl->size;
+	temp->is_expanded = 0;
 	if (sstop==global_scope){
 		temp->is_glob = 1;
 	}
@@ -180,6 +181,7 @@ decl* makeconstdecl(decl* type_decl){
 	temp->declclass = _CONST;
 	temp->type = type_decl;
 	temp->size = 1;
+	temp->is_expanded = 0;
 	return temp;
 }
 
@@ -192,6 +194,7 @@ decl* makeptrdecl(decl* type_decl){
 	var->declclass = _VAR;
 	var->type = type;
 	var->size = 1;
+	var->is_expanded = 0;
 	if (sstop==global_scope){
 		var->is_glob = 1;
 		
@@ -383,6 +386,7 @@ decl* define_function_no_param(decl* type_decl, int is_ptr, id* id_decl){
 		returntype->declclass = _TYPE;
 		returntype->typeclass = _POINTER;
 		returntype->ptrto = type_decl;
+		returntype->size = 1;
 	}
 	else{
 		returntype = type_decl;

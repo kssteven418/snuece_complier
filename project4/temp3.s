@@ -6,6 +6,108 @@
 	jump main
 EXIT:
 	exit
+foo:
+	shift_sp 7
+foo_start:
+	push_reg fp
+	push_const 4
+	add
+	push_const 0
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 4
+	add
+	push_const 1
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 4
+	add
+	push_const 2
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const -5
+	add
+	push_reg fp
+	push_const 4
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	fetch
+	assign
+	shift_sp -2
+	jump foo_final
+foo_final:
+	push_reg fp
+	pop_reg sp
+	pop_reg fp
+	pop_reg fp
+	pop_reg pc
+foo_end:
 soo:
 	shift_sp 7
 soo_start:
@@ -51,6 +153,121 @@ soo_start:
 	assign
 	fetch
 	shift_sp -1
+	shift_sp 3
+	push_const label_0
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	push_reg sp
+	push_const -3
+	add
+	pop_reg fp
+	jump foo
+label_0:
+	shift_sp -3
+	shift_sp 3
+	push_const label_1
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	push_reg sp
+	push_const -3
+	add
+	pop_reg fp
+	jump foo
+label_1:
+	shift_sp -3
+	shift_sp 3
+	push_const label_2
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	push_reg sp
+	push_const -3
+	add
+	pop_reg fp
+	jump foo
+label_2:
+	shift_sp -3
+	shift_sp 3
+	push_const label_3
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	push_reg sp
+	push_const -3
+	add
+	pop_reg fp
+	jump foo
+label_3:
+	shift_sp -3
+	shift_sp 3
+	push_const label_4
+	push_reg fp
+	push_const 0
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	push_reg sp
+	push_const -3
+	add
+	pop_reg fp
+	jump foo
+label_4:
+	shift_sp -3
 	push_reg fp
 	push_const -5
 	add
@@ -117,7 +334,7 @@ main_start:
 	push_reg sp
 	fetch
 	shift_sp 3
-	push_const label_0
+	push_const label_5
 	push_reg fp
 	push_const 0
 	push_const 1
@@ -128,7 +345,7 @@ main_start:
 	add
 	pop_reg fp
 	jump soo
-label_0:
+label_5:
 	push_reg sp
 	push_const -4
 	add
@@ -180,128 +397,6 @@ label_0:
 	assign
 	shift_sp -2
 	shift_sp 4
-	push_const 1000
-	push_reg fp
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const 0
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const 0
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -1
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -1
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -2
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -2
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -3
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -3
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -4
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -4
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -5
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -5
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -6
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -6
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -7
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -7
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -8
-	add
-	write_int
-	push_const 1000
-	write_int
-	push_reg sp
-	push_const -8
-	add
-	fetch
-	write_int
-	push_const 1000
-	write_int
 	shift_sp -1
 	push_reg fp
 	push_const 1

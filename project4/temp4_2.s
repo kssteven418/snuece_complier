@@ -6,57 +6,50 @@
 	jump main
 EXIT:
 	exit
-test:
-	shift_sp 4
-test_start:
+temp:
+	shift_sp 1
+temp_start:
+	push_const Lglob+0
+	push_reg sp
+	fetch
+	push_const 10
+	assign
+	fetch
+	shift_sp -1
 	push_reg fp
 	push_const -3
 	add
-	push_reg fp
-	push_const 1
-	add
-	fetch
+	push_const Lglob+0
 	assign
-	jump test_final
-test_final:
+	jump temp_final
+temp_final:
 	push_reg fp
 	pop_reg sp
 	pop_reg fp
 	pop_reg fp
 	pop_reg pc
-test_end:
+temp_end:
+temp2:
+	shift_sp 1
+temp2_start:
+	push_reg fp
+	push_const -3
+	add
+	push_const 10
+	assign
+	jump temp2_final
+temp2_final:
+	push_reg fp
+	pop_reg sp
+	pop_reg fp
+	pop_reg fp
+	pop_reg pc
+temp2_end:
 main:
-	shift_sp 5
+	shift_sp 2
 main_start:
 	push_reg fp
 	push_const 1
-	add
-	push_reg sp
-	fetch
-	push_const 1
-	assign
-	fetch
-	shift_sp -1
-	push_reg fp
-	push_const 2
-	add
-	push_reg sp
-	fetch
-	push_const 2
-	assign
-	fetch
-	shift_sp -1
-	push_reg fp
-	push_const 3
-	add
-	push_reg sp
-	fetch
-	push_const 3
-	assign
-	fetch
-	shift_sp -1
-	push_reg fp
-	push_const 4
 	add
 	push_reg sp
 	fetch
@@ -64,30 +57,17 @@ main_start:
 	push_const label_0
 	push_reg fp
 	push_const 0
-	push_reg fp
-	push_const 1
-	add
-	fetch
-	push_reg fp
-	push_const 2
-	add
-	fetch
-	push_reg fp
-	push_const 3
-	add
-	fetch
 	push_reg sp
-	push_const -3
-	add
 	pop_reg fp
-	jump test
+	jump temp
 label_0:
 	assign
 	fetch
 	shift_sp -1
 	push_reg fp
-	push_const 4
+	push_const 1
 	add
+	fetch
 	fetch
 	write_int
 str_0. string "\n"
@@ -99,4 +79,4 @@ main_final:
 	pop_reg fp
 	pop_reg pc
 main_end:
-Lglob.	data 0
+Lglob.	data 1
