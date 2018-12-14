@@ -3,7 +3,7 @@ struct str1{
 	int x;
 	int a[10];
 	int y;
-};
+}st;
 
 
 struct str1 sm(int x, int y){
@@ -28,6 +28,20 @@ struct str1 foo(int a, int b, struct str1 s, int x, int y){
 	return s;
 }
 
+struct str1 goo(struct str1 s){
+	struct str1 temp;
+	write_int(s.x);
+	write_string("\n");
+	write_int(s.y);
+	write_string("\n");
+	write_int(s.a[5]);
+	write_string("\n");
+	temp = s;
+	temp.x = 987;
+	temp.y = 654;
+	return temp;
+}
+
 void main(){
 	struct str1 s;
 
@@ -37,6 +51,18 @@ void main(){
 	write_string("\n");
 	write_int(s.y);
 	write_string("\n");
+	write_string("\n");
+	
+	write_string("Some more test on struct parameter and return... ans : 11111 22222 123 987 654\n");
+	st = s;
+	s = goo(st);
+
+	write_int(s.x);
+	write_string("\n");
+	write_int(s.y);
+	write_string("\n");
+
+
 
 }
 

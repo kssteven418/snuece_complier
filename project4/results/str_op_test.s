@@ -507,11 +507,455 @@ foo_final:
 	pop_reg fp
 	pop_reg pc
 foo_end:
+goo:
+	shift_sp 25
+goo_start:
+	push_reg fp
+	push_const 1
+	add
+	push_const 0
+	add
+	fetch
+	write_int
+str_4. string "\n"
+	push_const str_4
+	write_string
+	push_reg fp
+	push_const 1
+	add
+	push_const 11
+	add
+	fetch
+	write_int
+str_5. string "\n"
+	push_const str_5
+	write_string
+	push_reg fp
+	push_const 1
+	add
+	push_const 1
+	add
+	push_const 5
+	add
+	fetch
+	write_int
+str_6. string "\n"
+	push_const str_6
+	write_string
+	push_reg fp
+	push_const 13
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	fetch
+	assign
+	shift_sp -2
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	fetch
+	assign
+	shift_sp -2
+	shift_sp -1
+	push_reg fp
+	push_const 13
+	add
+	push_const 0
+	add
+	push_reg sp
+	fetch
+	push_const 987
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 13
+	add
+	push_const 11
+	add
+	push_reg sp
+	fetch
+	push_const 654
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const -14
+	add
+	push_reg fp
+	push_const 13
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	fetch
+	assign
+	shift_sp -2
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	fetch
+	assign
+	shift_sp -2
+	jump goo_final
+goo_final:
+	push_reg fp
+	pop_reg sp
+	pop_reg fp
+	pop_reg fp
+	pop_reg pc
+goo_end:
 main:
 	shift_sp 13
 main_start:
-str_4. string "Passing function return value directly into argument... ans : 7 123 8888 77 11111 22222\n"
-	push_const str_4
+str_7. string "Passing function return value directly into argument... ans : 7 123 8888 77 11111 22222\n"
+	push_const str_7
 	write_string
 	push_reg fp
 	push_const 1
@@ -742,8 +1186,8 @@ label_0:
 	add
 	fetch
 	write_int
-str_5. string "\n"
-	push_const str_5
+str_8. string "\n"
+	push_const str_8
 	write_string
 	push_reg fp
 	push_const 1
@@ -752,44 +1196,625 @@ str_5. string "\n"
 	add
 	fetch
 	write_int
-str_6. string "\n"
-	push_const str_6
+str_9. string "\n"
+	push_const str_9
 	write_string
+str_10. string "\n"
+	push_const str_10
+	write_string
+str_11. string "Some more test on struct parameter and return... ans : 11111 22222 123 987 654\n"
+	push_const str_11
+	write_string
+	push_const Lglob+0
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	fetch
+	assign
+	shift_sp -2
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	fetch
+	assign
+	shift_sp -2
+	shift_sp -1
+	push_reg fp
+	push_const 1
+	add
+	push_reg sp
+	fetch
 	shift_sp 12
 	push_const label_2
 	push_reg fp
 	push_const 0
-	push_const 8888
-	push_const 9999
-	shift_sp 12
-	push_const label_3
-	push_reg fp
-	push_const 0
-	push_const 7
-	push_const 8
-	push_reg sp
-	push_const -2
-	add
-	pop_reg fp
-	jump sm
-label_3:
-	push_const 77
-	push_const 88
-	push_reg sp
-	push_const -16
-	add
-	pop_reg fp
-	jump foo
-label_2:
+	push_const Lglob+0
+	shift_sp 11
 	push_reg sp
 	push_const -11
 	add
+	push_reg sp
+	push_const -12
+	add
+	fetch
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
 	push_const 1
 	add
 	fetch
-	shift_sp -13
+	assign
 	push_reg sp
-	push_const 13
+	push_const -1
 	add
 	fetch
-	pu
+	push_const 2
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	fetch
+	assign
+	shift_sp -2
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	fetch
+	assign
+	shift_sp -2
+	push_reg sp
+	push_const -12
+	add
+	pop_reg fp
+	jump goo
+label_2:
+	push_reg sp
+	push_const -13
+	add
+	fetch
+	push_reg sp
+	push_const -12
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 0
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 1
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 2
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 3
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 4
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 5
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 6
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 7
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 8
+	add
+	fetch
+	assign
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 9
+	add
+	fetch
+	assign
+	shift_sp -2
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	push_reg sp
+	push_const -1
+	add
+	fetch
+	push_const 11
+	add
+	fetch
+	assign
+	shift_sp -2
+	shift_sp 13
+	shift_sp -1
+	push_reg fp
+	push_const 1
+	add
+	push_const 0
+	add
+	fetch
+	write_int
+str_12. string "\n"
+	push_const str_12
+	write_string
+	push_reg fp
+	push_const 1
+	add
+	push_const 11
+	add
+	fetch
+	write_int
+str_13. string "\n"
+	push_const str_13
+	write_string
+main_final:
+	push_reg fp
+	pop_reg sp
+	pop_reg fp
+	pop_reg pc
+main_end:
+Lglob.	data 12

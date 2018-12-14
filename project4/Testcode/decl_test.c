@@ -14,8 +14,18 @@ int main(){
 	char ca[5];
 	int* pa[5];
 	int x;
+	int y;
 	int gy;
 	int* p;
+	char* s;
+
+	s = "hello\n";
+	write_string(s);
+	x = gx = 77;
+	write_int(x);
+	write_string("\n");
+	write_int(gx);
+	write_string("\n");
 
 	a[0] = 0;
 	a[1] = 1;

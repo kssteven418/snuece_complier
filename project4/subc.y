@@ -768,7 +768,7 @@ binary
 					$$->declclass = _EXP;
 				}
 				
-				printArithmetic(_PLUS);
+				printArithmetic(_PLUS, $1);
 			}
 			else{
 				$$ = NULL;
@@ -787,7 +787,7 @@ binary
 					$$->declclass = _EXP;
 				}
 
-				printArithmetic(_MINUS);
+				printArithmetic(_MINUS, $1);
 			}
 			else{
 				$$ = NULL;
@@ -935,7 +935,7 @@ unary
 			if(check_inc_dec($1, $$)){
 				$$ = $1;
 				$$->declclass = _EXP;
-				printIncDec(1, 0);
+				printIncDec(1, 0, $1);
 			}
 			else{
 				$$ = NULL;
@@ -947,17 +947,18 @@ unary
 			if(check_inc_dec($1, $$)){
 				$$ = $1;
 				$$->declclass = _EXP;
-				printIncDec(0, 0);
+				printIncDec(0, 0, $1);
 			}
 			else{
 				$$ = NULL;
 			}
 		}
+
 		| INCOP unary{
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
-				printIncDec(1, 1);
+				printIncDec(1, 1, $2);
 			}
 			else{
 				$$ = NULL;
@@ -968,7 +969,7 @@ unary
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
 				$$ = $2;
-				printIncDec(0, 1);
+				printIncDec(0, 1, $2);
 			}
 			else{
 				$$ = NULL;

@@ -160,7 +160,8 @@ int check_inc_dec(decl* src, decl* dest){
 	}
 	// unary must be a INT or a CHAR
 	else if (!check_type_compat(src->type, inttype, 0)
-					&& !check_type_compat(src->type, chartype, 0)){
+					&& !check_type_compat(src->type, chartype, 0)
+					&& src->type->typeclass != _POINTER){
 		dest = raise("not int or char type");
 		return 0;
 	}
@@ -183,9 +184,14 @@ int check_add_sub(decl* x, decl* y, decl* dest){
 			dest = NULL;
 			return 0;
 	}
+	if(x->type==NULL){
+			dest = NULL;
+			return 0;
+	}
 
 	// operands(x, y) should be INT
-	if(!check_type_compat(x->type, inttype, 0)){
+	if(!check_type_compat(x->type, inttype, 0)
+					&& x->type->typeclass!=_POINTER){
 		dest = raise("not int type");
 		return 0;
 	}
@@ -195,10 +201,12 @@ int check_add_sub(decl* x, decl* y, decl* dest){
 	}
 
 	// operands should be computable : should have same types
+	/*
 	if(!check_type_compat(x->type, y->type, 0)){
 		dest = raise("not computable");
 		return 0;
 	}
+	*/
 	return 1;
 }
 

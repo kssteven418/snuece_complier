@@ -188,9 +188,9 @@ int check_and_or(decl* x, decl* y, decl* dest);
 void printStartUp();
 void printGlobals();
 void printRelEqu(int op);
-void printArithmetic(int op);
+void printArithmetic(int op, decl* var);
 void printLoadVar(decl* var);
-void printIncDec(int isInc, int isOpFst);
+void printIncDec(int isInc, int isOpFst, decl* var);
 
 
 void addrToVar(decl* decl);

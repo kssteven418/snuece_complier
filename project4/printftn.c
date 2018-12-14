@@ -26,7 +26,13 @@ void printRelEqu(int op){
 	if(op==_NE) P("\tnot_equal\n");
 }
 
-void printArithmetic(int op){
+void printArithmetic(int op, decl* var){
+	if(var->type->typeclass == _POINTER){
+		if(var->type->ptrto!=NULL){
+			P("\tpush_const %d\n", var->type->ptrto->size);
+			P("\tmul\n");
+		}
+	}
 	if(op==_PLUS) P("\tadd\n");
 	if(op==_MINUS) P("\tsub\n");
 }
@@ -66,9 +72,17 @@ void printLoadVarParam(decl* var){
 	}
 }
 
-void printIncDec(int isInc, int isOpFst){
+void printIncDec(int isInc, int isOpFst, decl* var){
 	// stack top is address
 	// ++a, --a
+	int is_ptr = 0;
+	int size = 1;
+	if(var->type->typeclass == _POINTER){
+		if(var->type->ptrto!=NULL){
+			is_ptr = 1;
+			size =  var->type->ptrto->size;
+		}
+	}
 	if(isOpFst){
 		P("\tpush_reg sp\n");
 		P("\tfetch\n");
@@ -77,7 +91,7 @@ void printIncDec(int isInc, int isOpFst){
 		// stack top : addr addr addr #
 		P("\tfetch\n");
 		// stack top : var addr #
-		P("\tpush_const 1\n");
+		P("\tpush_const %d\n", size);
 		if(isInc) P("\tadd\n");
 		else P("\tsub\n");
 		// stack top : var+1 addr addr #
@@ -94,7 +108,7 @@ void printIncDec(int isInc, int isOpFst){
 		// stack top : addr addr addr #
 		P("\tfetch\n");
 		// stack top : var addr #
-		P("\tpush_const 1\n");
+		P("\tpush_const %d\n", size);
 		if(isInc) P("\tadd\n");
 		else P("\tsub\n");
 		// stack top : var+1 addr addr #
@@ -102,7 +116,7 @@ void printIncDec(int isInc, int isOpFst){
 		// stack top : addr # and addr->var+1
 		P("\tfetch\n");
 		// stack top : var+1 #
-		P("\tpush_const 1\n");
+		P("\tpush_const %d\n", size);
 		if(isInc) P("\tsub\n");
 		else P("\tadd\n");
 		// stack top : var #
