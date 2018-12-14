@@ -264,6 +264,7 @@ func_decl
 						returntype->declclass = _TYPE;
 						returntype->typeclass = _POINTER;
 						returntype->ptrto = $1;
+						returntype->size = 1;
 					}
 					else{
 						returntype = $1;
@@ -412,6 +413,7 @@ stmt
 			
 				// address to store the return value
 				P("\tpush_reg fp\n");
+				//printf("%d\n", ftn_decl->returntype->decl->size);
 				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
 				P("\tadd\n");
 

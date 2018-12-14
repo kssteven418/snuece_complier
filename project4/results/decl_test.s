@@ -134,7 +134,7 @@ str_2. string "\n"
 	add
 	push_reg sp
 	fetch
- push_const 97
+	push_const 97
 	assign
 	fetch
 	shift_sp -1
@@ -145,7 +145,7 @@ str_2. string "\n"
 	add
 	push_reg sp
 	fetch
- push_const 98
+	push_const 98
 	assign
 	fetch
 	shift_sp -1
@@ -156,7 +156,7 @@ str_2. string "\n"
 	add
 	push_reg sp
 	fetch
- push_const 99
+	push_const 99
 	assign
 	fetch
 	shift_sp -1
@@ -167,7 +167,7 @@ str_2. string "\n"
 	add
 	push_reg sp
 	fetch
- push_const 100
+	push_const 100
 	assign
 	fetch
 	shift_sp -1
@@ -178,7 +178,7 @@ str_2. string "\n"
 	add
 	push_reg sp
 	fetch
- push_const 101
+	push_const 101
 	assign
 	fetch
 	shift_sp -1

@@ -8,6 +8,72 @@ EXIT:
 	exit
 	push_const 10
 	shift_sp -1
+foo:
+	shift_sp 5
+foo_start:
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 0
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 11
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 3
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 1
+	add
+	push_const 0
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 4
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const -3
+	add
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	assign
+	jump foo_final
+foo_final:
+	push_reg fp
+	pop_reg sp
+	pop_reg fp
+	pop_reg fp
+	pop_reg pc
+foo_end:
 main:
 	push_const 10
 	shift_sp -1

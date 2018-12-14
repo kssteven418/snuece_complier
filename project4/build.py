@@ -11,6 +11,7 @@ p = subprocess.Popen("make", stdout=subprocess.PIPE, shell=True)
  
 	
 fname = str(sys.argv[1])
+	
 smode = False
 rmode = False 
 if len(sys.argv)>2:
@@ -19,16 +20,18 @@ if len(sys.argv)>2:
 	elif sys.argv[2] == "-r":
 		rmode = True # run mode, run only
 
-if rmode==False:
-	p = subprocess.Popen("./subc "+test_path+fname+".c > "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
-	(output, err) = p.communicate()
-	print output
+if fname[-2:] == '.c':
+	fname = fname[:-2]
+	if rmode==False:
+		p = subprocess.Popen("./subc "+test_path+fname+".c > "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
+		(output, err) = p.communicate()
+		print output
 
-if smode==False:
-	print "./sim/sim "+test_path+fname+".s"
-	p = subprocess.Popen("./sim/sim "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
-	(output, err) = p.communicate()
-	print output
+	if smode==False:
+		print "./sim/sim "+test_path+fname+".s"
+		p = subprocess.Popen("./sim/sim "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
+		(output, err) = p.communicate()
+		print output
 	
 
 

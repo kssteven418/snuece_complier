@@ -6,6 +6,13 @@ struct str1{
 	int y;
 }*st;
 
+struct str1* foo(struct str1* s, int x, int y, int a){
+	s->x = x;
+	(*s).y = y;
+	s->a[0] = a;
+	return s;
+}
+
 
 int main(){
 	int a;

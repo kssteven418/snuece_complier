@@ -58,7 +58,7 @@ main_start:
 	add
 	push_reg sp
 	fetch
- push_const 65
+	push_const 65
 	assign
 	fetch
 	shift_sp -1

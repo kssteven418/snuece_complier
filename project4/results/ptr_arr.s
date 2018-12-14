@@ -105,7 +105,7 @@ str_0. string "testing for pointer +/- int operator. 5 b 50 / 6 c 60 / 4 a 40 / 
 	add
 	push_reg sp
 	fetch
- push_const 98
+	push_const 98
 	assign
 	fetch
 	shift_sp -1
@@ -116,7 +116,7 @@ str_0. string "testing for pointer +/- int operator. 5 b 50 / 6 c 60 / 4 a 40 / 
 	add
 	push_reg sp
 	fetch
- push_const 97
+	push_const 97
 	assign
 	fetch
 	shift_sp -1
@@ -127,7 +127,7 @@ str_0. string "testing for pointer +/- int operator. 5 b 50 / 6 c 60 / 4 a 40 / 
 	add
 	push_reg sp
 	fetch
- push_const 99
+	push_const 99
 	assign
 	fetch
 	shift_sp -1
@@ -399,7 +399,7 @@ str_9. string "\n"
 	fetch
 	push_reg sp
 	fetch
- push_const 120
+	push_const 120
 	assign
 	fetch
 	shift_sp -1
@@ -579,7 +579,7 @@ str_14. string "testing for pointer ++/-- operation, 5 6 5 5 50 60 50 50\n"
 	add
 	push_reg sp
 	fetch
- push_const 98
+	push_const 98
 	assign
 	fetch
 	shift_sp -1
@@ -590,7 +590,7 @@ str_14. string "testing for pointer ++/-- operation, 5 6 5 5 50 60 50 50\n"
 	add
 	push_reg sp
 	fetch
- push_const 97
+	push_const 97
 	assign
 	fetch
 	shift_sp -1
@@ -601,7 +601,7 @@ str_14. string "testing for pointer ++/-- operation, 5 6 5 5 50 60 50 50\n"
 	add
 	push_reg sp
 	fetch
- push_const 99
+	push_const 99
 	assign
 	fetch
 	shift_sp -1
