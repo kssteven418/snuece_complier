@@ -645,6 +645,98 @@ str_32. string "\n"
 str_33. string "\n"
 	push_const str_33
 	write_string
+str_34. string "double_loop\n"
+	push_const str_34
+	write_string
+	push_reg fp
+	push_const 1
+	add
+	push_reg sp
+	fetch
+	push_const 0
+	assign
+	fetch
+	shift_sp -1
+	push_reg fp
+	push_const 2
+	add
+	push_reg sp
+	fetch
+	push_const 0
+	assign
+	fetch
+	shift_sp -1
+label_40:
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	push_const 10
+	less
+	branch_false label_41
+	push_reg fp
+	push_const 2
+	add
+	push_reg sp
+	fetch
+	push_reg fp
+	push_const 1
+	add
+	fetch
+	assign
+	fetch
+	shift_sp -1
+label_42:
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	push_const 10
+	less
+	branch_false label_43
+	push_reg fp
+	push_const 2
+	add
+	fetch
+	write_int
+str_35. string " "
+	push_const str_35
+	write_string
+	push_reg fp
+	push_const 2
+	add
+	push_reg sp
+	fetch
+	push_reg sp
+	fetch
+	fetch
+	push_const 1
+	add
+	assign
+	fetch
+	shift_sp -1
+	jump label_42
+label_43:
+str_36. string "\n"
+	push_const str_36
+	write_string
+	push_reg fp
+	push_const 1
+	add
+	push_reg sp
+	fetch
+	push_reg sp
+	fetch
+	fetch
+	push_const 1
+	add
+	assign
+	fetch
+	push_const 1
+	sub
+	shift_sp -1
+	jump label_40
+label_41:
 main_final:
 	push_reg fp
 	pop_reg sp

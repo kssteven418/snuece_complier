@@ -755,10 +755,41 @@ str_5. string "\n"
 str_6. string "\n"
 	push_const str_6
 	write_string
-main_final:
+	shift_sp 12
+	push_const label_2
 	push_reg fp
-	pop_reg sp
+	push_const 0
+	push_const 8888
+	push_const 9999
+	shift_sp 12
+	push_const label_3
+	push_reg fp
+	push_const 0
+	push_const 7
+	push_const 8
+	push_reg sp
+	push_const -2
+	add
 	pop_reg fp
-	pop_reg pc
-main_end:
-Lglob.	data 0
+	jump sm
+label_3:
+	push_const 77
+	push_const 88
+	push_reg sp
+	push_const -16
+	add
+	pop_reg fp
+	jump foo
+label_2:
+	push_reg sp
+	push_const -11
+	add
+	push_const 1
+	add
+	fetch
+	shift_sp -13
+	push_reg sp
+	push_const 13
+	add
+	fetch
+	pu

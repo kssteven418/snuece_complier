@@ -187,5 +187,19 @@ void main(){
 	write_int(y);
 	write_string("\n");
 
+	write_string("double_loop\n");
+	x = 0;
+	y = 0;
+	while(x<10){
+		y = x;
+		while(y<10){
+			write_int(y);
+			write_string(" ");
+			++y;
+		}
+		write_string("\n");
+		x++;
+	}
+
 
 }

@@ -475,17 +475,19 @@ stmt
 
 				// while start label
 				P("label_%d:\n", loop_start);
+				$<intVal>$ = loop_finish;
 			}
 			'(' expr ')' {
 				addrToVar($4);
 				P("\tbranch_false label_%d\n",loop_finish);
 			}
 			stmt{
+				int fin = $<intVal>2;
 				// if following the true branch,
 				// jump back to the start point
-				P("\tjump label_%d\n", loop_start);
+				P("\tjump label_%d\n", fin-1);
 				// finish label for the false point
-				P("label_%d:\n", loop_finish);
+				P("label_%d:\n", fin);
 			}
 
 		| FOR {
