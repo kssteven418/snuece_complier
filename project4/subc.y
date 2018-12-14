@@ -818,7 +818,7 @@ unary
 			const_decl->int_value = $1;
 			$$ = const_decl;
 			
-			P("	push_const %d\n", $1);
+			P("\tpush_const %d\n", $1);
 		}
 
 		| CHAR_CONST{
@@ -828,7 +828,7 @@ unary
 			const_decl->char_value = $1;
 			$$ = const_decl;
 
-			P(" push_const %d\n", $1);
+			P("\tpush_const %d\n", $1);
 		}
 
 		| STRING{
@@ -887,7 +887,7 @@ unary
 			}
 			
 			else{
-				$$ = $2;
+				$$ = copy($2);
 				if(check_is_const($$)){
 					// in case unary is a constant, value must be computed
 					$$->int_value = -($$->int_value);
@@ -897,7 +897,7 @@ unary
 				}
 
 				addrToVar($2);
-				P("\tnegate\t");
+				P("\tnegate\n");
 
 			}
 		}
@@ -916,7 +916,7 @@ unary
 			}
 			
 			else{
-				$$ = $2;
+				$$ = copy($2);
 				if(check_is_const($$)){
 					// in case unary is a constant, value must be computed
 					$$->int_value = !($$->int_value);
@@ -926,14 +926,14 @@ unary
 				}
 
 				addrToVar($2);
-				P("\tnot\t");
+				P("\tnot\n");
 			}
 		}
 
 		| unary INCOP{
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($1, $$)){
-				$$ = $1;
+				$$ = copy($1);
 				$$->declclass = _EXP;
 				printIncDec(1, 0, $1);
 			}
@@ -945,7 +945,7 @@ unary
 		| unary DECOP{
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($1, $$)){
-				$$ = $1;
+				$$ = copy($1);
 				$$->declclass = _EXP;
 				printIncDec(0, 0, $1);
 			}
@@ -957,7 +957,7 @@ unary
 		| INCOP unary{
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
-				$$ = $2;
+				$$ = copy($2);
 				printIncDec(1, 1, $2);
 			}
 			else{
@@ -968,7 +968,7 @@ unary
 		| DECOP unary{
 			/* for INCOP and DECOP, the unary must be a variable */
 			if(check_inc_dec($2, $$)){
-				$$ = $2;
+				$$ = copy($2);
 				printIncDec(0, 1, $2);
 			}
 			else{

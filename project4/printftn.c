@@ -174,7 +174,7 @@ void printAssignStruct(decl* str){
 	
 }
 
-
+/*
 void printStack(){
 	P("\tpush_const 77777\n");
 	P("\twrite_int\n");
@@ -307,6 +307,7 @@ void printStack(){
 
 
 }
+*/
 
 void printAssign(decl* var){
 
