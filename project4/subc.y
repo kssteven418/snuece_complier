@@ -111,7 +111,7 @@ ext_def
 				ftn_type_glob = ftn_type;
 				ftn_decl = $1;
 				ftn_name = find_id($1);
-				P("%s:\n", ftn_name->name);
+				fprintf(fp, "%s:\n", ftn_name->name);
 
 				// to make offset + 1 (due ro saved FP is @ FP+0)
 				//sstop->size = 1;
@@ -124,17 +124,17 @@ ext_def
 
 
 			// end up code and final position
-			P("%s_final:\n", find_id($1)->name);
-			P("\tpush_reg fp\n");
-			P("\tpop_reg sp\n");
-			P("\tpop_reg fp\n");
+			fprintf(fp, "%s_final:\n", find_id($1)->name);
+			fprintf(fp, "\tpush_reg fp\n");
+			fprintf(fp, "\tpop_reg sp\n");
+			fprintf(fp, "\tpop_reg fp\n");
 
 			if(!strCompare_no_len("main", ftn_name->name)){
-				P("\tpop_reg fp\n");
+				fprintf(fp, "\tpop_reg fp\n");
 			}
 
-			P("\tpop_reg pc\n");
-			P("%s_end:\n", find_id($1)->name);
+			fprintf(fp, "\tpop_reg pc\n");
+			fprintf(fp, "%s_end:\n", find_id($1)->name);
 		}
 ; 
 
@@ -366,10 +366,10 @@ ftn_compound_stmt
 			int size = sstop->size;
 			// allocate memory for local variables
 			if(size>0){
-				P("\tshift_sp %d\n", size);
+				fprintf(fp, "\tshift_sp %d\n", size);
 			}
 			// and then, start position
-			P("%s_start:\n", ftn_name->name);
+			fprintf(fp, "%s_start:\n", ftn_name->name);
 		}
 		stmt_list '}'
 
@@ -405,17 +405,17 @@ stmt
 					raise("return value is not return type");
 				}
 			}
-			P("\tjump %s_final\n", ftn_name->name);
+			fprintf(fp, "\tjump %s_final\n", ftn_name->name);
 		}
 
 		| RETURN {
 				//printf("asdsdsd\n");
 			
 				// address to store the return value
-				P("\tpush_reg fp\n");
+				fprintf(fp, "\tpush_reg fp\n");
 				//printf("%d\n", ftn_decl->returntype->decl->size);
-				P("\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
-				P("\tadd\n");
+				fprintf(fp, "\tpush_const -%d\n", ftn_decl->returntype->decl->size+2);
+				fprintf(fp, "\tadd\n");
 
 			} expr ';' {
 				if($3==NULL){
@@ -448,26 +448,26 @@ stmt
 				// stack top will be a value
 				printAssign($3);	
 
-				P("\tjump %s_final\n", ftn_name->name);
+				fprintf(fp, "\tjump %s_final\n", ftn_name->name);
   
 		}
 
 		| ';'
 
 		| if_cond stmt{
-				P("label_%d:\n",$1);
+				fprintf(fp, "label_%d:\n",$1);
 			}	%prec IFONLY
 				
 		| if_cond stmt ELSE{
 				// allocate label counter to mark the end of the false branch
 				$<intVal>$ = label_cnt; 
-				P("\tjump label_%d\n", label_cnt++);
+				fprintf(fp, "\tjump label_%d\n", label_cnt++);
 
 				// label for the false branch
-				P("label_%d:\n",$1);
+				fprintf(fp, "label_%d:\n",$1);
 			}
 			stmt{
-				P("label_%d:\n", $<intVal>4);
+				fprintf(fp, "label_%d:\n", $<intVal>4);
 			}
 
 		| WHILE {
@@ -476,20 +476,20 @@ stmt
 				loop_finish = label_cnt++;
 
 				// while start label
-				P("label_%d:\n", loop_start);
+				fprintf(fp, "label_%d:\n", loop_start);
 				$<intVal>$ = loop_finish;
 			}
 			'(' expr ')' {
 				addrToVar($4);
-				P("\tbranch_false label_%d\n",loop_finish);
+				fprintf(fp, "\tbranch_false label_%d\n",loop_finish);
 			}
 			stmt{
 				int fin = $<intVal>2;
 				// if following the true branch,
 				// jump back to the start point
-				P("\tjump label_%d\n", fin-1);
+				fprintf(fp, "\tjump label_%d\n", fin-1);
 				// finish label for the false point
-				P("label_%d:\n", fin);
+				fprintf(fp, "label_%d:\n", fin);
 			}
 
 		| FOR {
@@ -505,69 +505,69 @@ stmt
 			}'(' expr_e ';' {
 				// pop out the expression
 				afterExpr($4);		
-				P("label_%d:\n", for_cond);
+				fprintf(fp, "label_%d:\n", for_cond);
 			} 
 
 			expr_e ';' {
 				// if condition false, jump out of the for statement
-				P("\tbranch_false label_%d\n", for_end);
+				fprintf(fp, "\tbranch_false label_%d\n", for_end);
 				// if true, keep going
-				P("\tjump label_%d\n", for_stmt);
-				P("label_%d:\n", for_change);
+				fprintf(fp, "\tjump label_%d\n", for_stmt);
+				fprintf(fp, "label_%d:\n", for_change);
 			}
 			
 			expr_e ')' {
 				// pop out the expression
 				afterExpr($4);		
-				P("\tjump label_%d\n", for_cond);
-				P("label_%d:\n", for_stmt);
+				fprintf(fp, "\tjump label_%d\n", for_cond);
+				fprintf(fp, "label_%d:\n", for_stmt);
 			}
 
 			stmt{
-				P("\tjump label_%d\n", for_change);
-				P("label_%d:\n", for_end);
+				fprintf(fp, "\tjump label_%d\n", for_change);
+				fprintf(fp, "label_%d:\n", for_end);
 			}
 
 		| BREAK ';'{
-			P("\tjump label_%d\n", loop_finish);
+			fprintf(fp, "\tjump label_%d\n", loop_finish);
 		}
 		
 		| CONTINUE ';'{
-			P("\tjump label_%d\n", loop_start);
+			fprintf(fp, "\tjump label_%d\n", loop_start);
 		}
 
 		/* I/O statements */
 		| READINT '(' unary ')'{
 			// address is at the stack top
-			P("\tread_int\n");
-			P("\tassign\n");
+			fprintf(fp, "\tread_int\n");
+			fprintf(fp, "\tassign\n");
 		}
 
 		| READCHAR '(' unary ')'{
-			P("\tread_char\n");
-			P("\tassign\n");
+			fprintf(fp, "\tread_char\n");
+			fprintf(fp, "\tassign\n");
 		}
 
 		| WRITEINT '(' unary ')'{
 			addrToVar($3);
-			P("\twrite_int\n");
+			fprintf(fp, "\twrite_int\n");
 		}
 
 		| WRITECHAR '(' unary ')'{
 			addrToVar($3);
-			P("\twrite_char\n");
+			fprintf(fp, "\twrite_char\n");
 		}
 				
 		| WRITESTR '(' unary ')'{
 			addrToVar($3);
-			P("\twrite_string\n");
+			fprintf(fp, "\twrite_string\n");
 		}
 ;
 
 if_cond
 		: IF '(' expr ')' {
 				addrToVar($3);
-				P("\tbranch_false label_%d\n",label_cnt);
+				fprintf(fp, "\tbranch_false label_%d\n",label_cnt);
 				$$ = label_cnt++;
 		}
 	;
@@ -578,7 +578,7 @@ expr_e
 		}
 		| /* empty */{
 			$$ = makeconstdecl(inttype); 
-			P("\tpush_const 1\n");
+			fprintf(fp, "\tpush_const 1\n");
 		}
 ;
 
@@ -609,8 +609,8 @@ expr_arg
 expr
 		: unary {
 				// address of unary(variable) will be at the stack top
-				P("\tpush_reg sp\n");
-				P("\tfetch\n"); // copy yhe address
+				fprintf(fp, "\tpush_reg sp\n");
+				fprintf(fp, "\tfetch\n"); // copy yhe address
 
 			}'=' expr{
 				if ($1==NULL) {$$=NULL;}
@@ -676,7 +676,7 @@ or_list
 				else{
 					$$->declclass = _EXP;
 				}
-				P("\tor\n");
+				fprintf(fp, "\tor\n");
 			}
 			else{
 					$$ = NULL;
@@ -705,7 +705,7 @@ and_list
 				else{
 					$$->declclass = _EXP;
 				}
-				P("\tand\n");
+				fprintf(fp, "\tand\n");
 			}
 			else{
 				$$ = NULL;
@@ -820,7 +820,7 @@ unary
 			const_decl->int_value = $1;
 			$$ = const_decl;
 			
-			P("\tpush_const %d\n", $1);
+			fprintf(fp, "\tpush_const %d\n", $1);
 		}
 
 		| CHAR_CONST{
@@ -830,7 +830,7 @@ unary
 			const_decl->char_value = $1;
 			$$ = const_decl;
 
-			P("\tpush_const %d\n", $1);
+			fprintf(fp, "\tpush_const %d\n", $1);
 		}
 
 		| STRING{
@@ -841,8 +841,8 @@ unary
 			$$ = makeptrdecl(typedecl);
 			$$->declclass = _EXP; 
 
-			P("str_%d. string %s\n", str_cnt, $1);
-			P("\tpush_const str_%d\n", str_cnt++);
+			fprintf(fp, "str_%d. string %s\n", str_cnt, $1);
+			fprintf(fp, "\tpush_const str_%d\n", str_cnt++);
 
 		}
 
@@ -899,7 +899,7 @@ unary
 				}
 
 				addrToVar($2);
-				P("\tnegate\n");
+				fprintf(fp, "\tnegate\n");
 
 			}
 		}
@@ -928,7 +928,7 @@ unary
 				}
 
 				addrToVar($2);
-				P("\tnot\n");
+				fprintf(fp, "\tnot\n");
 			}
 		}
 
@@ -1041,10 +1041,10 @@ unary
 				addrToVar($3); 
 				// in case of struct array, the size is not 1
 				if ($$->size>1){
-						P("\tpush_const %d\n", $$->size);
-						P("\tmul\n");
+						fprintf(fp, "\tpush_const %d\n", $$->size);
+						fprintf(fp, "\tmul\n");
 				}
-				P("\tadd\n");
+				fprintf(fp, "\tadd\n");
 
 			}
 		}
@@ -1070,8 +1070,8 @@ unary
 					int offset = $$->offset;
 
 					if(!$1->is_expanded)	{
-						P("\tpush_const %d\n", $$->offset);
-						P("\tadd\n");
+						fprintf(fp, "\tpush_const %d\n", $$->offset);
+						fprintf(fp, "\tadd\n");
 					}
 
 					// direct use of struct return value.
@@ -1079,18 +1079,18 @@ unary
 					else{
 						$$->declclass = _EXP;
 						int size = $1->size;
-						printf("\tpush_reg sp\n");
-						printf("\tpush_const -%d\n", size-1);
-						printf("\tadd\n");
-						printf("\tpush_const %d\n", offset);
-						printf("\tadd\n");
-						printf("\tfetch\n");
-						printf("\tshift_sp -%d\n", size+1);
+						fprintf(fp, "\tpush_reg sp\n");
+						fprintf(fp, "\tpush_const -%d\n", size-1);
+						fprintf(fp, "\tadd\n");
+						fprintf(fp, "\tpush_const %d\n", offset);
+						fprintf(fp, "\tadd\n");
+						fprintf(fp, "\tfetch\n");
+						fprintf(fp, "\tshift_sp -%d\n", size+1);
 
-						printf("\tpush_reg sp\n");
-						printf("\tpush_const %d\n", size+1);
-						printf("\tadd\n");
-						printf("\tfetch\n");
+						fprintf(fp, "\tpush_reg sp\n");
+						fprintf(fp, "\tpush_const %d\n", size+1);
+						fprintf(fp, "\tadd\n");
+						fprintf(fp, "\tfetch\n");
 
 						//printf("SADDSADSAD %d %d\n",size, offset);
 
@@ -1124,8 +1124,8 @@ unary
 					$$ = copy(field->decl);
 					printFetchPtr($1);
 					int offset = $$->offset;
-					P("\tpush_const %d\n", $$->offset);
-					P("\tadd\n");
+					fprintf(fp, "\tpush_const %d\n", $$->offset);
+					fprintf(fp, "\tadd\n");
 
 					}
 				}
@@ -1137,10 +1137,10 @@ unary
 				// CALLER's responsibility
 				//int retsize = $1->returntype->decl->size;
 				//printf("%d, %d\n", $1->returntype->decl->typeclass, retsize);
-				P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
-				P("\tpush_const label_%d\n", label_cnt); // ret address
-				P("\tpush_reg fp\n"); // frame pointer
-				P("\tpush_const 0\n"); // safety buffer
+				fprintf(fp, "\tshift_sp %d\n", $1->returntype->decl->size); // return value
+				fprintf(fp, "\tpush_const label_%d\n", label_cnt); // ret address
+				fprintf(fp, "\tpush_reg fp\n"); // frame pointer
+				fprintf(fp, "\tpush_const 0\n"); // safety buffer
 				$<intVal>$ = label_cnt++;
 		
 			} args ')'{
@@ -1176,15 +1176,15 @@ unary
 						actuals = actuals->next;
 					}
 
-					P("\tpush_reg sp\n");
-					P("\tpush_const -%d\n", size);
-					P("\tadd\n");
-					P("\tpop_reg fp\n");
+					fprintf(fp, "\tpush_reg sp\n");
+					fprintf(fp, "\tpush_const -%d\n", size);
+					fprintf(fp, "\tadd\n");
+					fprintf(fp, "\tpop_reg fp\n");
 
-					P("\tjump %s\n", find_id($1)->name);
+					fprintf(fp, "\tjump %s\n", find_id($1)->name);
 
 					// mark the label to set the return address
-					P("label_%d:\n",$<intVal>3);
+					fprintf(fp, "label_%d:\n",$<intVal>3);
 				}
 			}
 		}
@@ -1209,22 +1209,22 @@ unary
 					if($$->type->typeclass==_STRUCT) $$->is_expanded = 1;
 
 					// CALLER's responsibility
-					P("\tshift_sp %d\n", $1->returntype->decl->size); // return value
-					P("\tpush_const label_%d\n", label_cnt); // ret address
-					P("\tpush_reg fp\n"); // frame pointer
-					P("\tpush_const 0\n"); // safety buffer
+					fprintf(fp, "\tshift_sp %d\n", $1->returntype->decl->size); // return value
+					fprintf(fp, "\tpush_const label_%d\n", label_cnt); // ret address
+					fprintf(fp, "\tpush_reg fp\n"); // frame pointer
+					fprintf(fp, "\tpush_const 0\n"); // safety buffer
 
 					// fp->current sp
-					P("\tpush_reg sp\n");
-					P("\tpop_reg fp\n");
+					fprintf(fp, "\tpush_reg sp\n");
+					fprintf(fp, "\tpop_reg fp\n");
 
 					// jump to the target address
 					// debugst(sstop->top);
 					//printf("%d\n", $1->declclass);
-					P("\tjump %s\n", find_id($1)->name);
+					fprintf(fp, "\tjump %s\n", find_id($1)->name);
 
 					// mark the label to set the return address
-					P("label_%d:\n",label_cnt++);
+					fprintf(fp, "label_%d:\n",label_cnt++);
 					//printStack();
 				}
 			}

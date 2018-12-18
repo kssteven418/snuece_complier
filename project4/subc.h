@@ -9,8 +9,11 @@
 
 #include <stdio.h>
 #include <strings.h>
+#include <string.h>
 
 #define P printf
+FILE* fp;
+char fname[100];
 
 // decl classes
 #define _VAR 0

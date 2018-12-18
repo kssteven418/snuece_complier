@@ -177,16 +177,6 @@ int main(int argc, char* argv[])
    for(i = 0; keyword[i] != NULL; i++)
       enter(tokentype[i], keyword[i], strlen(keyword[i]));
 
-   // init types
-   init_type();
-	
-   // START UP CODE
-   printStartUp();
-	
-   //debug
-   //debugst(sstop->top);
-   ste* s;
-   id* name;
 
    if(argc >= 2) {
 	   yyin = fopen(argv[1], "r");
@@ -200,6 +190,28 @@ int main(int argc, char* argv[])
       printf("Can't open input stream!\n");
       exit(1);
    }
+
+   if(argc>=3){
+	   strcpy(fname, argv[2]);
+   }
+   else{
+   		strcpy(fname, argv[1]);
+   		strcat(fname, ".s");
+   }
+
+   fp = fopen(fname, "w");
+
+   // init types
+   init_type();
+	
+   // START UP CODE
+   printStartUp();
+	
+   //debug
+   //debugst(sstop->top);
+   ste* s;
+   id* name;
+
 	
    yyparse();
 

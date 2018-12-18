@@ -14,16 +14,11 @@ fname = str(sys.argv[1])
 	
 smode = False
 rmode = False 
-if len(sys.argv)>2:
-	if sys.argv[2] == "-s":
-		smode = True # silent mode, do not run
-	elif sys.argv[2] == "-r":
-		rmode = True # run mode, run only
 
 if fname[-2:] == '.c':
 	fname = fname[:-2]
 	if rmode==False:
-		p = subprocess.Popen("./subc "+test_path+fname+".c > "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
+		p = subprocess.Popen("./subc "+test_path+fname+".c "+res_path+fname+".s", stdout=subprocess.PIPE, shell=True)
 		(output, err) = p.communicate()
 		print output
 

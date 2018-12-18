@@ -1,0 +1,477 @@
+=======================
+Testing Testcode/assign_test.c
+
+./sim/sim Testcode/assign_test.s
+simple assignments... ans : 10 20 A 10
+10
+20
+A
+10
+
+simple struct assignment... ans : 10 20 A 10 X3
+10
+20
+A
+10
+
+10
+20
+A
+10
+
+10
+20
+A
+10
+
+array in struct... ans : 0 1 ... 9 10 20 
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+20
+struct in struct... ans : 1 2 10 11 ... 19 100 101 ... 109 
+1
+2
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+program exits
+
+=======================
+Testing Testcode/basics.c
+
+./sim/sim Testcode/basics.s
+Basic bool op : 0 1 0 1 / 1 0 0 0 / 1 1 1 0 / 0 1/ -1 1 -1 1
+0
+1
+0
+1
+
+1
+0
+0
+0
+
+1
+1
+1
+0
+
+0
+1
+-1
+1
+-1
+1
+Basic equrel op : 0 1 1 0 1 1 X2 / 1 0 0 1
+
+0
+1
+1
+0
+1
+1
+
+0
+1
+1
+0
+1
+1
+
+1
+0
+0
+1
+program exits
+
+=======================
+Testing Testcode/cond_test.c
+
+./sim/sim Testcode/cond_test.s
+only-if statement... ans : 1 1
+1
+1
+if-else statement... ans: 1 4 5 8
+1
+4
+5
+8
+while statement... ans : 10 45 2 1 10 45
+10
+45
+2
+1
+10
+45
+while statement w/ b/c... ans : 7 21 70 30
+7
+21
+70
+30
+double_loop
+0 1 2 3 4 5 6 7 8 9 
+1 2 3 4 5 6 7 8 9 
+2 3 4 5 6 7 8 9 
+3 4 5 6 7 8 9 
+4 5 6 7 8 9 
+5 6 7 8 9 
+6 7 8 9 
+7 8 9 
+8 9 
+9 
+program exits
+
+=======================
+Testing Testcode/decl_test.c
+
+./sim/sim Testcode/decl_test.s
+hello
+77
+77
+Testing array basics...
+0
+1
+2
+3
+4
+a
+b
+c
+d
+e
+Testing array & inc dec...
+0
+1
+3
+2
+1
+0
+3
+2
+Testing pointer array with inc dec...
+0
+1
+2
+3
+4
+0
+1
+3
+2
+1
+0
+3
+2
+Testing unary pointer ...
+100
+100
+100
+1
+1
+1
+1
+1
+program exits
+
+=======================
+Testing Testcode/for_test.c
+
+./sim/sim Testcode/for_test.s
+for basics... ans : 10 45 10 35
+10
+45
+10
+35
+for w/ break/continue... ans : 6 21 41 60 60
+6
+21
+41
+60
+60
+program exits
+
+=======================
+Testing Testcode/ftn_test.c
+
+./sim/sim Testcode/ftn_test.s
+Parameter Passing...
+ans : 777 33 22 888 33 55 88 123 11
+ans : 777 10000 20000 888 33 55 50000 123 11
+777
+33
+22
+888
+33
+55
+88
+123
+11
+
+777
+10000
+20000
+888
+33
+55
+50000
+123
+11
+Ending..!
+Return safely..!
+
+Safety check ... ans : 33 10000 888
+33
+10000
+888
+program exits
+
+=======================
+Testing Testcode/global_arr.c
+
+./sim/sim Testcode/global_arr.s
+program exits
+
+=======================
+Testing Testcode/nestftn_test.c
+
+./sim/sim Testcode/nestftn_test.s
+NESTED FUNCTION..! : 100 100 100 101 101 101
+100
+100
+100
+101
+101
+101
+
+RECURSIVE FUNCTION..!
+Recursion going with 1
+Recursion going with 2
+Recursion going with 3
+Recursion going with 4
+Recursion going with 5
+Recursion going with 6
+Recursion going with 7
+Recursion going with 8
+Recursion going with 9
+Recursion ended with 10
+10
+
+FIBONACCI FUNCTION..! ans = fib(6)
+21
+program exits
+
+=======================
+Testing Testcode/ptr_arr.c
+
+./sim/sim Testcode/ptr_arr.s
+testing for pointer +/- int operator. 5 b 50 / 6 c 60 / 4 a 40 / 777 x 888 999
+5
+b
+50
+6
+c
+60
+4
+a
+40
+777
+x
+888
+999
+testing for pointer ++/-- operation, 5 6 5 5 50 60 50 50
+5
+6
+5
+5
+50
+60
+50
+50
+program exits
+
+=======================
+Testing Testcode/ptr_function.c
+
+./sim/sim Testcode/ptr_function.s
+int pointer function : 10 10 0 20 20 20 30 30 50 50
+10
+10
+0
+20
+20
+20
+30
+30
+50
+50
+program exits
+
+=======================
+Testing Testcode/return.c
+
+./sim/sim Testcode/return.s
+Testing for RETURN; statement... Ans : 10, 20, 100, 10, 100
+10
+20
+100
+10
+100
+
+Testing for RETURN struct; statement... 
+Ans : 1 2 3 4 1 2 3 4 11 22 33 44 100 200 300 400 11 22 33 44 777
+1
+2
+3
+4
+1
+2
+3
+4
+11
+22
+33
+44
+100
+200
+300
+400
+11
+22
+33
+44
+777
+program exits
+
+=======================
+Testing Testcode/sample_ans
+=======================
+Testing Testcode/str_op_test.c
+
+./sim/sim Testcode/str_op_test.s
+Passing function return value directly into argument... ans : 7 123 8888 77 11111 22222
+7
+123
+8888
+77
+11111
+22222
+
+Some more test on struct parameter and return... ans : 11111 22222 123 987 654
+11111
+22222
+123
+987
+654
+program exits
+
+=======================
+Testing Testcode/struct_ptr.c
+
+./sim/sim Testcode/struct_ptr.s
+struct pointer function : 10 20 30 20 40 60 40 80 120
+10
+20
+30
+20
+40
+60
+40
+80
+120
+program exits
+
+=======================
+Testing Testcode/struct_test.c
+
+./sim/sim Testcode/struct_test.s
+struct test 1...
+ans : 10 0 1 2 3 4
+10
+0
+1
+2
+3
+4
+struct test 2...
+ans : 10 0 1 2 3 4
+10
+0
+1
+2
+3
+4
+struct pointer and -> operator...
+ans : 10 0 1 2 3 4 
+~ 10 0 1 2 3 4
+10
+0
+1
+2
+3
+4
+10
+0
+1
+2
+3
+4
+struct test 2...
+ans : 10 0 1 2 3 4
+10
+0
+1
+2
+3
+4
+program exits
+
+=======================
+Testing Testcode/t1.c
+
+./sim/sim Testcode/t1.s
+program exits
+
+=======================
+Testing Testcode/t2.c
+
+./sim/sim Testcode/t2.s
+program exits
+
+=======================
+Testing Testcode/t3.c
+
+./sim/sim Testcode/t3.s
+program exits
+
+=======================
+Testing Testcode/t4.c
+
+./sim/sim Testcode/t4.s
+program exits
+

@@ -1,4 +1,4 @@
-	shift_sp 1
+	shift_sp 2
 	push_const EXIT
 	push_reg fp
 	push_reg sp 
